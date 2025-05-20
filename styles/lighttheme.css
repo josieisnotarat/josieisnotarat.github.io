@@ -1,31 +1,31 @@
 :root {
-    /* Base colors */
+    /** Base colors */
     --clr-dark-a0: #000000;
     --clr-light-a0: #ffffff;
   
-    /* Theme primary colors */
-    --clr-primary-a0: #3e306e;
-    --clr-primary-a10: #53447d;
-    --clr-primary-a20: #67598d;
-    --clr-primary-a30: #7c6f9d;
-    --clr-primary-a40: #9185ad;
-    --clr-primary-a50: #a79dbd;
+    /** Theme primary colors */
+    --clr-primary-a0: #4f3320;
+    --clr-primary-a10: #553b2a;
+    --clr-primary-a20: #5b4334;
+    --clr-primary-a30: #604c3e;
+    --clr-primary-a40: #665449;
+    --clr-primary-a50: #6b5d53;
   
-    /* Theme surface colors */
-    --clr-surface-a0: #121212;
-    --clr-surface-a10: #282828;
-    --clr-surface-a20: #3f3f3f;
-    --clr-surface-a30: #575757;
-    --clr-surface-a40: #717171;
-    --clr-surface-a50: #8b8b8b;
+    /** Theme surface colors */
+    --clr-surface-a0: #ffffff;
+    --clr-surface-a10: #f0f0f0;
+    --clr-surface-a20: #e1e1e1;
+    --clr-surface-a30: #d3d3d3;
+    --clr-surface-a40: #c5c5c5;
+    --clr-surface-a50: #b6b6b6;
   
-    /* Theme tonal surface colors */
-    --clr-surface-tonal-a0: #17151b;
-    --clr-surface-tonal-a10: #2c2a30;
-    --clr-surface-tonal-a20: #434146;
-    --clr-surface-tonal-a30: #5b595e;
-    --clr-surface-tonal-a40: #747277;
-    --clr-surface-tonal-a50: #8e8d90;
+    /** Theme tonal surface colors */
+    --clr-surface-tonal-a0: #ede8e6;
+    --clr-surface-tonal-a10: #e0dcda;
+    --clr-surface-tonal-a20: #d4d0ce;
+    --clr-surface-tonal-a30: #c7c4c3;
+    --clr-surface-tonal-a40: #bbb8b7;
+    --clr-surface-tonal-a50: #afadac;
   }
   
   /* Reset and base typography */
@@ -40,7 +40,7 @@
     display: flex;
     min-height: 100vh;
     background-color: var(--clr-surface-a0);
-    color: var(--clr-light-a0);
+    color: var(--clr-dark-a0);
   }
   
   /* Sidebar styles */
@@ -73,7 +73,7 @@
     font-size: 14px;
     margin-bottom: 30px;
     text-align: center;
-    color: var(--clr-light-a0);
+    color: var(--clr-dark-a0);
   }
   
   .sidebar .info {
@@ -83,21 +83,21 @@
   
   .info label {
     font-size: 12px;
-    color: var(--clr-surface-a50);
+    color: var(--clr-primary-a50);
   }
   
   .info p {
     font-size: 14px;
     margin-top: 4px;
     word-break: break-word;
-    color: var(--clr-light-a0);
+    color: var(--clr-dark-a0);
   }
   
   /* Main layout and content */
   .main {
     flex: 1;
     padding: 40px;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
   }
   
@@ -110,7 +110,7 @@
   
   nav a {
     text-decoration: none;
-    color: var(--clr-surface-a50);
+    color: var(--clr-primary-a50);
     font-weight: 700;
     padding: 6px 12px;
     border-radius: 8px;
@@ -133,7 +133,34 @@
   .about-text {
     line-height: 1.8;
     font-size: 1rem;
-    color: var(--clr-surface-a50);
+    color: var(--clr-primary-a20);
     text-align: justify;
   }
+  
+  /* Theme toggle button */
+  .theme-btn {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--clr-surface-tonal-a0);
+    color: var(--clr-dark-a0);
+    border: 1px solid var(--clr-surface-a40);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    z-index: 999;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .theme-btn:hover {
+    background-color: var(--clr-primary-a20);
+    color: var(--clr-light-a0);
+    border-color: var(--clr-primary-a10);
+  }
+
+  body, .sidebar, .main, nav a, .about-text, .section-title {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
   

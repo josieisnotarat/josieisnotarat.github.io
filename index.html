@@ -7,9 +7,12 @@
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <!-- External CSS -->
-  <link rel="stylesheet" href="styles/mainstyle.css">
+  <link id="theme-style" rel="stylesheet" href="styles/darktheme.css">
 </head>
 <body>
+  <!-- Theme Toggle Button -->
+  <button id="theme-toggle" class="theme-btn">🌙</button>
+  
   <!-- Sidebar with photo and contact info -->
   <aside class="sidebar">
     <img src="images/josieprofile.png" alt="There would be a photo of me here, but something isn't working right..." />
@@ -92,5 +95,28 @@
       });
     });
   </script>
+
+  <!-- Dark/Light Theme Toggle Script -->
+  <script>
+    const themeToggleBtn = document.getElementById("theme-toggle");
+    const themeLink = document.getElementById("theme-style");
+  
+    // Check saved theme
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    if (savedTheme === "light") {
+      themeLink.href = "styles/lighttheme.css";
+      themeToggleBtn.textContent = "☀️";
+    }
+  
+    themeToggleBtn.addEventListener("click", () => {
+      const isDark = themeLink.getAttribute("href").includes("dark");
+  
+      themeLink.href = isDark ? "styles/lighttheme.css" : "styles/darktheme.css";
+      localStorage.setItem("theme", isDark ? "light" : "dark");
+      themeToggleBtn.textContent = isDark ? "☀️" : "🌙";
+    });
+  </script>
+  
+
 </body>
 </html>
