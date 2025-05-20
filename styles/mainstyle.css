@@ -28,6 +28,7 @@
     --clr-surface-tonal-a50: #8e8d90;
   }
   
+  /* Reset and base typography */
   * {
     box-sizing: border-box;
     margin: 0;
@@ -42,6 +43,7 @@
     color: var(--clr-light-a0);
   }
   
+  /* Sidebar styles */
   .sidebar {
     width: 320px;
     background-color: var(--clr-surface-a10);
@@ -91,11 +93,15 @@
     color: var(--clr-light-a0);
   }
   
+  /* Main layout and content */
   .main {
     flex: 1;
     padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
   }
   
+  /* Navigation tabs */
   nav {
     display: flex;
     gap: 20px;
@@ -117,6 +123,7 @@
     color: var(--clr-light-a0);
   }
   
+  /* Section titles and paragraph text */
   .section-title {
     font-size: 28px;
     margin-bottom: 16px;
@@ -124,7 +131,9 @@
   }
   
   .about-text {
-    line-height: 1.6;
+    line-height: 1.8;
+    font-size: 1rem;
     color: var(--clr-surface-a50);
+    text-align: justify;
   }
   

@@ -4,16 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Josephine Wooldridge | Personal Website</title>
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <!-- External CSS -->
   <link rel="stylesheet" href="styles/mainstyle.css">
 </head>
 <body>
+  <!-- Sidebar with photo and contact info -->
   <aside class="sidebar">
     <img src="images/josieprofile.png" alt="There would be a photo of me here, but something isn't working right..." />
     <h1>Josephine Wooldridge</h1>
     <div class="title">
-        Triple Major<br>
-        Software Engineering & IT
+      Triple Major<br>
+      Software Engineering & IT
     </div>
     <div class="info">
       <label>Email</label>
@@ -28,7 +31,10 @@
       <p>Cincinnati, OH</p>
     </div>
   </aside>
+
+  <!-- Main content area -->
   <main class="main">
+    <!-- Navigation Tabs -->
     <nav>
       <a href="#about" class="active">About</a>
       <a href="#resume">Resume</a>
@@ -36,12 +42,55 @@
       <a href="#contact">Contact</a>
     </nav>
 
-    <section id="about">
+    <!-- Tab Content Sections -->
+    <section id="about" class="tab-content">
       <h2 class="section-title">About Me</h2>
       <p class="about-text">
         I’m a curious technologist and creative problem solver currently triple-majoring in Software Engineering Technologies, Software Development, and Computer Support Administration. I’ve worked in real-world lab environments as an electronics and IT technician, built full-stack web applications, and created immersive AI tools and games. I love blending logic and design to make cool, useful, and slightly chaotic things.
       </p>
     </section>
+
+    <section id="resume" class="tab-content" style="display: none;">
+      <h2 class="section-title">Resume</h2>
+      <p class="about-text">
+        Here's a quick overview of my skills, education, and work experience. A downloadable PDF version of my resume will be available here soon!
+      </p>
+    </section>
+
+    <section id="portfolio" class="tab-content" style="display: none;">
+      <h2 class="section-title">Portfolio</h2>
+      <p class="about-text">
+        Check out some of the projects I’ve worked on, including web apps, automation tools, and game designs. I’ll embed GitHub modules and images here shortly.
+      </p>
+    </section>
+
+    <section id="contact" class="tab-content" style="display: none;">
+      <h2 class="section-title">Contact</h2>
+      <p class="about-text">
+        Want to work together, ask questions, or just say hi? Reach out via the info on the sidebar or use a contact form I’ll add here soon!
+      </p>
+    </section>
   </main>
+
+  <!-- Tab Switching Script -->
+  <script>
+    const tabs = document.querySelectorAll("nav a");
+    const sections = document.querySelectorAll(".tab-content");
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", e => {
+        e.preventDefault();
+
+        // Update active tab
+        tabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+
+        // Show corresponding section only
+        sections.forEach(section => {
+          section.style.display = section.id === tab.getAttribute("href").substring(1) ? "block" : "none";
+        });
+      });
+    });
+  </script>
 </body>
 </html>
