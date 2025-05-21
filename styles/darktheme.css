@@ -275,3 +275,18 @@
     background: var(--clr-accent-purple);
     border-radius: 4px;
   }
+
+  input[type="text"] {
+    background-color: transparent;
+    border: none;    
+    color: var(--clr-text-main, #f9f4ff);
+    outline: none;
+    padding: 6px 8px;
+    font-size: 1rem;
+  }
+  
+  input[type="text"]::placeholder {
+    color: var(--clr-text-muted, #aaa);
+    opacity: 0.6;
+  }
+  
