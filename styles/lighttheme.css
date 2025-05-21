@@ -55,7 +55,7 @@
   }
   
   .sidebar img {
-    width: 120px;
+    width: 220px;
     border-radius: 50%;
     margin-bottom: 20px;
   }
@@ -79,6 +79,7 @@
   .sidebar .info {
     width: 100%;
     margin-bottom: 10px;
+    font-size: 12px;
   }
   
   .info label {
