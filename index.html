@@ -35,45 +35,14 @@
     </div>
   </aside>
 
-  <!-- Main content area -->
-  <main class="main">
-    <!-- Navigation Tabs -->
-    <nav>
-      <a href="#about" class="active">About</a>
-      <a href="#resume">Resume</a>
-      <a href="#portfolio">Portfolio</a>
-      <a href="#contact">Contact</a>
-    </nav>
-
-    <!-- Tab Content Sections -->
-    <section id="about" class="tab-content">
-      <h2 class="section-title">About Me</h2>
-      <p class="about-text">
-        I’m a curious technologist and creative problem solver currently triple-majoring in Software Engineering Technologies, Software Development, and Computer Support Administration. I’ve worked in real-world lab environments as an electronics and IT technician, built full-stack web applications, and created immersive AI tools and games. I love blending logic and design to make cool, useful, and slightly chaotic things.
-      </p>
-    </section>
-
-    <section id="resume" class="tab-content" style="display: none;">
-      <h2 class="section-title">Resume</h2>
-      <p class="about-text">
-        Here's a quick overview of my skills, education, and work experience. A downloadable PDF version of my resume will be available here soon!
-      </p>
-    </section>
-
-    <section id="portfolio" class="tab-content" style="display: none;">
-      <h2 class="section-title">Portfolio</h2>
-      <p class="about-text">
-        Check out some of the projects I’ve worked on, including web apps, automation tools, and game designs. I’ll embed GitHub modules and images here shortly.
-      </p>
-    </section>
-
-    <section id="contact" class="tab-content" style="display: none;">
-      <h2 class="section-title">Contact</h2>
-      <p class="about-text">
-        Want to work together, ask questions, or just say hi? Reach out via the info on the sidebar or use a contact form I’ll add here soon!
-      </p>
-    </section>
+  <main class="main terminal">
+    <div id="terminal-output" class="terminal-output"></div>
+    <div class="terminal-line">
+      <span class="terminal-prefix">PC C:\Users\Josephine> </span>
+      <input type="text" id="terminal-input" autocomplete="off" autofocus />
+    </div>
   </main>
+  
 
   <!-- Tab Switching Script -->
   <script>
@@ -117,6 +86,73 @@
     });
   </script>
   
-
+  <script>
+    const terminalInput = document.getElementById("terminal-input");
+    const terminalOutput = document.getElementById("terminal-output");
+  
+    const commands = {
+      help: "Available commands: about, projects, contact, ai, clear",
+      about: `I’m a curious technologist triple-majoring in Software Engineering Technologies, Software Development, and Computer Support Administration. I’ve worked as an IT technician, built full-stack web apps, and created immersive AI projects.`,
+      projects: "Portfolio coming soon! Check GitHub for now: github.com/josiewooldridge",
+      contact: "Email: josephinewooldridge05@gmail.com<br>Phone: +1 (513) 802-8322",
+      ai: `<a href="YOUR_CHATGPT_CONVO_LINK" target="_blank">What AI is saying about me</a>`,
+      clear: "",
+      intro:"",
+      ascii:`<pre style="font-family: 'Courier New', monospace;"> 
+        
+⠀⣴⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀         Welcome to
+⠀⣼⣿⣿⣿⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀       josieisnotarat.github.io
+⣼⣿⣿⣿⣿⣿⣿⣿⣦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀      
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣤⣤⣶⣶⣿⣿⡗     OS: Student v4.00
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟      Uptime: 19yrs, 11mo
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀     Majors: SE Tech / Dev / Support & Admin
+⣿⣿⡇⠜⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿          Occupation: Intern\\Dev\\IT_Technician.py
+⣿⣿⣿⣶⣿⣿⣿⣿⣿⠋⡹⠙⣿⣿⣿⡇⠀⠀        Location: Cincinnati, OH, USA
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣾⣿⣿⠛⠀⠀⠀⠀⠀      Expected Grad: Spring_2026
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠛⠁⠀⠀⠀⠀⠀⠀
+⣿⣿⡿⠻⠿⠿⠿⠿⠛⠹⠑⠀⠀               Type "help" for a list of commands.
+⠟
+</pre>
+`};
+  
+    function addLine(text, isCommand = false) {
+      const line = document.createElement("div");
+      line.innerHTML = isCommand
+        ? `<span class="terminal-prefix">PC C:\\Users\\Josephine> </span> ${text}`
+        : text;
+      terminalOutput.appendChild(line);
+      terminalOutput.scrollTop = terminalOutput.scrollHeight;
+    }
+  
+    function runCommand(cmd) {
+      addLine(cmd, true);
+  
+      if (commands[cmd]) {
+        if (cmd === "clear") {
+          terminalOutput.innerHTML = "";
+        } else {
+          addLine(commands[cmd]);
+        }
+      } else if (cmd.trim() !== "") {
+        addLine(`Command not found: ${cmd}`);
+      }
+    }
+  
+    // Run intro command on page load
+    window.addEventListener("DOMContentLoaded", () => {
+      runCommand("ascii");
+    });
+  
+    // User command handling
+    terminalInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        const input = terminalInput.value.trim();
+        runCommand(input);
+        terminalInput.value = "";
+      }
+    });
+  </script>
+  
+  
 </body>
 </html>
