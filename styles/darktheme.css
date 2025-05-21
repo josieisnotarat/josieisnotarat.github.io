@@ -46,7 +46,8 @@
   /* Sidebar Layout */
   .sidebar {
     width: 320px;
-    background-color: var(--clr-surface-a10);
+    
+    backdrop-filter: blur(20px);
     padding: 40px 20px;
     display: flex;
     flex-direction: column;
@@ -207,7 +208,7 @@
     position: relative;
     margin: 2rem 0;
     max-width: 800px;
-    background-color: var(--clr-surface);
+    background-color: var(--clr-surface);    
     border: 1px solid var(--clr-border);
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
