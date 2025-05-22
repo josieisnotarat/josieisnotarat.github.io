@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio | Josephine Wooldridge</title>
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+
+
+<body>
+    <div id="sparkle-container"></div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+          <h1 class="logo">JW</h1>
+          <nav>
+            <ul class="nav-links">
+              <li><a href="#projects">Projects</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+    </header>
+      
+
+    <!-- HERO -->
+    <section class="hero scroll-fade">
+        <div class="hero-flex">
+          
+          <!-- PROFILE BLOCK -->
+          <div class="profile-container" id="profileCard">
+            <div class="profile-bg">
+              <img src="images/josieprofilelarge.png" alt="There would be a photo of me here, but something isn't working right..." />
+            </div>
+            <div class="profile-overlay">
+              <h2>Josephine Wooldridge</h2>
+              <p class="subtitle">Curious technologist. Triple major. Terminal witch.</p>
+              
+              <button class="contact-btn">📨 Get In Touch</button>
+            </div>
+          </div>
+      
+          <!-- TERMINAL -->
+          <div class="terminal-container" id="terminalBox">
+            <div class="terminal-topbar">
+              <div>PC C:\Users\Josephine\portfolio.exe</div>
+              <div class="window-buttons">
+                <div class="window-button">_</div>
+                <div class="window-button">X</div>
+              </div>
+            </div>
+            <div id="divTerminalOutput" class="terminal-output"></div>
+            <div class="terminal-input">
+              <span class="terminal-prefix">PC C:\Users\Josephine&gt; <input type="text" id="txtTerminalInput" autofocus></span>
+            </div>
+          </div>
+      
+        </div>
+      </section>
+      
+    
+    <!-- PROJECTS -->
+    <section id="projects" class="projects scroll-fade">
+        <div class="container">
+        <h2>Projects</h2>
+        <div class="project-grid">
+            <div class="project-card glass scroll-fade">
+            <h3>AI Dungeon Master Bot</h3>
+            <p>D&D bot that dynamically narrates based on player choices using OpenAI.</p>
+            </div>
+            <div class="project-card glass scroll-fade">
+            <h3>Smart Home Assistant</h3>
+            <p>Voice-activated Raspberry Pi assistant controlling lights, plugs, and sass.</p>
+            </div>
+        </div>
+        </div>
+    </section>
+    
+    <!-- ABOUT -->
+    <section id="about" class="about scroll-fade">
+        <div class="container glass">
+        <h2>About Me</h2>
+        <p>I'm a software dev with an affinity for AI, web design, and embedded systems. Currently studying three IT majors and moonlighting as a lab technician.</p>
+        </div>
+    </section>
+    
+    <!-- CONTACT -->
+    <section id="contact" class="contact scroll-fade">
+        <div class="container glass">
+        <h2>Get In Touch</h2>
+        <form>
+            <input type="text" placeholder="Your Name" required />
+            <input type="email" placeholder="Your Email" required />
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+        </div>
+    </section>
+  
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+        <p>&copy; 2025 Josephine Wooldridge. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- SPARKLE SCRIPT -->
+    <script>
+        const sparkleContainer = document.getElementById('sparkle-container');
+        const sparkleChars = ['｡', '･', '*', '˚', '✧', '｡'];
+    
+        document.addEventListener('mousemove', (e) => {
+        const sparkle = document.createElement("div");
+        sparkle.className = "sparkle";
+        sparkle.textContent = sparkleChars[Math.floor(Math.random() * sparkleChars.length)];
+        sparkle.style.left = `${e.clientX}px`;
+        sparkle.style.top = `${e.clientY}px`;
+        sparkleContainer.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 1000);
+        });
+    </script>
+
+    <!-- SCROLL SCRIPT -->
+    <script>
+        const scrollEls = document.querySelectorAll('.scroll-fade');
+    
+        const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            }
+        });
+        }, {
+        threshold: 0.1
+        });
+    
+        scrollEls.forEach(el => scrollObserver.observe(el));
+    </script> 
+
+    <!-- TERMINAL SCRIPT -->
+    <script>        
+        const objCmd_aCommands = {
+      help: `
+Available commands:
+about
+classes
+clear
+contact
+help
+projects
+welcome_protocol
+`,
+      about: `
+Howdy! I'm Josie. :D
+
+I'm a triple-major honors student studying:
+ - Software Engineering Technologies
+ - Software Development
+ - Computer Support Administration
+
+ I love learning- especially when it comes to programming, AI, and databases.
+`,
+      projects: `
+Check out my GitHub for projects in web development, automation, and game design:
+<a href="https://github.com/josieisnotarat" target="_blank">github.com/josieisnotarat</a>
+`,
+      contact: `
+Email: josephinewooldridge05@gmail.com
+Phone: +1 (513) 802-8322
+`,
+      classes: `
+In-Progress Classes:
+ - Web development using C#
+ - C Programming
+ - Calculus II
+`,
+      clear: " ",
+      welcome_protocol: `
+
+ ⠀⣴⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀        
+⠀⣼⣿⣿⣿⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀       Welcome to josieisnotarat.github.io! :D
+⣼⣿⣿⣿⣿⣿⣿⣿⣦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀      
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣤⣤⣶⣶⣿⣿⡗     OS: Student v4.00
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟       Uptime: 19yrs, 11mo
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀     Majors: SE Tech / Dev / Support & Admin
+⣿⣿⡇⠜⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿          Occupation: Intern\Dev\IT_Technician.py
+⣿⣿⣿⣶⣿⣿⣿⣿⣿⠋⡹⠙⣿⣿⣿⡇⠀⠀        Location: Cincinnati, OH, USA
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣾⣿⣿⠛⠀⠀⠀⠀⠀      Expected Grad: Spring_2026
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠛⠁⠀⠀⠀⠀⠀⠀
+⣿⣿⡿⠻⠿⠿⠿⠿⠛⠹⠑⠀⠀               Type \"help\" for a list of commands. :)
+⠟
+
+`
+    };
+        
+        // Select elements
+        const terminalInput = document.getElementById("txtTerminalInput");
+        const terminalOutput = document.getElementById("divTerminalOutput");
+        
+        // Listen for Enter key
+        terminalInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            const input = terminalInput.value.trim().toLowerCase();
+            terminalInput.value = "";
+        
+            printLine(`PC C:\\Users\\Josephine> ${input}`, "user-input");
+        
+            if (input in objCmd_aCommands) {
+            const response = objCmd_aCommands[input];
+            if (input === "clear") {
+                terminalOutput.innerHTML = "";
+            } else {
+                printLine(response, "output");
+            }
+            } else {
+            printLine("Command not recognized. Type 'help' for a list of commands.", "error");
+            }
+        }
+        });
+        
+        // Print line helper
+        function printLine(text, type = "") {
+        const line = document.createElement("div");
+        line.className = type;
+        line.innerHTML = text;
+        terminalOutput.appendChild(line);
+        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+        
+        // Auto-run welcome
+        window.addEventListener("DOMContentLoaded", () => {
+        printLine(objCmd_aCommands["welcome_protocol"], "output");
+        });
+    </script>
+    
+
+  
+</body>
+</html>

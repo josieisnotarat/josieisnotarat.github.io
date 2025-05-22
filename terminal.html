@@ -3,67 +3,164 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Josie's Terminal</title>
+    <title>Josie's Terminal + Resume</title>
     <style>
-        :root {
-            --clr-accent-purple: #7319fa;
-            --clr-accent-pink: #ff33b4;
-            --clr-accent-orange: #ff7e29;
-            --clr-glass-bg: rgba(0, 0, 0, 0.45);
-            --clr-text-main: #ffffff;
-            --clr-text-muted: #bbbbbb;
-        }
+      :root {
+        --clr-accent-purple: #7319fa;
+        --clr-accent-pink: #ff33b4;
+        --clr-accent-orange: #ff7e29;
+        --clr-glass-bg: rgba(0, 0, 0, 0.45);
+        --clr-text-main: #ffffff;
+        --clr-text-muted: #bbbbbb;
+        --clr-resume-bg: #1c1325;
+      }
 
-        body {
-            margin: 0;
-            height: 100vh;
-            overflow: hidden;
-            font-family: 'Courier New', monospace;
-            color: var(--clr-text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1000px;
-            background: radial-gradient(circle at top left, #1f0b2e, #0c0512);
-        }
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow-x: hidden;
+      }
 
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background: white;
-            background-size: 300% 300%;
-            z-index: -3;
-            filter: blur(20px) brightness(0.4);
-        }
+      body {
+        font-family: 'Courier New', monospace;
+        color: var(--clr-text-main);
+        background: radial-gradient(circle at top left, #1f0b2e, #0c0512);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
 
-        #sparkle-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            pointer-events: none;
-        }
+      #hero-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 2rem;
+        padding: 2rem;
+        width: 100%;
+      }
 
-        .sparkle {
-            position: absolute;
-            font-size: 25px;
-            color: white;
-            opacity: 1;
-            pointer-events: none;
-            animation: fadeOut 1s forwards;
-        }
+      #resume-section {
+        background-color: var(--clr-resume-bg);
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        padding: 3rem 2rem;
+      }
 
-        @keyframes fadeOut {
-            to {
-            opacity: 0;
-            transform: translateY(-10px) scale(0.8);
-            }
-        }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: white;
+        background-size: 300% 300%;
+        z-index: -3;
+        filter: blur(20px) brightness(0.4);
+      }
 
-        .terminal-container {
+      #sparkle-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .sparkle {
+        position: absolute;
+        font-size: 25px;
+        color: white;
+        opacity: 1;
+        pointer-events: none;
+        animation: fadeOut 1s forwards;
+      }
+
+      @keyframes fadeOut {
+        to {
+          opacity: 0;
+          transform: translateY(-10px) scale(0.8);
+        }
+      }
+
+      .glass-box {
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 1rem;
+        padding: 2rem;
+        width: 100%;
+        max-width: 950px;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      h1 {
+        color: #ffffff;
+        font-size: 2.2rem;
+      }
+
+      h2 {
+        color: var(--clr-accent-orange);
+        margin-bottom: 1rem;
+      }
+
+      a {
+        color: var(--clr-text-muted);
+        text-decoration: none;
+      }
+
+      .contact-info {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      .section-title {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        padding-bottom: 0.5rem;
+      }
+
+      .skill-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 0.5rem 1.5rem;
+        padding-left: 0;
+      }
+
+      .skill-grid li::before {
+        content: "\2022";
+        color: #ffffff;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+      }
+
+      .job-title {
+        font-weight: bold;
+        color: #ffffff;
+      }
+
+      .date-location {
+        font-style: italic;
+        font-size: 0.9em;
+        color: #aaaaaa;
+        margin-bottom: 0.5rem;
+      }
+
+      ul {
+        list-style: none;
+        padding-left: 1rem;
+      }
+
+      ul li {
+        margin-bottom: 0.3rem;
+      }
+
+      .terminal-container {
             width: 90%;
             max-width: 800px;
             background: var(--clr-glass-bg);
@@ -146,7 +243,7 @@
             color: var(--clr-accent-purple);
         }
 
-        .profile-container {
+      .profile-container {
         position: relative;
         width: 320px;
         height: 520px;
@@ -254,15 +351,13 @@
         background-color: var(--clr-accent-purple);
         color: white;
         }
-
-
-
-
     </style>
   </head>
   <body>
     <div id="sparkle-container"></div>
-    <div class="profile-container" id="profileCard">
+    <div id="hero-section">
+      <!-- profileCard and terminalBox go side-by-side -->
+      <div class="profile-container" id="profileCard">
         <div class="profile-bg">
           <img src="images/josieprofilelarge.png" alt="There would be a photo of me here, but something isn't working right..." />
         </div>
@@ -277,21 +372,109 @@
           <button class="contact-btn">📨 Get In Touch</button>
         </div>
       </div>
-      
-        
-    <div class="terminal-container" id="terminalBox">
-      <div class="terminal-topbar">
-        <div>PC C:\Users\Josephine\portfolio.exe</div>
-        <div class="window-buttons">
-          <div class="window-button">_</div>
-          <div class="window-button">X</div>
+      <div class="terminal-container" id="terminalBox">
+        <div class="terminal-topbar">
+          <div>PC C:\Users\Josephine\portfolio.exe</div>
+          <div class="window-buttons">
+            <div class="window-button">_</div>
+            <div class="window-button">X</div>
+          </div>
+        </div>
+        <div id="divTerminalOutput" class="terminal-output"></div>
+        <div class="terminal-input">
+          <span class="terminal-prefix">PC C:\Users\Josephine> <input type="text" id="txtTerminalInput" autofocus></input></span>
         </div>
       </div>
-      <div id="divTerminalOutput" class="terminal-output"></div>
-      <div class="terminal-input">
-        <span class="terminal-prefix">PC C:\Users\Josephine> <input type="text" id="txtTerminalInput" autofocus></input></span>
-      </div>
     </div>
+    
+    <!-- Resume Sections Injected Here -->
+    <div class="glass-box contact-info">
+      <h1>Josephine Wooldridge</h1>
+      <p><a href="mailto:jmwooldridge@cincinnatistate.edu">jmwooldridge@cincinnatistate.edu</a> | <a href="https://linkedin.com/in/josephine-wooldridge" target="_blank">linkedin.com/in/josephine-wooldridge</a></p>
+    </div>
+  
+    <div class="glass-box">
+      <h2 class="section-title">Profile</h2>
+      <p>Triple-Major STEM honors student at Cincinnati State studying Network Administration - Computer Support, Software Development, and Software Engineering Technologies, alongside a Computer Network Administration Certificate. Proficient in organizational and time management skills, problem-solving, software development, computer maintenance, repair, and support.</p>
+    </div>
+  
+    <div class="glass-box">
+      <h2 class="section-title">Skills</h2>
+      <ul class="skill-grid">
+        <li>Project Management</li>
+        <li>Windows 10/11 Support</li>
+        <li>Visual Basic</li>
+        <li>SQL & .NET Programming</li>
+        <li>CRUD Programming</li>
+        <li>Software Design & Development</li>
+        <li>Computer & Electronics Repair</li>
+        <li>Python Programming</li>
+        <li>Java Programming</li>
+        <li>HTML5/JavaScript/PHP</li>
+        <li>System Analysis & Design</li>
+        <li>Component-Level Soldering & Repair</li>
+        <li>OpenAI API Implementation</li>
+        <li>Server & OS Administration</li>
+        <li>Public Speaking</li>
+      </ul>
+    </div>
+  
+    <div class="glass-box">
+      <h2 class="section-title">Education</h2>
+      <p class="job-title">Cincinnati State Technical and Community College</p>
+      <p class="date-location">August 2023 – Present</p>
+      <ul>
+        <li>4x Dean’s List, Honors Student, Phi Theta Kappa Executive Vice President</li>
+        <li>GPA 4.00</li>
+        <li><strong>Notable Courses:</strong></li>
+        <li>NETA-155 Server Administration</li>
+        <li>IT-111 Database Design & SQL</li>
+        <li>CPDM-210 System Analysis & Design</li>
+        <li>IT-102 Programming 2 (CRUD, OO, .NET)</li>
+      </ul>
+    </div>
+  
+    <div class="glass-box">
+      <h2 class="section-title">Professional Experience</h2>
+      <p class="job-title">Database Programmer / EIT Lab Center Intern</p>
+      <p class="date-location">Cincinnati State EIT Division — Cincinnati, OH | June 2024 – Present</p>
+      <ul>
+        <li>Troubleshoots technical issues on student and school-owned devices</li>
+        <li>Develops a normalized SQL CRUD inventory management system</li>
+        <li>Supports recruitment events for 500–1000 attendees</li>
+        <li>Automates workflows using 15,000+ employer database</li>
+        <li>Collaborates and mentors peers in tech tasks</li>
+      </ul>
+  
+      <p class="job-title">Library Student Assistant (Federal Work Study)</p>
+      <p class="date-location">Johnnie Mae Berry Library — Cincinnati, OH | January 2024 – April 2024</p>
+      <ul>
+        <li>Balanced 22 credit-hour STEM course load with high-pressure library support role</li>
+      </ul>
+    </div>
+  
+    <div class="glass-box">
+      <h2 class="section-title">Extracurricular Projects</h2>
+      <p class="job-title">AI Dungeon Master – Python / Discord Bot</p>
+      <p class="date-location">March 2025 – Present</p>
+      <ul>
+        <li>Built an AI-powered bot for D&D campaign automation and immersion</li>
+      </ul>
+  
+      <p class="job-title">Typefinity – Python Game</p>
+      <p class="date-location">July 2024 – January 2025</p>
+      <ul>
+        <li>Developed a CLI-based typing game executable with OpenAI integration</li>
+      </ul>
+  
+      <p class="job-title">Joel – HTML/JavaScript App</p>
+      <p class="date-location">September 2021 – January 2022</p>
+      <ul>
+        <li>Co-founded and led visual design of an Android productivity app</li>
+      </ul>
+    </div>
+
+    
 
     <script>
       const terminalBox = document.getElementById('terminalBox');
