@@ -1,150 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portfolio | Josephine Wooldridge</title>
-  <link rel="stylesheet" href="styles/style.css">
-</head>
-
-
-<body>
-    <div id="sparkle-container"></div>
-
-    <!-- HEADER -->
-    <header>
-        <div class="container">
-          <h1 class="logo">JW</h1>
-          <nav>
-            <ul class="nav-links">
-              <li><a href="#projects">Projects</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
-          </nav>
-        </div>
-    </header>
-      
-
-    <!-- HERO -->
-    <section class="hero scroll-fade">
-        <div class="hero-flex">
-          
-          <!-- PROFILE BLOCK -->
-          <div class="profile-container" id="profileCard">
-            <div class="profile-bg">
-              <img src="images/josieprofilelarge.png" alt="There would be a photo of me here, but something isn't working right..." />
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <title>Portfolio | Josephine Wooldridge</title>
+      <link rel="stylesheet" href="styles/style.css">
+   </head>
+   <body>
+      <div id="sparkle-container"></div>
+      <!-- HEADER -->
+      <header>
+         <div class="container">
+            <h1 class="logo">JW</h1>
+            <nav>
+               <ul class="nav-links">
+                  <li><a href="#projects">Projects</a></li>
+                  <li><a href="#about">About</a></li>
+                  <li><a href="#contact">Contact</a></li>
+               </ul>
+            </nav>
+         </div>
+      </header>
+      <!-- HERO -->
+      <section class="hero">
+         <div class="hero-flex">
+            <!-- PROFILE BLOCK -->
+            <div class="profile-container  scroll-fade" id="profileCard">
+               <div class="profile-bg">
+                  <img src="images/josieprofilelarge.png" alt="There would be a photo of me here, but something isn't working right..." />
+               </div>
+               <div class="profile-overlay  scroll-fade">
+                  <h2>Josephine Wooldridge</h2>
+                  <p class="subtitle">Curious technologist. Triple major. Terminal witch.</p>
+                  <button class="contact-btn">📨 Get In Touch</button>
+               </div>
             </div>
-            <div class="profile-overlay">
-              <h2>Josephine Wooldridge</h2>
-              <p class="subtitle">Curious technologist. Triple major. Terminal witch.</p>
-              
-              <button class="contact-btn">📨 Get In Touch</button>
+            <!-- TERMINAL -->
+            <div class="terminal-container  scroll-fade" id="terminalBox">
+               <div class="terminal-topbar">
+                  <div>PC C:\Users\Josephine\portfolio.exe</div>
+                  <div class="window-buttons">
+                     <div class="window-button">_</div>
+                     <div class="window-button">X</div>
+                  </div>
+               </div>
+               <div id="divTerminalOutput" class="terminal-output"></div>
+               <div class="terminal-input">
+                  <span class="terminal-prefix">PC C:\Users\Josephine> <input type="text" id="txtTerminalInput" autofocus></span>
+               </div>
             </div>
-          </div>
-      
-          <!-- TERMINAL -->
-          <div class="terminal-container" id="terminalBox">
-            <div class="terminal-topbar">
-              <div>PC C:\Users\Josephine\portfolio.exe</div>
-              <div class="window-buttons">
-                <div class="window-button">_</div>
-                <div class="window-button">X</div>
-              </div>
-            </div>
-            <div id="divTerminalOutput" class="terminal-output"></div>
-            <div class="terminal-input">
-              <span class="terminal-prefix">PC C:\Users\Josephine> <input type="text" id="txtTerminalInput" autofocus></span>
-            </div>
-          </div>
-      
-        </div>
+         </div>
       </section>
-      
-    
-    <!-- PROJECTS -->
-    <section id="projects" class="projects scroll-fade">
-        <div class="container">
-        <h2>Projects</h2>
-        <div class="project-grid">
-            <div class="project-card glass scroll-fade">
-            <h3>AI Dungeon Master Bot</h3>
-            <p>D&D bot that dynamically narrates based on player choices using OpenAI.</p>
+      <!-- PROJECTS -->
+      <section id="projects" class="projects">
+         <div class="container">
+            <h2>Projects</h2>
+            <div class="project-grid">
+               <div class="project-card glass scroll-fade">
+                  <h3>AI Dungeon Master Bot</h3>
+                  <p>D&D bot that dynamically narrates based on player choices using OpenAI.</p>
+               </div>
+               <div class="project-card glass scroll-fade">
+                  <h3>Smart Home Assistant</h3>
+                  <p>Voice-activated Raspberry Pi assistant controlling lights, plugs, and sass.</p>
+               </div>
             </div>
-            <div class="project-card glass scroll-fade">
-            <h3>Smart Home Assistant</h3>
-            <p>Voice-activated Raspberry Pi assistant controlling lights, plugs, and sass.</p>
+         </div>
+      </section>
+      <!-- ABOUT 
+         <section id="about" class="about">
+             <div class="project-card glass scroll-fade">
+             <h2>About Me</h2>
+             <p>I'm a software dev with an affinity for AI, web design, and embedded systems. Currently studying three IT majors and moonlighting as a lab technician.</p>
+             </div>
+         </section> -->
+      <!-- RESUME -->
+      <section id="projects" class="projects">
+         <div class="container">
+            <h2>Resume</h2>
+            <div class="project-grid">
+               <div class="project-card glass scroll-fade">
+                  <h2>Profile</h2>
+                  <p>Triple-Major STEM honors student at Cincinnati State studying Network Administration - Computer Support, Software Development, and Software Engineering Technologies, alongside a Computer Network Administration Certificate. Proficient in organizational and time management skills, problem-solving, software development, computer maintenance, repair, and support.</p>
+               </div>
+               <div class="project-card glass scroll-fade">
+                  <h2>Skills</h2>
+                  <ul>
+                     <li>Project Management</li>
+                     <li>Windows 10/11 Support</li>
+                     <li>Visual Basic</li>
+                     <li>SQL & .NET Programming</li>
+                     <li>CRUD Programming</li>
+                     <li>Software Design & Development</li>
+                     <li>Computer & Electronics Repair</li>
+                     <li>Python Programming</li>
+                     <li>Java Programming</li>
+                     <li>HTML5/JavaScript/PHP</li>
+                     <li>System Analysis & Design</li>
+                     <li>Component-Level Soldering & Repair</li>
+                     <li>OpenAI API Implementation</li>
+                     <li>Server & OS Administration</li>
+                     <li>Public Speaking</li>
+                  </ul>
+               </div>
+               <div class="project-card glass scroll-fade">
+                  <h2>Education</h2>
+                  <p><strong>Cincinnati State Technical and Community College</strong><br>August 2023 - Present</p>
+                  <ul>
+                     <li>4x Dean's List, Honors Student, Phi Theta Kappa Executive Vice President</li>
+                     <li>GPA 4.00</li>
+                     <li><strong>Notable Courses:</strong></li>
+                     <li>NETA-155 Server Administration</li>
+                     <li>IT-111 Database Design & SQL</li>
+                     <li>CPDM-210 System Analysis & Design</li>
+                     <li>IT-102 Programming 2 (CRUD, OO, .NET)</li>
+                  </ul>
+               </div>
+               <div class="project-card glass scroll-fade">
+                  <h2>Professional Experience</h2>
+                  <p><strong>Database Programmer / EIT Lab Center Intern</strong><br>Cincinnati State EIT Division - Cincinnati, OH | June 2024 - Present</p>
+                  <ul>
+                     <li>Troubleshoots technical issues on student and school-owned devices</li>
+                     <li>Develops a normalized SQL CRUD inventory management system</li>
+                     <li>Supports recruitment events for 500-1000 attendees</li>
+                     <li>Automates workflows using 15,000+ employer database</li>
+                     <li>Collaborates and mentors peers in tech tasks</li>
+                  </ul>
+                  <p><strong>Library Student Assistant (Federal Work Study)</strong><br>Johnnie Mae Berry Library - Cincinnati, OH | Jan 2024 - Apr 2024</p>
+                  <ul>
+                     <li>Balanced 22 credit-hour STEM course load with high-pressure library support role</li>
+                  </ul>
+               </div>
+               <div class="project-card glass scroll-fade">
+                  <h2>Extracurricular Projects</h2>
+                  <p><strong>AI Dungeon Master - Python / Discord Bot</strong><br>March 2025 - Present</p>
+                  <ul>
+                     <li>Built an AI-powered bot for D&amp;D campaign automation and immersion</li>
+                  </ul>
+                  <p><strong>Typefinity - Python Game</strong><br>July 2024 - January 2025</p>
+                  <ul>
+                     <li>Developed a CLI-based typing game executable with OpenAI integration</li>
+                  </ul>
+                  <p><strong>Joel - HTML/JavaScript App</strong><br>September 2021 - January 2022</p>
+                  <ul>
+                     <li>Co-founded and led visual design of an Android productivity app</li>
+                  </ul>
+               </div>
             </div>
-        </div>
-        </div>
-    </section>
-    
-    <!-- ABOUT -->
-    <section id="about" class="about scroll-fade">
-        <div class="container glass">
-        <h2>About Me</h2>
-        <p>I'm a software dev with an affinity for AI, web design, and embedded systems. Currently studying three IT majors and moonlighting as a lab technician.</p>
-        </div>
-    </section>
-    
-    <!-- CONTACT -->
-    <section id="contact" class="contact scroll-fade">
-        <div class="container glass">
-        <h2>Get In Touch</h2>
-        <form>
-            <input type="text" placeholder="Your Name" required />
-            <input type="email" placeholder="Your Email" required />
-            <textarea placeholder="Your Message" rows="5" required></textarea>
-            <button type="submit">Send</button>
-        </form>
-        </div>
-    </section>
-  
-
-    <!-- FOOTER -->
-    <footer>
-        <div class="container">
-        <p>© 2025 Josephine Wooldridge. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- SPARKLE SCRIPT -->
-    <script>
-        const sparkleContainer = document.getElementById('sparkle-container');
-        const sparkleChars = ['｡', '･', '*', '˚', '✧', '｡'];
-    
-        document.addEventListener('mousemove', (e) => {
-        const sparkle = document.createElement("div");
-        sparkle.className = "sparkle";
-        sparkle.textContent = sparkleChars[Math.floor(Math.random() * sparkleChars.length)];
-        sparkle.style.left = `${e.clientX}px`;
-        sparkle.style.top = `${e.clientY}px`;
-        sparkleContainer.appendChild(sparkle);
-        setTimeout(() => sparkle.remove(), 1000);
-        });
-    </script>
-
-    <!-- SCROLL SCRIPT -->
-    <script>
-        const scrollEls = document.querySelectorAll('.scroll-fade');
-    
-        const scrollObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            }
-        });
-        }, {
-        threshold: 0.1
-        });
-    
-        scrollEls.forEach(el => scrollObserver.observe(el));
-    </script> 
-
-    <!-- TERMINAL SCRIPT -->
-    <script>        
-        const objCmd_aCommands = {
-      help: `
+         </div>
+      </section>
+      <!-- FOOTER -->
+      <footer>
+         <div class="container">
+            <p>© 2025 Josephine Wooldridge. All rights reserved.</p>
+         </div>
+      </footer>
+      <!-- SPARKLE SCRIPT -->
+      <script>
+         const sparkleContainer = document.getElementById('sparkle-container');
+         const sparkleChars = ['☆', '。', '*', '✦', '⁺', '˚', '⋆', '｡', '°', '✩', '₊', '･', 'ﾟ', '✧', '∘', '⊹', '⟡', '˖', '•'];
+         
+         
+         document.addEventListener('mousemove', (e) => {
+         const sparkle = document.createElement("div");
+         sparkle.className = "sparkle";
+         sparkle.textContent = sparkleChars[Math.floor(Math.random() * sparkleChars.length)];
+         sparkle.style.left = `${e.clientX}px`;
+         sparkle.style.top = `${e.clientY}px`;
+         sparkleContainer.appendChild(sparkle);
+         setTimeout(() => sparkle.remove(), 1000);
+         });
+      </script>
+      <!-- SCROLL SCRIPT -->
+      <script>
+         const scrollEls = document.querySelectorAll('.scroll-fade');
+         
+         const scrollObserver = new IntersectionObserver((entries) => {
+         entries.forEach(entry => {
+             if (entry.isIntersecting) {
+             entry.target.classList.add('in-view');
+             }
+         });
+         }, {
+         threshold: 0.1
+         });
+         
+         scrollEls.forEach(el => scrollObserver.observe(el));
+      </script> 
+      <!-- TERMINAL SCRIPT -->
+      <script>        
+         const objCmd_aCommands = {
+         help: `
 Available commands:
 about
 classes
@@ -154,33 +200,32 @@ help
 projects
 welcome_protocol
 `,
-      about: `
+         about: `
 Howdy! I'm Josie. :D
-
+         
 I'm a triple-major honors student studying:
  - Software Engineering Technologies
  - Software Development
  - Computer Support Administration
-
- I love learning- especially when it comes to programming, AI, and databases.
+         
+I love learning- especially when it comes to programming, AI, and databases.
 `,
-      projects: `
+         projects: `
 Check out my GitHub for projects in web development, automation, and game design:
 <a href="https://github.com/josieisnotarat" target="_blank">github.com/josieisnotarat</a>
 `,
-      contact: `
+         contact: `
 Email: josephinewooldridge05@gmail.com
 Phone: +1 (513) 802-8322
 `,
-      classes: `
+         classes: `
 In-Progress Classes:
  - Web development using C#
  - C Programming
  - Calculus II
 `,
-      clear: " ",
-      welcome_protocol: `
-
+         clear: " ",
+         welcome_protocol: `
  ⠀⣴⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀        
 ⠀⣼⣿⣿⣿⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀       Welcome to josieisnotarat.github.io! :D
 ⣼⣿⣿⣿⣿⣿⣿⣿⣦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀      
@@ -193,51 +238,48 @@ In-Progress Classes:
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠛⠁⠀⠀⠀⠀⠀⠀
 ⣿⣿⡿⠻⠿⠿⠿⠿⠛⠹⠑⠀⠀               Type \"help\" for a list of commands. :)
 ⠟
-
 `
-    };
-        
-        // Select elements
-        const terminalInput = document.getElementById("txtTerminalInput");
-        const terminalOutput = document.getElementById("divTerminalOutput");
-        
-        // Listen for Enter key
-        terminalInput.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-            const input = terminalInput.value.trim().toLowerCase();
-            terminalInput.value = "";
-        
-            printLine(`PC C:\\Users\\Josephine> ${input}`, "user-input");
-        
-            if (input in objCmd_aCommands) {
-            const response = objCmd_aCommands[input];
-            if (input === "clear") {
-                terminalOutput.innerHTML = "";
-            } else {
-                printLine(response, "output");
-            }
-            } else {
-            printLine("Command not recognized. Type 'help' for a list of commands.", "error");
-            }
-        }
-        });
-        
-        // Print line helper
-        function printLine(text, type = "") {
-        const line = document.createElement("div");
-        line.className = type;
-        line.innerHTML = text;
-        terminalOutput.appendChild(line);
-        terminalOutput.scrollTop = terminalOutput.scrollHeight;
-        }
-        
-        // Auto-run welcome
-        window.addEventListener("DOMContentLoaded", () => {
-        printLine(objCmd_aCommands["welcome_protocol"], "output");
-        });
-    </script>
-    
-
-  
-</body>
+         };
+         
+         // Select elements
+         const terminalInput = document.getElementById("txtTerminalInput");
+         const terminalOutput = document.getElementById("divTerminalOutput");
+         
+         // Listen for Enter key
+         terminalInput.addEventListener("keydown", function (e) {
+         if (e.key === "Enter") {
+             const input = terminalInput.value.trim().toLowerCase();
+             terminalInput.value = "";
+         
+             printLine(`PC C:\\Users\\Josephine> ${input}`, "user-input");
+         
+             if (input in objCmd_aCommands) {
+             const response = objCmd_aCommands[input];
+             if (input === "clear") {
+                 terminalOutput.innerHTML = "";
+             } else {
+                 printLine(response, "output");
+             }
+             } else {
+             printLine("Command not recognized. Type 'help' for a list of commands.", "error");
+             }
+         }
+         });
+         
+         // Print line helper
+         function printLine(text, type = "") {
+         const line = document.createElement("div");
+         line.className = type;
+         line.innerHTML = text;
+         terminalOutput.appendChild(line);
+         terminalOutput.scrollTop = terminalOutput.scrollHeight;
+         }
+         
+         // Auto-run welcome
+         window.addEventListener("DOMContentLoaded", () => {
+         printLine("PC C:\\Users\\Josephine> welcome_protocol");
+         printLine(objCmd_aCommands["welcome_protocol"], "output");
+         });
+      </script>
+   </body>
 </html>
