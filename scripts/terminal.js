@@ -173,7 +173,7 @@ Phone: +1 (513) 802-8322`,
         printLine("To play the full version, visit <a href=\"https://github.com/josieisnotarat/Typefinity\" target=\"_blank\">github.com/josieisnotarat/Typefinity</a> and follow setup instructions.");
         printLine("That being said, there are a total of 50 unique words to find. Can you find them all?");    
         printLine("\nInstructions:\nEnter a combination of two words from the word bank, separated by spaces.\nFor example: typing in \"fire water\" might result in \"steam\"");
-        printLine("\nAvailable Commands:\n!logic         - Get a snarky explanation of your combo (disabled)\n!load          - Save your current game state (disabled)\n!save          - Load your previously saved demo session (disabled)\n!instructions  - Show command list\n!endprogram    - Exit the game");
+        printLine("\nAvailable Commands:\n!logic         - Get a snarky explanation of your combo (disabled)\n!load          - Save your current game state (disabled)\n!save          - Load your previously saved demo session (disabled)\n!instructions  - Show command list\n!endgame    - Exit the game");
         printLine(`\nWord bank: ${wordBank.join(", ")}`);
         return;
       }
@@ -201,7 +201,7 @@ Phone: +1 (513) 802-8322`,
 
   if (lowerInput === "!instructions") {    
     printLine("\nInstructions:\nEnter a combination of two words from the word bank, separated by spaces.\nFor example: typing in \"fire water\" might result in \"steam\"");
-    printLine("\nAvailable Commands:\n!logic         - Get a snarky explanation of your combo (disabled)\n!load          - Save your current game state (disabled)\n!save          - Load your previously saved demo session (disabled)\n!instructions  - Show command list\n!endprogram    - Exit the game");
+    printLine("\nAvailable Commands:\n!logic         - Get a snarky explanation of your combo (disabled)\n!load          - Save your current game state (disabled)\n!save          - Load your previously saved demo session (disabled)\n!instructions  - Show command list\n!endgame    - Exit the game");
     return;
   }
 
