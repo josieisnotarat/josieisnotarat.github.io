@@ -159,7 +159,7 @@ Phone: +1 (513) 802-8322`,
       const input = rawInput.toLowerCase();
       terminalInput.value = "";
 
-      printLine(`PC C:\\Users\\Josephine> ${rawInput}`, "user-input");
+      printLine(`PC C:\\Users\\Josephine> ${rawInput} \n`, "user-input");
 
       if (inTypefinity) {
         handleTypefinityCommand(rawInput);
