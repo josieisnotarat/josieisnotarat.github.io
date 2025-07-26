@@ -1,37 +1,37 @@
 :root {
-	--clr-bg: #000000;
-	--clr-text: #ffffff;
-	--clr-muted: #cce462;
-	--clr-accent: #bcb200;
-	--clr-accent-alt: #eed200;
-	--clr-overlay: rgba(18, 18, 18, 0.6);
-	--clr-border: rgba(255, 255, 255, 0.08);
-	--clr-btn-hover: var(--clr-accent-alt);
-	--clr-terminal-accent: #d1c050;
-	--clr-terminal-faded: #d1c0503e;
-	--clr-project-hover: var(--clr-accent);
-	--clr-form-bg: rgba(63, 63, 63, 0.4);
-	--clr-footer-bg: rgba(63, 63, 63, 0.6);
+  --clr-bg: #000000;
+  --clr-text: #ffffff;
+  --clr-muted: #cce462;
+  --clr-accent: #bcb200;
+  --clr-accent-alt: #eed200;
+  --clr-overlay: rgba(18, 18, 18, 0.6);
+  --clr-border: rgba(255, 255, 255, 0.08);
+  --clr-btn-hover: var(--clr-accent-alt);
+  --clr-terminal-accent: #d1c050;
+  --clr-terminal-faded: #d1c0503e;
+  --clr-project-hover: var(--clr-accent);
+  --clr-form-bg: rgba(63, 63, 63, 0.4);
+  --clr-footer-bg: rgba(63, 63, 63, 0.6);
 }
 
 body {
-	font-family: 'Inter', sans-serif;
-	background-color: var(--clr-bg);
-	color: var(--clr-text);
-	margin: 0;
-	line-height: 1.6;
-	background-image: url('../images/background.png');
-	background-size: cover;
-	background-position: center;
-	background-attachment: fixed;
+  font-family: "Inter", sans-serif;
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
+  margin: 0;
+  line-height: 1.6;
+  background-image: url("../images/background.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 .container {
-	max-width: 1300px;
-	margin: 0 auto;
-	padding: 0 2rem;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
 .darkback {
-	background-color: var(--clr-bg);
+  background-color: var(--clr-bg);
 }
