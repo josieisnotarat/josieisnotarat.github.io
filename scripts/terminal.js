@@ -257,8 +257,6 @@ Phone: +1 (513) 802-8322`,
     terminalOutput.scrollTop = terminalOutput.scrollHeight;
   }
 
-  window.addEventListener("DOMContentLoaded", () => {
-    printLine("PC C:\\Users\\Josephine> welcome_protocol");
-    printLine(objCmd_aCommands["welcome_protocol"], "output");
-  });
+  printLine("PC C:\\Users\\Josephine> welcome_protocol");
+  printLine(objCmd_aCommands["welcome_protocol"], "output");
 });
