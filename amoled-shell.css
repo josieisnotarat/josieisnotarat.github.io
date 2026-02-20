@@ -403,13 +403,6 @@ code{
 }
 .btnrow{ display:flex; gap:10px; align-items:center; margin-top:10px; flex-wrap:wrap; }
 
-.mobile-nav-toggle{
-  position: fixed;
-  right: 14px;
-  bottom: 14px;
-  z-index: 30;
-  display: none;
-}
 
 .pdf-status{
   margin-top: 10px;
@@ -466,9 +459,22 @@ code{
   .sidebar{
     background: rgba(0,0,0,0.72);
     backdrop-filter: blur(8px);
+    height: 100dvh;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
   }
 
-  .mobile-nav-toggle{ display: inline-block; }
+  .main{
+    height: 100dvh;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+  }
+
+  body{
+    height: 100dvh;
+    overflow: hidden;
+  }
+
 
   body.mobile-nav-content .sidebar{ transform: translateX(-100vw); }
   body.mobile-nav-content .main{ transform: translateX(0); }

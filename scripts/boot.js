@@ -21,7 +21,6 @@ const bootText = [
 
 const bootlines = document.getElementById("bootlines");
 const mobileQuery = window.matchMedia("(max-width: 860px)");
-const mobileNavToggle = document.getElementById("mobileNavToggle");
 
 function addLine(t) {
   const el = document.createElement("div");
@@ -35,7 +34,6 @@ function setMobileView(view) {
   document.body.classList.remove("mobile-nav-content", "mobile-nav-directory");
   if (!mobileQuery.matches) {
     document.body.classList.add("shifted");
-    if (mobileNavToggle) mobileNavToggle.setAttribute("aria-expanded", "false");
     return;
   }
 
@@ -43,11 +41,6 @@ function setMobileView(view) {
   document.body.classList.remove("shifted");
   document.body.classList.add(nextView === "directory" ? "mobile-nav-directory" : "mobile-nav-content");
 
-  if (mobileNavToggle) {
-    const inDirectory = nextView === "directory";
-    mobileNavToggle.textContent = inDirectory ? "view content" : "open directory";
-    mobileNavToggle.setAttribute("aria-expanded", String(inDirectory));
-  }
 }
 
 function bindMobileSwipe() {
@@ -71,13 +64,6 @@ function bindMobileSwipe() {
     if (dx > 0) setMobileView("directory");
     else setMobileView("content");
   }, { passive: true });
-}
-
-if (mobileNavToggle) {
-  mobileNavToggle.addEventListener("click", () => {
-    const isDirectory = document.body.classList.contains("mobile-nav-directory");
-    setMobileView(isDirectory ? "content" : "directory");
-  });
 }
 
 document.addEventListener("click", (event) => {
