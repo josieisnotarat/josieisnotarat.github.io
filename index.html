@@ -1,243 +1,458 @@
-<!DOCTYPE html>
+<!-- root.html
+     josie's archive — amoled filesystem site
+     includes:
+     - boot -> swipe sidebar in -> show routes
+     - router (hash-based)
+     - pdf viewer (pdf.js) with:
+        - auto-load when served
+        - file picker fallback on file:// (no server required)
+        - download button + open raw
+-->
+
+<!doctype html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      <title>Portfolio | Josephine Wooldridge</title>
-      <link rel="stylesheet" href="styles/style.css">
-   </head>
-   <body>
-      <div id="sparkle-container"></div>
-      <!-- HEADER -->
-      <header>
-         <div class="container">
-            <h1 class="logo">JW</h1>
-            <nav>
-               <ul class="nav-links">
-                  <li><a href="#projects">Projects</a></li>
-                  <li><a href="#about">About</a></li>
-                  <li><a href="#contact">Contact</a></li>
-               </ul>
-            </nav>
-         </div>
-      </header>
-      <!-- HERO -->
-      <section class="hero">
-         <div class="hero-flex">
-            <!-- PROFILE BLOCK -->
-            <div class="profile-container  scroll-fade glass" id="profileCard">
-               <div class="profile-bg">
-                  <img src="images/josieprofilelarge.png" alt="There would be a photo of me here, but something isn't working right..." />
-               </div>
-               <div class="profile-overlay  scroll-fade">
-                  <h2>Josephine Wooldridge</h2>
-                  <p class="subtitle">Triple major in IT & Software development/engineering. </p>
-                  <button class="contact-btn">Get In Touch</button>
-               </div>
-            </div>
-            <!-- TERMINAL -->
-            <div class="terminal-container  scroll-fade" id="terminalBox">
-               <div class="terminal-topbar">
-                  <div>PC C:\Users\Josephine\portfolio.exe</div>
-                  <div class="window-buttons">
-                     <div class="window-button">_</div>
-                     <div class="window-button">X</div>
-                  </div>
-               </div>
-               <div id="divTerminalOutput" class="terminal-output"></div>
-               <div class="terminal-input">
-                  <span class="terminal-prefix">PC C:\Users\Josephine> <input type="text" id="txtTerminalInput" autofocus></span>
-               </div>
-            </div>
-         </div>
-      </section>
-      <!-- PROJECTS/RESUME -->
-      <section id="projects" class="projects">
-         <div class="container">
-            <div class="sheet">
-               <div class="two-column resume">
-                  <div class="resume__columns">
-                     <div class="resume__main">
-                        <section class="resume__section resume__summary glass">
-                           <div class="resume__content">
-                              <div class="resume__section-title">
-                                 <h2>Professional Summary</h2>
-                              </div>
-                              <div class="other">
-                                 <div class="other-info">
-                                    <p>Triple-Major STEM honors student at Cincinnati State studying Network Administration - Computer Support, Software Development, and Software Engineering Technologies, alongside a Computer Network Administration Certificate. Proficient in organizational and time management skills, problem-solving, software development, computer maintenance, repair, and support.</p>
-                                    <br>
-                                 </div>
-                              </div>
-                           </div>
-                        </section>
-                        <section class="resume__section resume__experience glass">
-                           <div class="resume__content">
-                              <div class="resume__section-title">
-                                 <h2>Employment History</h2>
-                              </div>
-                              <div class="xp-item">
-                                 <div class="xp-job">Database Programmer / EIT Lab Center Intern
-                                    <span>@ Cincinnati State Engineering and IT Division</span><br /><small>Cincinnati, OH</small>
-                                 </div>
-                                 <div class="xp-date">June 2024 – Present</div>
-                                 <div class="xp-detail">
-                                    <ul>
-                                       <li>Troubleshoots a variety of technical issues on school-owned and student-owned devices</li>
-                                       <li>Designs, develops, and manages a CRUD inventory management system with normalized SQL database</li>
-                                       <li>Supports EIT recruitment events by setting up equipment and speaking about IT programs</li>
-                                       <li>Automates data workflows for a database of over 15,000 employer contacts</li>
-                                       <li>Mentors peers and contributes to organized and well-documented projects</li>
-                                    </ul>
-                                 </div>
-                              </div>
-                              <div class="xp-item">
-                                 <div class="xp-job">Student Worker: Federal Work Study
-                                    <span>@ Johnnie Mae Berry Library</span><br /><small>Cincinnati, OH</small>
-                                 </div>
-                                 <div class="xp-date">January 2024 – April 2024</div>
-                                 <div class="xp-detail">
-                                    <ul>
-                                       <li>Managed time efficiently while enrolled in 22 credit hours of STEM coursework</li>
-                                    </ul>
-                                 </div>
-                              </div>                              
-                           </div>
-                        </section>
-                        <section class="resume__section resume__experience glass">
-                           <div class="resume__content">
-                              <div class="resume__section-title">
-                                 <h2>Projects</h2>
-                              </div>
-                              <div class="extra">
-                                 <div class="extra-info">AI Dungeon Master – Discord Bot (Mar 2025 – Present)<br /><small>Developed an OpenAI-powered storytelling bot with dice rolls, lore tracking, and character support.</small></div>
-                              </div>
-                              <div class="extra">
-                                 <div class="extra-info">TypeFinity – Python Game (Jul 2024 – Jan 2025)<br /><small>Created a text-based adventure game using CLI; converted to EXE; integrated OpenAI API for interactivity.</small></div>
-                              </div>
-                              <div class="extra">
-                                 <div class="extra-info">Joel – HTML/JavaScript App (Sep 2021 – Jan 2022)<br /><small>Co-led a team on a startup app; contributed to UI design, branding, and creative development direction.</small></div>
-                              </div>
-                           </div>
-                        </section>
-                     </div>
-                     <div class="resume__side">
-                        <section class="resume__section resume__skills glass">
-                           <div class="resume__content">
-                              <div class="resume__section-title">
-                                 <h2>Skills</h2>
-                              </div>
-                              <div class="resume__text">
-                                 <div class="extra">
-                                    <div class="extra-info">Hardware & IT Support</div>
-                                    <div class="extra-details">
-                                       <div class="extra-details__progress" style="width:88%"></div>
-                                    </div>
-                                 </div>
-                                 <div class="extra">
-                                    <div class="extra-info">Windows 10/11 Support</div>
-                                    <div class="extra-details">
-                                       <div class="extra-details__progress" style="width:80%"></div>
-                                    </div>
-                                 </div>
-                                 <div class="extra">
-                                    <div class="extra-info">Public Speaking</div>
-                                    <div class="extra-details">
-                                       <div class="extra-details__progress" style="width:80%"></div>
-                                    </div>
-                                 </div>
-                                 <div class="extra">
-                                    <div class="extra-info">Component-Level Soldering</div>
-                                    <div class="extra-details">
-                                       <div class="extra-details__progress" style="width:75%"></div>
-                                    </div>
-                                 </div>
-                                 <div class="extra">
-                                    <div class="extra-info">OpenAI API Integration</div>
-                                    <div class="extra-details">
-                                       <div class="extra-details__progress" style="width:85%"></div>
-                                    </div>
-                                 </div>
-                                 <div class="extra">
-                                    <div class="extra-info">Time Management</div>
-                                    <div class="extra-details">
-                                       <div class="extra-details__progress" style="width:90%"></div>
-                                    </div>
-                                 </div>
-                                 <div class="extra">
-                                    <div class="extra-info">Organization</div>
-                                    <div class="extra-details">
-                                       <div class="extra-details__progress" style="width:90%"></div>
-                                    </div>
-                                 </div>
-                                 <div class="extra">
-                                    <div class="extra-info">Team Collaboration</div>
-                                    <div class="extra-details">
-                                       <div class="extra-details__progress" style="width:90%"></div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </section>
-                        <section class="resume__section resume__languages glass">
-                           <div class="resume__content">
-                              <div class="resume__section-title">
-                                 <h2>Coding Languages</h2>
-                              </div>
-                              <div class="extra">
-                                 <div class="extra-info">Java</div>
-                                 <div class="extra-details">
-                                    <div class="extra-details__progress" style="width:90%"></div>
-                                 </div>
-                              </div>
-                              <div class="extra">
-                                 <div class="extra-info">Python</div>
-                                 <div class="extra-details">
-                                    <div class="extra-details__progress" style="width:85%"></div>
-                                 </div>
-                              </div>
-                              <div class="extra">
-                                 <div class="extra-info">VB.NET</div>
-                                 <div class="extra-details">
-                                    <div class="extra-details__progress" style="width:80%"></div>
-                                 </div>
-                              </div>
-                              <div class="extra">
-                                 <div class="extra-info">PHP</div>
-                                 <div class="extra-details">
-                                    <div class="extra-details__progress" style="width:75%"></div>
-                                 </div>
-                              </div>
-                              <div class="extra">
-                                 <div class="extra-info">HTML / CSS / JavaScript</div>
-                                 <div class="extra-details">
-                                    <div class="extra-details__progress" style="width:85%"></div>
-                                 </div>
-                              </div>
-                              <div class="extra">
-                                 <div class="extra-info">C</div>
-                                 <div class="extra-details">
-                                    <div class="extra-details__progress" style="width:70%"></div>
-                                 </div>
-                              </div>
-                           </div>
-                        </section>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </section>
-      <!-- FOOTER -->
-      <footer>
-         <div class="container">
-         </div>
-      </footer>      
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>josie's archive</title>
+  <link rel="stylesheet" href="amoled-shell.css" />
 
-      <script src="scripts/sparkle.js" defer></script>
-      <script src="scripts/scroll.js" defer></script>
-      <script src="scripts/terminal.js" defer></script>  
-      
+  <!-- pdf.js (cdnjs exposes window.pdfjsLib) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
 
-   </body>
+<body>
+  <aside class="sidebar" aria-label="sidebar">
+    <div class="brand">
+      <h1 class="h1">josie's archive</h1>
+      <p class="quote">“you’ve come to the right place.”</p>
+    </div>
+
+    <nav class="tree" id="dirlist" aria-label="directories">
+      <a class="label" href="#root" data-route>/root</a>
+
+      <details open>
+        <summary><span class="label">/users</span></summary>
+        <div class="children">
+
+          <details class="indent" style="--d:1" open>
+            <summary class="indent" style="--d:1">
+              <span class="label dash">/josieisnotarat</span>
+            </summary>
+            <div class="children">
+              <a class="indent dash" style="--d:2" href="#josie-journals" data-route>/journals</a>
+              <a class="indent dash" style="--d:2" href="#josie-bio" data-route>/bio</a>
+            </div>
+          </details>
+
+          <details class="indent" style="--d:1">
+            <summary class="indent" style="--d:1">
+              <span class="label dash">/josephine</span>
+            </summary>
+            <div class="children">
+              <a class="indent dash" style="--d:2" href="#josephine-bio" data-route>/bio</a>
+            </div>
+          </details>
+
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="label">/projects</span></summary>
+        <div class="children">
+
+          <details class="indent" style="--d:1">
+            <summary class="indent" style="--d:1">
+              <span class="label dash">/completed</span>
+            </summary>
+            <div class="children">
+              <a class="indent dash" style="--d:2" href="#bedsidebistro" data-route>/bedsidebistro</a>
+              <a class="indent dash" style="--d:2" href="#typefinity" data-route>/typefinity</a>
+            </div>
+          </details>
+
+          <details class="indent" style="--d:1" open>
+            <summary class="indent" style="--d:1">
+              <span class="label dash">/current</span>
+            </summary>
+            <div class="children">
+              <a class="indent dash" style="--d:2" href="#glitch" data-route>/glitch</a>
+              <a class="indent dash" style="--d:2" href="#smartmirror" data-route>/smartmirror</a>
+              <a class="indent dash" style="--d:2" href="#cooltvheadthing" data-route>/cooltvheadthing</a>
+              <a class="indent dash" style="--d:2" href="#thiswebsite" data-route>/thiswebsite</a>
+            </div>
+          </details>
+
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="label">/languages</span></summary>
+        <div class="children">
+          <a class="indent dash" style="--d:1" href="#python" data-route>/python</a>
+          <a class="indent dash" style="--d:1" href="#java" data-route>/java</a>
+          <a class="indent dash" style="--d:1" href="#c" data-route>/c</a>
+          <a class="indent dash" style="--d:1" href="#cpp" data-route>/c++</a>
+          <a class="indent dash" style="--d:1" href="#web" data-route>/web</a>
+          <a class="indent dash" style="--d:1" href="#dotnet" data-route>/.net</a>
+          <a class="indent dash" style="--d:1" href="#sql" data-route>/sql</a>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="label">/academics</span></summary>
+        <div class="children">
+          <a class="indent dash" style="--d:1" href="#transcript" data-route>/transcript</a>
+
+          <details class="indent" style="--d:1">
+            <summary class="indent" style="--d:1">
+              <span class="label dash">/degrees</span>
+            </summary>
+            <div class="children">
+              <a class="indent dash" style="--d:2" href="#csa" data-route>/csa</a>
+              <a class="indent dash" style="--d:2" href="#csd" data-route>/csd</a>
+              <a class="indent dash" style="--d:2" href="#set" data-route>/set</a>
+            </div>
+          </details>
+
+          <details class="indent" style="--d:1">
+            <summary class="indent" style="--d:1">
+              <span class="label dash">/certificates</span>
+            </summary>
+            <div class="children">
+              <a class="indent dash" style="--d:2" href="#netca" data-route>/netca</a>
+            </div>
+          </details>
+
+          <details class="indent" style="--d:1">
+            <summary class="indent" style="--d:1">
+              <span class="label dash">/extracurriculars</span>
+            </summary>
+            <div class="children">
+              <a class="indent dash" style="--d:2" href="#ptk" data-route>/ptk</a>
+              <a class="indent dash" style="--d:2" href="#dndclub" data-route>/d&dclub</a>
+            </div>
+          </details>
+
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="label">/workinfo</span></summary>
+        <div class="children">
+          <a class="indent dash" style="--d:1" href="#resume" data-route>/resume.pdf</a>
+          <a class="indent dash" style="--d:1" href="#coverletter" data-route>/genericcoverletter.pdf</a>
+          <a class="indent dash" style="--d:1" href="#experience" data-route>/experience</a>
+        </div>
+      </details>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <section class="bootstage" id="bootstage">
+      <p class="subhead">root@josies-archive:~$ boot</p>
+      <div class="bootlines" id="bootlines" aria-live="polite"></div>
+    </section>
+
+    <section class="routes" id="routes">
+
+      <section id="root" class="route active">
+        <p class="subhead">root@josies-archive:~$ welcome</p>
+        <h1 class="h1">/root</h1>
+
+        <p>hi. welcome to josie's archive.</p>
+        <p>this is a directory-based site. open folders on the left, pick a path, and you land here on the right.</p>
+
+        <p>quickstart:</p>
+        <p>
+          - click a folder to expand it<br>
+          - click an item to open it<br>
+          - deep links work: <code>#root</code> / <code>#smartmirror</code> / etc
+        </p>
+
+        <p>recommended paths:</p>
+        <p>
+          - <a href="#josie-journals" data-route>users / josieisnotarat / journals</a><br>
+          - <a href="#josephine-bio" data-route>users / josephine / bio</a><br>
+          - <a href="#smartmirror" data-route>projects / current / smartmirror</a><br>
+          - <a href="#glitch" data-route>projects / current / glitch</a><br>
+          - <a href="#bedsidebistro" data-route>projects / completed / bedsidebistro</a><br>
+          - <a href="#resume" data-route>workinfo / resume.pdf</a>
+        </p>
+
+        <p>notes:</p>
+        <p>
+          - this is intentionally minimal. amoled black. white text. one divider line.<br>
+          - pdf pages will render cleanly (no browser chrome). ”<br>
+          - if you get lost, hit <a href="#root" data-route>/root</a>.
+        </p>
+      </section>
+
+      <section id="josieisnotarat" class="route">
+        <p class="subhead">directory</p>
+        <h1 class="h1">/users/josieisnotarat</h1>
+        <p>personal hub.</p>
+      </section>
+
+      <section id="josie-journals" class="route">
+        <p class="subhead">directory</p>
+        <h1 class="h1">/users/josieisnotarat/journals</h1>
+        <p>personal journals root.</p>
+      </section>
+
+      <section id="josie-bio" class="route">
+        <p class="subhead">file</p>
+        <h1 class="h1">/users/josieisnotarat/bio</h1>
+        <p>short bio page.</p>
+      </section>
+
+      <section id="josephine-bio" class="route">
+        <p class="subhead">file</p>
+        <h1 class="h1">/users/josephine/bio</h1>
+        <p>work-focused bio page.</p>
+      </section>
+
+      <section id="bedsidebistro" class="route"><p class="subhead">project</p><h1 class="h1">/projects/completed/bedsidebistro</h1><p>project writeup later.</p></section>
+      <section id="typefinity" class="route"><p class="subhead">project</p><h1 class="h1">/projects/completed/typefinity</h1><p>project writeup later.</p></section>
+
+      <section id="glitch" class="route"><p class="subhead">project</p><h1 class="h1">/projects/current/glitch</h1><p>assistant + voice + smart home stuff.</p></section>
+      <section id="smartmirror" class="route"><p class="subhead">project</p><h1 class="h1">/projects/current/smartmirror</h1><p>board shell + ui experiments.</p></section>
+      <section id="cooltvheadthing" class="route"><p class="subhead">project</p><h1 class="h1">/projects/current/cooltvheadthing</h1><p>mysterious device page.</p></section>
+      <section id="thiswebsite" class="route"><p class="subhead">project</p><h1 class="h1">/projects/current/thiswebsite</h1><p>meta: how the archive is built.</p></section>
+
+      <section id="python" class="route"><p class="subhead">directory</p><h1 class="h1">/languages/python</h1><p>notes + snippets.</p></section>
+      <section id="java" class="route"><p class="subhead">directory</p><h1 class="h1">/languages/java</h1><p>notes + snippets.</p></section>
+      <section id="c" class="route"><p class="subhead">directory</p><h1 class="h1">/languages/c</h1><p>notes + snippets.</p></section>
+      <section id="cpp" class="route"><p class="subhead">directory</p><h1 class="h1">/languages/c++</h1><p>notes + snippets.</p></section>
+      <section id="web" class="route"><p class="subhead">directory</p><h1 class="h1">/languages/web</h1><p>notes + snippets.</p></section>
+      <section id="dotnet" class="route"><p class="subhead">directory</p><h1 class="h1">/languages/.net</h1><p>notes + snippets.</p></section>
+      <section id="sql" class="route"><p class="subhead">directory</p><h1 class="h1">/languages/sql</h1><p>notes + snippets.</p></section>
+
+      <section id="transcript" class="route"><p class="subhead">file</p><h1 class="h1">/academics/transcript</h1><p>transcript summary / embed later.</p></section>
+
+      <!-- resume: viewer + download -->
+      <section id="resume" class="route">
+        <p class="subhead">file</p>
+        <h1 class="h1">/workinfo/resume.pdf</h1>
+
+        <div class="btnrow">
+          <input class="filepick" id="pick-resume" type="file" accept="application/pdf">
+
+          <a class="btn" id="btn-open-raw" href="assets/resume.pdf" target="_blank" rel="noopener">open raw</a>
+
+          <a class="btn" id="btn-download" href="#" download="resume.pdf" aria-disabled="true">download</a>
+
+          <button class="btn" id="btn-reload" type="button">reload</button>
+        </div>
+
+        <div id="pdf-status" class="pdf-status"></div>
+        <div id="pdf-container" class="pdf-container"></div>
+      </section>
+
+      <section id="coverletter" class="route"><p class="subhead">file</p><h1 class="h1">/workinfo/genericcoverletter.pdf</h1><p>pdf embed later.</p></section>
+      <section id="experience" class="route"><p class="subhead">directory</p><h1 class="h1">/workinfo/experience</h1><p>experience timeline.</p></section>
+
+    </section>
+  </main>
+
+  <script>
+    // ----------------------------
+    // boot
+    // ----------------------------
+    const bootText = [
+      "boot: initializing…",
+      "boot: mounting /users",
+      "boot: mounting /projects",
+      "boot: mounting /languages",
+      "boot: mounting /academics",
+      "boot: mounting /workinfo",
+      "",
+      "scan: rooting directories…",
+      "ok: /users/josieisnotarat",
+      "ok: /users/josephine",
+      "ok: /projects/current",
+      "ok: /projects/completed",
+      "ok: /workinfo/resume.pdf",
+      "",
+      "ready."
+    ];
+
+    const bootlines = document.getElementById("bootlines");
+
+    function addLine(t){
+      const el = document.createElement("div");
+      el.className = "line";
+      el.textContent = t;
+      bootlines.appendChild(el);
+      requestAnimationFrame(() => el.classList.add("show"));
+    }
+  </script>
+
+  <script>
+    // ----------------------------
+    // pdf viewer (server + file picker)
+    // ----------------------------
+
+    function setDownloadLinkFromBlob(blob){
+      const a = document.getElementById("btn-download");
+      const url = URL.createObjectURL(blob);
+      a.href = url;
+      a.setAttribute("download", "resume.pdf");
+      a.setAttribute("aria-disabled", "false");
+    }
+
+    async function renderPDFSource({ url=null, data=null }){
+      const statusEl = document.getElementById("pdf-status");
+      const container = document.getElementById("pdf-container");
+
+      container.innerHTML = "";
+      statusEl.textContent = "loading pdf…";
+
+      if (!window.pdfjsLib){
+        statusEl.textContent = "pdf.js not loaded (pdfjsLib missing).";
+        return;
+      }
+
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+      try{
+        const loadingTask = window.pdfjsLib.getDocument(
+          data ? { data } : { url }
+        );
+        const pdf = await loadingTask.promise;
+
+        statusEl.textContent = `rendering ${pdf.numPages} page(s)…`;
+
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++){
+          const page = await pdf.getPage(pageNum);
+
+          // fit to content width
+          const main = document.querySelector(".main");
+          const targetWidth = Math.min(760, main.clientWidth - 40);
+
+          const viewport0 = page.getViewport({ scale: 1 });
+          const scale = targetWidth / viewport0.width;
+          const viewport = page.getViewport({ scale });
+
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d", { alpha: false });
+
+          canvas.width = Math.floor(viewport.width);
+          canvas.height = Math.floor(viewport.height);
+
+          await page.render({ canvasContext: ctx, viewport }).promise;
+          container.appendChild(canvas);
+        }
+
+        statusEl.textContent = "done.";
+      }catch(err){
+        console.error(err);
+        statusEl.textContent =
+          "couldn’t load the pdf.";
+      }
+    }
+
+    async function tryAutoLoadResume(){
+      // works when served; usually fails on file:// (expected)
+      try{
+        const res = await fetch("assets/resume.pdf", { cache: "no-store" });
+        if (!res.ok) throw new Error("fetch failed");
+        const blob = await res.blob();
+        const ab = await blob.arrayBuffer();
+        setDownloadLinkFromBlob(blob);
+        await renderPDFSource({ data: ab });
+        return true;
+      }catch{
+        return false;
+      }
+    }
+
+    async function onEnterResumeRoute(){
+      const container = document.getElementById("pdf-container");
+      if (container && container.childElementCount > 0) return;
+
+      const ok = await tryAutoLoadResume();
+      if (!ok){
+        document.getElementById("pdf-status").textContent =
+          "file mode detected. ";
+      }
+    }
+
+    // buttons
+    document.addEventListener("click", async (e) => {
+      if (e.target && e.target.id === "btn-pick-resume"){
+        document.getElementById("pick-resume").click();
+      }
+
+      if (e.target && e.target.id === "btn-reload"){
+        const ok = await tryAutoLoadResume();
+        if (!ok){
+          document.getElementById("pdf-status").textContent =
+            "reload failed (likely file://). ";
+        }
+      }
+    });
+
+    document.getElementById("pick-resume").addEventListener("change", async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      setDownloadLinkFromBlob(file);
+      const ab = await file.arrayBuffer();
+      await renderPDFSource({ data: ab });
+    });
+  </script>
+
+  <script>
+    // ----------------------------
+    // router + boot orchestration
+    // ----------------------------
+    function routeTo(hash){
+      const id = (hash || "#root").replace("#", "");
+
+      document.querySelectorAll(".route").forEach(r => {
+        r.classList.toggle("active", r.id === id);
+      });
+
+      document.querySelectorAll("[data-route]").forEach(a => {
+        a.classList.toggle("active", a.getAttribute("href") === "#" + id);
+      });
+
+      // auto-open parents for deep links
+      const active = document.querySelector('[data-route].active');
+      if (active){
+        let node = active.parentElement;
+        while (node){
+          if (node.tagName === "DETAILS") node.open = true;
+          node = node.parentElement;
+        }
+      }
+
+      if (id === "resume"){
+        onEnterResumeRoute();
+      }
+    }
+
+    window.addEventListener("hashchange", () => routeTo(location.hash));
+
+    async function runBoot(){
+      for (const t of bootText){
+        addLine(t);
+        await new Promise(r => setTimeout(r, 220 + Math.random() * 170));
+      }
+
+      // phase 1: swipe sidebar in + push boot text right
+      document.body.classList.add("shifted");
+
+      // after swipe completes, swap boot -> routes, then route
+      setTimeout(() => {
+        document.body.classList.add("ready");
+        routeTo(location.hash || "#root");
+      }, 540);
+    }
+
+    runBoot();
+  </script>
+</body>
 </html>
