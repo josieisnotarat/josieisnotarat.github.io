@@ -403,6 +403,7 @@ code{
 }
 .btnrow{ display:flex; gap:10px; align-items:center; margin-top:10px; flex-wrap:wrap; }
 
+
 .pdf-status{
   margin-top: 10px;
   font-size: 13px;
@@ -458,7 +459,28 @@ code{
   .sidebar{
     background: rgba(0,0,0,0.72);
     backdrop-filter: blur(8px);
+    height: 100dvh;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
   }
+
+  .main{
+    height: 100dvh;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+  }
+
+  body{
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+
+  body.mobile-nav-content .sidebar{ transform: translateX(-100vw); }
+  body.mobile-nav-content .main{ transform: translateX(0); }
+
+  body.mobile-nav-directory .sidebar{ transform: translateX(0); }
+  body.mobile-nav-directory .main{ transform: translateX(100vw); }
 }
 
 /* accessibility: reduce motion */
