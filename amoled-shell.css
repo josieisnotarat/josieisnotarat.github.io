@@ -1,0 +1,289 @@
+/* amoled-shell.css
+   josie's archive — amoled filesystem site
+
+   goals:
+   - amoled black / white only
+   - one font (mono)
+   - sidebar + divider + nav swipe in as ONE chunk after boot
+   - boot text starts at true left edge of page, then swipes right with content
+   - clean tree nav via <details>
+   - pdf viewer via pdf.js:
+       - auto-loads from assets/*.pdf when served over http(s)
+       - on file://, prompts user to pick the pdf (no server required)
+       - provides download button (blob-based) + open raw button (when served)
+*/
+
+:root{
+  --bg:#000;
+  --fg:#fff;
+  --line:#fff;
+
+  --sidebar-w: 340px;
+  --pad: 18px;
+
+  --t: 520ms;
+  --ease: cubic-bezier(.2,.9,.2,1);
+
+  --mono: ui-monospace, sfmono-regular, menlo, monaco, consolas, "liberation mono","courier new", monospace;
+  --indent: 14px;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--mono);
+  text-transform: lowercase;
+  overflow-x:hidden;
+}
+
+/* sidebar is fixed and offscreen until boot ends */
+.sidebar{
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  padding: var(--pad);
+  transform: translateX(calc(-1 * var(--sidebar-w)));
+  transition: transform var(--t) var(--ease);
+  z-index: 10;
+}
+
+/* divider line is part of the sidebar chunk */
+.sidebar::after{
+  content:"";
+  position:absolute;
+  top:0; right:0;
+  width:1px; height:100%;
+  background:var(--line);
+  opacity:0;
+  transition: opacity var(--t) var(--ease);
+}
+
+/* main content slides right when sidebar comes in */
+.main{
+  min-height: 100vh;
+  padding: var(--pad);
+  transform: translateX(0);
+  transition: transform var(--t) var(--ease);
+}
+
+/* shift phase */
+body.shifted .sidebar{ transform: translateX(0); }
+body.shifted .sidebar::after{ opacity: 1; }
+body.shifted .main{ transform: translateX(var(--sidebar-w)); }
+
+/* brand */
+.brand{
+  display:grid;
+  gap:6px;
+  padding-bottom:14px;
+  margin-bottom:14px;
+  border-bottom:1px solid var(--line);
+}
+.brand .h1{
+  margin:0;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+}
+.brand .quote{
+  margin:0;
+  font-size:12px;
+  font-style:italic;
+  opacity:.9;
+}
+
+/* boot (no boxes, true left edge until shift) */
+.bootstage{
+  display:block;
+  max-width: 760px;
+}
+.subhead{
+  font-size: 12px;
+  letter-spacing: .10em;
+  opacity: .65;
+  margin: 0 0 18px 0;
+}
+.bootlines{
+  display:grid;
+  gap:6px;
+  font-size:13px;
+  margin:0;
+}
+.line{
+  opacity:0;
+  transform: translateY(4px);
+  transition: opacity 180ms linear, transform 180ms linear;
+  white-space:pre-wrap;
+}
+.line.show{
+  opacity:1;
+  transform: translateY(0);
+}
+
+/* show routes only when ready; hide boot only when ready */
+.routes{
+  display:none;
+  padding-left: 6px;
+}
+body.ready .routes{ display:block; }
+body.ready .bootstage{ display:none; }
+
+/* route content */
+.route{
+  display:none;
+  max-width: 760px;
+}
+.route.active{ display:block; }
+
+.route .h1{
+  margin: 0 0 12px 0;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+}
+.route p{
+  margin: 0 0 14px 0;
+  line-height: 1.55;
+  opacity: .92;
+}
+code{
+  border: 1px solid var(--line);
+  padding: 1px 6px;
+}
+
+/* sidebar tree */
+.tree{
+  display:grid;
+  gap:10px;
+}
+
+.tree details{ margin:0; padding:0; }
+
+.tree summary{
+  list-style:none;
+  cursor:pointer;
+  user-select:none;
+  padding: 2px 0;
+  font-size: 13px;
+  opacity: .9;
+  transition: opacity 140ms ease;
+}
+.tree summary::-webkit-details-marker{ display:none; }
+.tree summary:hover{ opacity: .6; }
+
+.tree .children{
+  display:grid;
+  gap:6px;
+  padding-top:2px;
+}
+
+.tree .indent{
+  padding-left: calc(var(--d, 0) * var(--indent));
+}
+
+.tree .dash::before{
+  content:"-";
+  width: 10px;
+  opacity: .6;
+  margin-right: 8px;
+  display:inline-block;
+}
+
+.tree summary .label{
+  display:flex;
+  align-items:center;
+}
+
+/* links */
+.tree a{
+  color:var(--fg);
+  text-decoration:none;
+  font-size: 13px;
+  display:flex;
+  align-items:center;
+  padding: 2px 0;
+  opacity: .78;
+  transition: opacity 140ms ease;
+}
+.tree a:hover{ opacity: 1; }
+.tree a.active{ opacity: 1; }
+
+/* top-level /root link */
+.tree > a.label{
+  display:block;
+  padding: 2px 0;
+  color: var(--fg);
+  text-decoration:none;
+  font-size:13px;
+  opacity:.78;
+  transition: opacity 140ms ease;
+}
+.tree > a.label:hover{ opacity:1; }
+.tree > a.label.active{ opacity:1; }
+
+/* routes links (recommended paths list) */
+.routes a{
+  color: var(--fg);
+  text-decoration: none;
+  opacity: .78;
+  transition: opacity 140ms ease;
+}
+.routes a:hover{ opacity: 1; }
+.routes a.active{ opacity: 1; }
+
+/* ----------------------------
+   buttons (barebones)
+   ---------------------------- */
+.btn{
+  display:inline-block;
+  color: var(--fg);
+  text-decoration:none;
+  border: 1px solid var(--line);
+  padding: 6px 10px;
+  font-size: 13px;
+  opacity: .9;
+  transition: opacity 140ms ease;
+  background: transparent;
+  font-family: var(--mono);
+}
+.btn:hover{ opacity: .6; }
+.btnrow{ display:flex; gap:10px; align-items:center; margin-top:10px; flex-wrap:wrap; }
+
+.pdf-status{
+  margin-top: 10px;
+  font-size: 13px;
+  opacity: .75;
+}
+
+/* ----------------------------
+   pdf.js render
+   ---------------------------- */
+.pdf-container{
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.pdf-container canvas{
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* hide native input */
+.filepick{
+  position:absolute;
+  left:-9999px;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+
+/* mobile */
+@media (max-width: 860px){
+  :root{ --sidebar-w: 100vw; }
+  body.shifted .main{ transform: translateX(100vw); }
+}
