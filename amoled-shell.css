@@ -403,6 +403,14 @@ code{
 }
 .btnrow{ display:flex; gap:10px; align-items:center; margin-top:10px; flex-wrap:wrap; }
 
+.mobile-nav-toggle{
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 30;
+  display: none;
+}
+
 .pdf-status{
   margin-top: 10px;
   font-size: 13px;
@@ -459,6 +467,14 @@ code{
     background: rgba(0,0,0,0.72);
     backdrop-filter: blur(8px);
   }
+
+  .mobile-nav-toggle{ display: inline-block; }
+
+  body.mobile-nav-content .sidebar{ transform: translateX(-100vw); }
+  body.mobile-nav-content .main{ transform: translateX(0); }
+
+  body.mobile-nav-directory .sidebar{ transform: translateX(0); }
+  body.mobile-nav-directory .main{ transform: translateX(100vw); }
 }
 
 /* accessibility: reduce motion */
