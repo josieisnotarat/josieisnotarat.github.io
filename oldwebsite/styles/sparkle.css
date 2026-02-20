@@ -1,0 +1,30 @@
+#sparkle-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.sparkle {
+  position: absolute;
+  color: #d1c05057;
+  font-size: 30px;
+  animation: sparkleFade 1s ease-out forwards;
+  user-select: none;
+  transform: translate(-50%, -50%);
+  opacity: 10;
+  margin: 5px;
+  border-radius: 20px;
+}
+
+@keyframes sparkleFade {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -80%) scale(0.5);
+    opacity: 0;
+  }
+}
