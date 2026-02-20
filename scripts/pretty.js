@@ -13,6 +13,29 @@
   // if user prefers reduced motion, keep a static but nice position
   const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  function dedentCodeBlocks(){
+    const blocks = document.querySelectorAll('pre code');
+    blocks.forEach(code => {
+      const raw = code.textContent.replace(/\t/g, '  ');
+      const lines = raw.split(/\r?\n/);
+
+      // trim leading/trailing blank lines
+      while(lines.length && lines[0].trim()==='') lines.shift();
+      while(lines.length && lines[lines.length-1].trim()==='') lines.pop();
+
+      // find common indent
+      let min = Infinity;
+      for(const line of lines){
+        if(!line.trim()) continue;
+        const m = line.match(/^\s+/);
+        if(!m) { min = 0; break; }
+        min = Math.min(min, m[0].length);
+      }
+      const out = lines.map(l => min ? l.slice(min) : l).join('\n');
+      code.textContent = out;
+    });
+  }
+
   // default position (top-right-ish, matches your ref vibe)
   let x = 72, y = 28;
   let tx = x, ty = y;
@@ -104,4 +127,5 @@
     window.removeEventListener("pointerdown", engage);
     window.removeEventListener("keydown", engage);
   };
+  window.addEventListener('DOMContentLoaded', dedentCodeBlocks);
 })();

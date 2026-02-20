@@ -1,9 +1,0 @@
-.glass {
-  background: var(--clr-overlay);
-  border: 1px solid var(--clr-border);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  border-radius: 12px;
-  transition: all 0.3s ease;
-}

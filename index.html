@@ -1,426 +1,336 @@
-<!-- root.html josie's archive — amoled filesystem site includes: - boot
--> swipe sidebar in -> show routes
-- router (hash-based)
-- pdf viewer (pdf.js) with:
-- auto-load when served
-- file picker fallback on file:// (no server required)
-- download button + open raw
+<!-- root.html
+     josie's archive — amoled filesystem site
+     includes:
+     - boot -> swipe sidebar in -> show routes
+     - router (hash-based)
+     - pdf viewer (pdf.js) with:
+        - auto-load when served
+        - file picker fallback on file:// (no server required)
+        - download button + open raw
 -->
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
-  
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>
-      josie's archive
-    </title>
-    <link rel="stylesheet" href="amoled-shell.css" />
-    <!-- pdf.js (use https; http can get blocked) -->
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
-    </script>
-    <!-- your scripts (defer=w ait for DOM; order preserved) -->
-    <script defer src="scripts/pdf.js">
-    </script>
-    <script defer src="scripts/sparkle-swirl.js">
-    </script>
-    <script defer src="scripts/pretty.js">
-    </script>
-    <script defer src="scripts/boot.js">
-    </script>
-  </head>
-  
-  <body>
-    <canvas id="bg" aria-hidden="true">
-    </canvas>
-    <aside class="sidebar" aria-label="sidebar">
-      <div class="brand">
-        <h1 class="h1">
-          josie's archive
-        </h1>
-        <p class="quote">
-          “you’ve come to the right place.”
-        </p>
-      </div>
-      <nav class="tree" id="dirlist" aria-label="directories">
-        <a class="label" href="#root" data-route>
-          /root
-        </a>
-        <details open>
-          <summary>
-            <span class="label">
-              /users
-            </span>
-          </summary>
-          <div class="children">
-            <details class="indent" style="--d:1" open>
-              <summary class="indent" style="--d:1">
-                <span class="label dash">
-                  /josieisnotarat
-                </span>
-              </summary>
-              <div class="children">
-                <a class="indent dash" style="--d:2" href="#josie-journals" data-route>
-                  /journals
-                </a>
-                <a class="indent dash" style="--d:2" href="#josie-bio" data-route>
-                  /bio
-                </a>
-              </div>
-            </details>
-            <details class="indent" style="--d:1">
-              <summary class="indent" style="--d:1">
-                <span class="label dash">
-                  /josephine
-                </span>
-              </summary>
-              <div class="children">
-                <a class="indent dash" style="--d:2" href="#josephine-bio" data-route>
-                  /bio
-                </a>
-              </div>
-            </details>
-          </div>
-        </details>
-        <details>
-          <summary>
-            <span class="label">
-              /projects
-            </span>
-          </summary>
-          <div class="children">
-            <details class="indent" style="--d:1">
-              <summary class="indent" style="--d:1">
-                <span class="label dash">
-                  /completed
-                </span>
-              </summary>
-              <div class="children">
-                <a class="indent dash" style="--d:2" href="#bedsidebistro" data-route>
-                  /bedsidebistro
-                </a>
-                <a class="indent dash" style="--d:2" href="#typefinity" data-route>
-                  /typefinity
-                </a>
-              </div>
-            </details>
-            <details class="indent" style="--d:1" open>
-              <summary class="indent" style="--d:1">
-                <span class="label dash">
-                  /current
-                </span>
-              </summary>
-              <div class="children">
-                <a class="indent dash" style="--d:2" href="#glitch" data-route>
-                  /glitch
-                </a>
-                <a class="indent dash" style="--d:2" href="#smartmirror" data-route>
-                  /smartmirror
-                </a>
-                <a class="indent dash" style="--d:2" href="#cooltvheadthing" data-route>
-                  /cooltvheadthing
-                </a>
-                <a class="indent dash" style="--d:2" href="#thiswebsite" data-route>
-                  /thiswebsite
-                </a>
-              </div>
-            </details>
-          </div>
-        </details>
-        <details>
-          <summary>
-            <span class="label">
-              /languages
-            </span>
-          </summary>
-          <div class="children">
-            <a class="indent dash" style="--d:1" href="#python" data-route>
-              /python
-            </a>
-            <a class="indent dash" style="--d:1" href="#java" data-route>
-              /java
-            </a>
-            <a class="indent dash" style="--d:1" href="#c" data-route>
-              /c
-            </a>
-            <a class="indent dash" style="--d:1" href="#cpp" data-route>
-              /c++
-            </a>
-            <a class="indent dash" style="--d:1" href="#web" data-route>
-              /web
-            </a>
-            <a class="indent dash" style="--d:1" href="#dotnet" data-route>
-              /.net
-            </a>
-            <a class="indent dash" style="--d:1" href="#sql" data-route>
-              /sql
-            </a>
-          </div>
-        </details>
-        <details>
-          <summary>
-            <span class="label">
-              /academics
-            </span>
-          </summary>
-          <div class="children">
-            <a class="indent dash" style="--d:1" href="#transcript" data-route>
-              /transcript
-            </a>
-            <details class="indent" style="--d:1">
-              <summary class="indent" style="--d:1">
-                <span class="label dash">
-                  /degrees
-                </span>
-              </summary>
-              <div class="children">
-                <a class="indent dash" style="--d:2" href="#csa" data-route>
-                  /csa
-                </a>
-                <a class="indent dash" style="--d:2" href="#csd" data-route>
-                  /csd
-                </a>
-                <a class="indent dash" style="--d:2" href="#set" data-route>
-                  /set
-                </a>
-              </div>
-            </details>
-            <details class="indent" style="--d:1">
-              <summary class="indent" style="--d:1">
-                <span class="label dash">
-                  /certificates
-                </span>
-              </summary>
-              <div class="children">
-                <a class="indent dash" style="--d:2" href="#netca" data-route>
-                  /netca
-                </a>
-              </div>
-            </details>
-            <details class="indent" style="--d:1">
-              <summary class="indent" style="--d:1">
-                <span class="label dash">
-                  /extracurriculars
-                </span>
-              </summary>
-              <div class="children">
-                <a class="indent dash" style="--d:2" href="#ptk" data-route>
-                  /ptk
-                </a>
-                <a class="indent dash" style="--d:2" href="#dndclub" data-route>
-                  /d&dclub
-                </a>
-              </div>
-            </details>
-          </div>
-        </details>
-        <details>
-          <summary>
-            <span class="label">
-              /workinfo
-            </span>
-          </summary>
-          <div class="children">
-            <a class="indent dash" style="--d:1" href="#resume" data-route>
-              /resume.pdf
-            </a>
-            <a class="indent dash" style="--d:1" href="#coverletter" data-route>
-              /genericcoverletter.pdf
-            </a>
-            <a class="indent dash" style="--d:1" href="#experience" data-route>
-              /experience
-            </a>
-          </div>
-        </details>
-      </nav>
-    </aside>
-    <main class="main">
-      <section class="bootstage" id="bootstage">
-        <p class="subhead">
-          root@josies-archive:~$ boot
-        </p>
-        <div class="bootlines" id="bootlines" aria-live="polite">
-        </div>
-      </section>
-      <section class="routes" id="routes">
-        <section id="root" class="route active">
-          <p class="subhead">
-            root@josies-archive:~$ welcome
-          </p>
-          <h1 class="h1">
-            /root
-          </h1>
-          <p>
-            hi. welcome to josie's archive.
-          </p>
-          <p>
-            quickstart:
-          </p>
-          <p>
-            - click a folder to expand it
-            <br>
-            - click an item to open it
-            <br>
-            - look cool while you're doing it
-          </p>
-        </section>
-
-
-        <section id="josieisnotarat" class="route">
-          <p class="subhead">
-            directory
-          </p>
-          <h1 class="h1">
-            /users/josieisnotarat
-          </h1>
-          <p>
-            personal hub.
-          </p>
-        </section>
-
-
-        <section id="josie-journals" class="route">
-          <p class="subhead">
-            directory
-          </p>
-          <h1 class="h1">
-            /users/josieisnotarat/journals
-          </h1>
-          <p>
-            personal journals root.
-          </p>
-        </section>
-
-
-        <section id="josie-bio" class="route">
-          <p class="subhead">
-            file
-          </p>
-          <h1 class="h1">
-            /users/josieisnotarat/bio
-          </h1>
-          <p>
-            short bio page.
-          </p>
-        </section>
-
-
-        <section id="josephine-bio" class="route">
-          <p class="subhead">
-            file
-          </p>
-          <h1 class="h1">
-            /users/josephine/bio
-          </h1>
-          <p>
-            work-focused bio page.
-          </p>
-        </section>
-
-
-        <section id="bedsidebistro" class="route">
-          <p class="subhead">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>josie's archive</title>
+<link href="amoled-shell.css" rel="stylesheet"/>
+<!-- pdf.js (use https; http can get blocked) -->
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<!-- your scripts (defer = wait for DOM; order preserved) -->
+<script defer="" src="scripts/pdf.js"></script>
+<script defer="" src="scripts/sparkle-swirl.js"></script>
+<script defer="" src="scripts/pretty.js"></script>
+<script defer="" src="scripts/boot.js"></script>
+</head>
+<body>
+<canvas aria-hidden="true" id="bg"></canvas>
+<aside aria-label="sidebar" class="sidebar">
+<div class="brand">
+<h1 class="h1">josie's archive</h1>
+<p class="quote">“you’ve come to the right place.”</p>
+</div>
+<nav aria-label="directories" class="tree" id="dirlist">
+<a class="label" data-route="" href="#root">/root</a>
+<details open="">
+<summary><span class="label">/users</span></summary>
+<div class="children">
+<details class="indent" open="" style="--d:1">
+<summary class="indent" style="--d:1">
+<span class="label dash">/josieisnotarat</span>
+</summary>
+<div class="children">
+<a class="indent dash" data-route="" href="#josie-journals" style="--d:2">/journals</a>
+<a class="indent dash" data-route="" href="#josie-bio" style="--d:2">/bio</a>
+</div>
+</details>
+<details class="indent" style="--d:1">
+<summary class="indent" style="--d:1">
+<span class="label dash">/josephine</span>
+</summary>
+<div class="children">
+<a class="indent dash" data-route="" href="#josephine-bio" style="--d:2">/bio</a>
+</div>
+</details>
+</div>
+</details>
+<details>
+<summary><span class="label">/projects</span></summary>
+<div class="children">
+<details class="indent" style="--d:1">
+<summary class="indent" style="--d:1">
+<span class="label dash">/completed</span>
+</summary>
+<div class="children">
+<a class="indent dash" data-route="" href="#bedsidebistro" style="--d:2">/bedsidebistro</a>
+<a class="indent dash" data-route="" href="#typefinity" style="--d:2">/typefinity</a>
+</div>
+</details>
+<details class="indent" open="" style="--d:1">
+<summary class="indent" style="--d:1">
+<span class="label dash">/current</span>
+</summary>
+<div class="children">
+<a class="indent dash" data-route="" href="#glitch" style="--d:2">/glitch</a>
+<a class="indent dash" data-route="" href="#smartmirror" style="--d:2">/smartmirror</a>
+<a class="indent dash" data-route="" href="#cooltvheadthing" style="--d:2">/cooltvheadthing</a>
+<a class="indent dash" data-route="" href="#thiswebsite" style="--d:2">/thiswebsite</a>
+</div>
+</details>
+</div>
+</details>
+<details>
+<summary><span class="label">/languages</span></summary>
+<div class="children">
+<a class="indent dash" data-route="" href="#python" style="--d:1">/python</a>
+<a class="indent dash" data-route="" href="#java" style="--d:1">/java</a>
+<a class="indent dash" data-route="" href="#c" style="--d:1">/c</a>
+<a class="indent dash" data-route="" href="#cpp" style="--d:1">/c++</a>
+<a class="indent dash" data-route="" href="#web" style="--d:1">/web</a>
+<a class="indent dash" data-route="" href="#dotnet" style="--d:1">/.net</a>
+<a class="indent dash" data-route="" href="#sql" style="--d:1">/sql</a>
+</div>
+</details>
+<details>
+<summary><span class="label">/academics</span></summary>
+<div class="children">
+<a class="indent dash" data-route="" href="#transcript" style="--d:1">/transcript</a>
+<details class="indent" style="--d:1">
+<summary class="indent" style="--d:1">
+<span class="label dash">/degrees</span>
+</summary>
+<div class="children">
+<a class="indent dash" data-route="" href="#csa" style="--d:2">/csa</a>
+<a class="indent dash" data-route="" href="#csd" style="--d:2">/csd</a>
+<a class="indent dash" data-route="" href="#set" style="--d:2">/set</a>
+</div>
+</details>
+<details class="indent" style="--d:1">
+<summary class="indent" style="--d:1">
+<span class="label dash">/certificates</span>
+</summary>
+<div class="children">
+<a class="indent dash" data-route="" href="#netca" style="--d:2">/netca</a>
+</div>
+</details>
+<details class="indent" style="--d:1">
+<summary class="indent" style="--d:1">
+<span class="label dash">/extracurriculars</span>
+</summary>
+<div class="children">
+<a class="indent dash" data-route="" href="#ptk" style="--d:2">/ptk</a>
+<a class="indent dash" data-route="" href="#dndclub" style="--d:2">/d&amp;dclub</a>
+</div>
+</details>
+</div>
+</details>
+<details>
+<summary><span class="label">/workinfo</span></summary>
+<div class="children">
+<a class="indent dash" data-route="" href="#resume" style="--d:1">/resume.pdf</a>
+<a class="indent dash" data-route="" href="#coverletter" style="--d:1">/genericcoverletter.pdf</a>
+<a class="indent dash" data-route="" href="#experience" style="--d:1">/experience</a>
+</div>
+</details>
+</nav>
+</aside>
+<main class="main">
+<section class="bootstage" id="bootstage">
+<p class="subhead">root@josies-archive:~$ boot</p>
+<div aria-live="polite" class="bootlines" id="bootlines"></div>
+</section>
+<section class="routes" id="routes">
+<section class="route active" id="root">
+<p class="subhead">root@josies-archive:~$ welcome</p>
+<h1 class="h1">/root</h1>
+<p>hi. welcome to josie’s archive — a personal filesystem-shaped site for projects, notes, and little proof that i’m real.</p>
+<p class="subhead">quickstart</p>
+<p>
+  - click a folder to expand it<br/>
+  - click an item to open it<br/>
+  - hit <code>ctrl</code> / <code>cmd</code> + <code>f</code> if you’re lost<br/>
+  - enjoy the unnecessary ambiance
+</p>
+<p class="subhead">what you’ll find here</p>
+<p>
+  projects: writeups, demos, screenshots, and artifacts.<br/>
+  academics: degree/cert paths + highlights.<br/>
+  workinfo: resume/cover letter + experience timeline.<br/>
+  users: personal pages and journals.
+</p>
+<p class="subhead">site notes</p>
+<p>
+  built for amoled black. minimal color. lots of whitespace. crisp type.<br/>
+  background runs behind everything (pointer-safe) and should stay subtle.
+</p>
+<div class="btnrow">
+<a class="btn" data-route="" href="#thiswebsite">how it’s built</a>
+<a class="btn" data-route="" href="#resume">open resume</a>
+<a class="btn" href="#projects" onclick="location.hash='#glitch'; return false;">jump to projects</a>
+</div>
+</section>
+<section class="route" id="josieisnotarat">
+<p class="subhead">directory</p>
+<h1 class="h1">/users/josieisnotarat</h1>
+<p>personal hub. the less-filtered version of me.</p>
+<p class="subhead">index</p>
+<p>
+- <a data-route="" href="#josie-journals">/journals</a><br/>- <a data-route="" href="#josie-bio">/bio</a><br/>- <a data-route="" href="#glitch">/projects/current/glitch</a><br/>- <a data-route="" href="#thiswebsite">/projects/current/thiswebsite</a><br/>
+</p>
+</section>
+<section class="route" id="josie-journals">
+<p class="subhead">directory</p>
+<h1 class="h1">/users/josieisnotarat/journals</h1>
+<p>journal root. some pages may be private / not mounted yet. (future: encrypt + unlock.)</p>
+<p class="subhead">folders</p>
+<p>
+  - daily logs (todo)<br/>
+  - project notes (todo)<br/>
+  - writing fragments (todo)<br/>
+  - brain dumps (todo)
+</p>
+<p class="subhead">why it exists</p>
+<p>
+  i build better when i can dump context somewhere. this is that somewhere.
+</p>
+</section>
+<section class="route" id="josie-bio">
+<p class="subhead">file</p>
+<h1 class="h1">/users/josieisnotarat/bio</h1>
+<p>hi. i’m josie — tech witch energy, terminal aesthetics, and an unreasonable amount of side projects.</p>
+<div class="btnrow">
+<a class="btn" href="#" rel="noopener" target="_blank">github (add link)</a>
+<a class="btn" href="#" rel="noopener" target="_blank">linkedin (add link)</a>
+<a class="btn" data-route="" href="#resume">resume</a>
+</div>
+<p class="subhead">vibes</p>
+<p>
+  i like building systems that feel owned: local-first tools, minimal ui, and “it just works” flows.
+  i’m into automation, embedded-ish tinkering, and interfaces that look like a machine is thinking.
+</p>
+<p class="subhead">current focus</p>
+<p>
+  - ai assistant + smart mirror stack<br/>
+  - web apps + database work<br/>
+  - hardware-adjacent lab work / troubleshooting<br/>
+  - making everything look clean on amoled black
+</p>
+<p class="subhead">favorites</p>
+<p>
+  languages: python, java, c, web, sql.<br/>
+  themes: console ui, calm chaos, dark-academia archive vibes.
+</p>
+</section>
+<section class="route" id="josephine-bio">
+<p class="subhead">file</p>
+<h1 class="h1">/users/josephine/bio</h1>
+<p>josephine “josie” wooldridge — software + it support + systems-minded problem solver.</p>
+<div class="btnrow">
+<a class="btn" href="#" rel="noopener" target="_blank">linkedin (add link)</a>
+<a class="btn" data-route="" href="#resume">resume</a>
+<a class="btn" data-route="" href="#experience">experience</a>
+</div>
+<p class="subhead">what i do</p>
+<p>
+  i build practical tools and clean interfaces, and i’m comfortable jumping between code, debugging,
+  documentation, and hands-on troubleshooting.
+</p>
+<p class="subhead">strengths</p>
+<p>
+  - customer-facing support with real ticket triage<br/>
+  - building + maintaining small systems end-to-end<br/>
+  - database-backed web apps (forms, joins, admin flows)<br/>
+  - clean documentation + “future me can read this” code style
+</p>
+<p class="subhead">looking for</p>
+<p>
+  roles that mix software + support + systems thinking: desktop/it support, junior dev, automation,
+  tooling, or hybrid ops/dev work.
+</p>
+</section>
+<section class="route" id="bedsidebistro"><p class="subhead">
             project
-          </p>
-          <h1 class="h1">
+          </p><h1 class="h1">
             /projects/completed/bedsidebistro
-          </h1>
-          <p>
+          </h1><p>
             live demo (patient view):
-          </p>
-          <div class="btnrow">
-            <a class="btn" href="http://www.bedsidebistro.com/patientview.html?mrn=MRN001"
-            target="_blank" rel="noopener">
+          </p><div class="btnrow">
+<a class="btn" href="http://www.bedsidebistro.com/patientview.html?mrn=MRN001" rel="noopener" target="_blank">
               open demo
             </a>
-            <a class="btn" href="#bedsidebistro" id="btn-reload-bb">
+<a class="btn" href="#bedsidebistro" id="btn-reload-bb">
               reload
             </a>
-          </div>
-          <div class="embed-wrap">
-            <iframe id="bb-iframe" class="embed" src="https://www.bedsidebistro.com/patientview.html?mrn=MRN001"
-            title="bedsidebistro patientview demo" loading="lazy" referrerpolicy="no-referrer"
-            sandbox="allow-scripts allow-forms allow-same-origin allow-popups">
-            </iframe>
-          </div>
-          <p class="pdf-status" id="bb-embed-status">
-          </p>
-          <p>
+</div><div class="embed-wrap">
+<iframe class="embed" id="bb-iframe" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-forms allow-same-origin allow-popups" src="https://www.bedsidebistro.com/patientview.html?mrn=MRN001" title="bedsidebistro patientview demo">
+</iframe>
+</div><p class="pdf-status" id="bb-embed-status">
+</p><p>
             project artifacts:
-          </p>
-          <p>
+          </p><p>
             -
-            <a href="http://www.bedsidebistro.com/projects/bedsidebistro/" target="_blank"
-            rel="noopener">
+            <a href="http://www.bedsidebistro.com/projects/bedsidebistro/" rel="noopener" target="_blank">
               project hub
             </a>
-            <br>
+<br/>
             -
-            <a href="http://www.bedsidebistro.com/projects/bedsidebistro/docs/" target="_blank"
-            rel="noopener">
+            <a href="http://www.bedsidebistro.com/projects/bedsidebistro/docs/" rel="noopener" target="_blank">
               docs
             </a>
-            <br>
+<br/>
             -
-            <a href="http://www.bedsidebistro.com/projects/bedsidebistro/renders/"
-            target="_blank" rel="noopener">
+            <a href="http://www.bedsidebistro.com/projects/bedsidebistro/renders/" rel="noopener" target="_blank">
               renders
             </a>
-          </p>
-        </section>
-
-
-        <section id="typefinity" class="route">
-          <p class="subhead">
+</p></section>
+<section class="route" id="typefinity">
+<p class="subhead">project</p>
+<h1 class="h1">/projects/completed/typefinity</h1>
+<p>typefinity is a terminal-ish ui system for navigating content like a filesystem — fast, minimal, and oddly cozy.</p>
+<div class="btnrow">
+<a class="btn" href="#" rel="noopener" target="_blank">project repo (add link)</a>
+<a class="btn" href="#" rel="noopener" target="_blank">demo / screenshots (add link)</a>
+<a class="btn" href="#" rel="noopener" target="_blank">writeup (add link)</a>
+</div>
+<p class="subhead">highlights</p>
+<p>
+- console-style navigation + routing<br/>- custom theming for amoled black<br/>- designed as a “personal system ui” foundation<br/>- built to be extensible: new pages feel like mounting directories<br/>
+</p>
+<p class="subhead">status</p>
+<p>active / evolving. this page is a living doc — i add artifacts as they solidify.</p>
+<p class="subhead">ui documentation</p>
+<p>screenshots slot</p>
+<div class="embed-wrap">
+<img alt="/projects/completed/typefinity screenshot" class="embed" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','&lt;p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;&gt;image missing: assets/devlab/typefinity/overview.png&lt;/p&gt;');" src="assets/devlab/typefinity/overview.png"/>
+</div>
+<p class="subhead" style="margin-top:18px;">code excerpt</p>
+<pre><code>
+# insert a short, clean snippet here later.
+# keep it small. link out for the full file.
+</code></pre>
+</section>
+<section class="route" id="glitch"><p class="subhead">
             project
-          </p>
-          <h1 class="h1">
-            /projects/completed/typefinity
-          </h1>
-          <p>
-            project writeup later.
-          </p>
-        </section>
-
-
-        <section id="glitch" class="route">
-          <p class="subhead">
-            project
-          </p>
-          <h2 class="h1">glitch</h2>
-
-  <p>
+          </p><h2 class="h1">glitch</h2><p>
     Glitch is my personal AI assistant: a voice-first interface with a custom tone, memory-aware responses,
     and an opinionated UI layer designed to feel more like a system I own than a generic chatbot.
-  </p>
-
-  <p>
+  </p><p>
     It’s built to do real work (answers, recall, routing, device control) while keeping the interaction style
     consistent: fast, minimal, and slightly chaotic when appropriate.
-  </p>
-
-  <div class="btnrow">
-    <a class="btn" href="#" target="_blank" rel="noopener">project repo (add link)</a>
-    <a class="btn" href="#" target="_blank" rel="noopener">demo video (add link)</a>
-    <a class="btn" href="#" target="_blank" rel="noopener">notes / writeup (add link)</a>
-  </div>
-
-  <p class="subhead">capabilities</p>
-  <p>
+  </p><div class="btnrow">
+<a class="btn" href="#" rel="noopener" target="_blank">project repo (add link)</a>
+<a class="btn" href="#" rel="noopener" target="_blank">demo video (add link)</a>
+<a class="btn" href="#" rel="noopener" target="_blank">notes / writeup (add link)</a>
+</div><p class="subhead">capabilities</p><p>
     conversation + reasoning: responds with consistent assistant voice, handles multi-step tasks, and keeps output structured.
-  </p>
-  <p>
+  </p><p>
     memory + recall: retrieves relevant stored notes / tags / embeddings to answer “what was that thing…” questions.
-  </p>
-  <p>
+  </p><p>
     intent routing: detects when a request should trigger automation (reminders, device control, logging, etc.).
-  </p>
-  <p>
+  </p><p>
     voice mode: wake word, speech-to-text input, and text-to-speech output for hands-free use.
-  </p>
-
-  <p class="subhead">high-level flow</p>
-  <pre><code>
+  </p><p class="subhead">high-level flow</p><pre><code>
 user input (voice or text)
       ↓
 transcription (if voice)
@@ -435,104 +345,44 @@ router:
   - run device commands
   - schedule reminders
   - log / store notes
-  </code></pre>
-
-  <p class="subhead">ui documentation</p>
-
-  <p>main console view</p>
-  <div class="embed-wrap">
-    <img
-      src="assets/devlab/glitch/console.png"
-      alt="glitch console ui"
-      class="embed"
-      onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;>image missing: assets/devlab/glitch/console.png</p>');"
-    />
-  </div>
-
-  <p style="margin-top:14px;">voice listening state</p>
-  <div class="embed-wrap">
-    <img
-      src="assets/devlab/glitch/listening.png"
-      alt="glitch listening state"
-      class="embed"
-      onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;>image missing: assets/devlab/glitch/listening.png</p>');"
-    />
-  </div>
-
-  <p style="margin-top:14px;">memory recall example</p>
-  <div class="embed-wrap">
-    <img
-      src="assets/devlab/glitch/recall.png"
-      alt="glitch memory recall example"
-      class="embed"
-      onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;>image missing: assets/devlab/glitch/recall.png</p>');"
-    />
-  </div>
-
-  <p class="subhead" style="margin-top:18px;">code excerpts</p>
-
-  <p>context assembly (insert real snippet)</p>
-  <pre><code class="language-python">
+  </code></pre><p class="subhead">ui documentation</p><p>main console view</p><div class="embed-wrap">
+<img alt="glitch console ui" class="embed" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','&lt;p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;&gt;image missing: assets/devlab/glitch/console.png&lt;/p&gt;');" src="assets/devlab/glitch/console.png"/>
+</div><p style="margin-top:14px;">voice listening state</p><div class="embed-wrap">
+<img alt="glitch listening state" class="embed" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','&lt;p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;&gt;image missing: assets/devlab/glitch/listening.png&lt;/p&gt;');" src="assets/devlab/glitch/listening.png"/>
+</div><p style="margin-top:14px;">memory recall example</p><div class="embed-wrap">
+<img alt="glitch memory recall example" class="embed" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','&lt;p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;&gt;image missing: assets/devlab/glitch/recall.png&lt;/p&gt;');" src="assets/devlab/glitch/recall.png"/>
+</div><p class="subhead" style="margin-top:18px;">code excerpts</p><p>context assembly (insert real snippet)</p><pre><code class="language-python">
 # build messages + attach retrieved memory context
 # keep it short; link out for full module
-  </code></pre>
-
-  <p>tool / intent routing (insert real snippet)</p>
-  <pre><code class="language-python">
+  </code></pre><p>tool / intent routing (insert real snippet)</p><pre><code class="language-python">
 # parse assistant output for tool intents
 # route to: devices, reminders, logging, ui updates
-  </code></pre>
-
-  <p>voice pipeline (insert real snippet)</p>
-  <pre><code class="language-python">
-# wake word -> record -> transcribe -> reply -> speak
-  </code></pre>
-
-  <p class="subhead">prompt + behavior rules</p>
-  <p>
+  </code></pre><p>voice pipeline (insert real snippet)</p><pre><code class="language-python">
+# wake word -&gt; record -&gt; transcribe -&gt; reply -&gt; speak
+  </code></pre><p class="subhead">prompt + behavior rules</p><p>
     Glitch runs with a defined system prompt and lightweight behavior rules to keep responses consistent:
     concise by default, structured output, clear boundaries, and intentional “personality” without noise.
-  </p>
-
-  <p class="subhead">expansion roadmap</p>
-  <p>
+  </p><p class="subhead">expansion roadmap</p><p>
     local-first memory store; offline recall; plugin registry; richer device scenes; daily briefing mode;
     tighter UI integration with the SmartMirror display layer; better debugging and trace logs.
-  </p>
-
-  <p class="subhead">why it matters</p>
-  <p>
+  </p><p class="subhead">why it matters</p><p>
     Glitch is an end-to-end assistant system: input, context, model calls, tool routing, and a UI layer.
     It’s a practical foundation for automation, personal knowledge retrieval, and interface design.
-  </p>
-        </section>
-
-
-        <section id="smartmirror" class="route">
-          <p class="subhead">
+  </p></section>
+<section class="route" id="smartmirror"><p class="subhead">
             project
-          </p>
-            <h2 class="h1">smartmirror</h2>
-
-  <p>
+          </p><h2 class="h1">smartmirror</h2><p>
     SmartMirror is a modular, voice-activated AI interface designed to run on a mirror panel or dedicated display.
     It functions as a personal command center that blends ambient UI, contextual recall, and smart device control
     into a minimal AMOLED console system.
-  </p>
-
-  <p>
+  </p><p>
     The goal is not to recreate a commercial assistant. The goal is to build something that feels owned:
     fast, quiet, extensible, and aesthetically intentional.
-  </p>
-
-  <div class="btnrow">
-    <a class="btn" href="#" target="_blank" rel="noopener">project repo (add link)</a>
-    <a class="btn" href="#" target="_blank" rel="noopener">demo video (add link)</a>
-    <a class="btn" href="#" target="_blank" rel="noopener">notes / writeup (add link)</a>
-  </div>
-
-  <p class="subhead">system architecture</p>
-  <pre><code>
+  </p><div class="btnrow">
+<a class="btn" href="#" rel="noopener" target="_blank">project repo (add link)</a>
+<a class="btn" href="#" rel="noopener" target="_blank">demo video (add link)</a>
+<a class="btn" href="#" rel="noopener" target="_blank">notes / writeup (add link)</a>
+</div><p class="subhead">system architecture</p><pre><code>
 [ microphone ]
       ↓
 [ wake word detection ]
@@ -546,136 +396,120 @@ router:
       ├─ on-screen console render
       ├─ device control (api)
       └─ scheduler (alarms/reminders)
-  </code></pre>
-
-  <p class="subhead">feature set</p>
-  <p>
+  </code></pre><p class="subhead">feature set</p><p>
     wake word activation: listens for <code>glitch</code>, then begins capture + transcription.
-  </p>
-  <p>
+  </p><p>
     contextual recall: searches stored notes / embeddings, returns summarized context on demand.
-  </p>
-  <p>
+  </p><p>
     smart device control: routes certain intents into api calls (lights, outlets, scene presets).
-  </p>
-  <p>
+  </p><p>
     alarms + reminders: natural language scheduling stored locally and triggered by a background scheduler.
-  </p>
-
-  <p class="subhead">ui documentation</p>
-
-  <!-- image slot: main interface -->
-  <p>
+  </p><p class="subhead">ui documentation</p><!-- image slot: main interface --><p>
     main interface
-  </p>
-  <div class="embed-wrap">
-    <!-- replace src with your asset path -->
-    <img
-      src="assets/devlab/smartmirror/ui-overview.png"
-      alt="smartmirror main ui screenshot"
-      class="embed"
-      onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;>image missing: assets/devlab/smartmirror/ui-overview.png</p>');"
-    />
-  </div>
-
-  <!-- image slot: listening state -->
-  <p style="margin-top:14px;">
+  </p><div class="embed-wrap">
+<!-- replace src with your asset path -->
+<img alt="smartmirror main ui screenshot" class="embed" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','&lt;p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;&gt;image missing: assets/devlab/smartmirror/ui-overview.png&lt;/p&gt;');" src="assets/devlab/smartmirror/ui-overview.png"/>
+</div><!-- image slot: listening state --><p style="margin-top:14px;">
     listening state
-  </p>
-  <div class="embed-wrap">
-    <img
-      src="assets/devlab/smartmirror/listening.png"
-      alt="smartmirror listening state"
-      class="embed"
-      onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;>image missing: assets/devlab/smartmirror/listening.png</p>');"
-    />
-  </div>
-
-  <!-- image slot: device feedback -->
-  <p style="margin-top:14px;">
+  </p><div class="embed-wrap">
+<img alt="smartmirror listening state" class="embed" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','&lt;p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;&gt;image missing: assets/devlab/smartmirror/listening.png&lt;/p&gt;');" src="assets/devlab/smartmirror/listening.png"/>
+</div><!-- image slot: device feedback --><p style="margin-top:14px;">
     device feedback overlay
-  </p>
-  <div class="embed-wrap">
-    <img
-      src="assets/devlab/smartmirror/device-feedback.png"
-      alt="smartmirror device feedback overlay"
-      class="embed"
-      onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;>image missing: assets/devlab/smartmirror/device-feedback.png</p>');"
-    />
-  </div>
-
-  <p class="subhead" style="margin-top:18px;">code excerpts</p>
-
-  <p>wake word prototype (insert real snippet)</p>
-  <pre><code class="language-python">
+  </p><div class="embed-wrap">
+<img alt="smartmirror device feedback overlay" class="embed" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','&lt;p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;&gt;image missing: assets/devlab/smartmirror/device-feedback.png&lt;/p&gt;');" src="assets/devlab/smartmirror/device-feedback.png"/>
+</div><p class="subhead" style="margin-top:18px;">code excerpts</p><p>wake word prototype (insert real snippet)</p><pre><code class="language-python">
 # insert your current wake word detection / mic loop here
 # keep it short; link out for full file
-  </code></pre>
-
-  <p>openai integration (insert real snippet)</p>
-  <pre><code class="language-python">
+  </code></pre><p>openai integration (insert real snippet)</p><pre><code class="language-python">
 # insert your openai call + message construction here
 # ideally show how you attach retrieved memory context
-  </code></pre>
-
-  <p>device control (insert real snippet)</p>
-  <pre><code class="language-python">
+  </code></pre><p>device control (insert real snippet)</p><pre><code class="language-python">
 # insert your govee/outlet command routing here
 # include one example payload or function signature
-  </code></pre>
-
-  <p class="subhead">expansion roadmap</p>
-  <p>
+  </code></pre><p class="subhead">expansion roadmap</p><p>
     handwriting capture + ocr ingestion; local embedding store for offline recall; modular plugins;
     dashboard mode (calendar/weather); background reacts to state; encrypted memory vault.
-  </p>
-
-  <p class="subhead">why it matters</p>
-  <p>
+  </p><p class="subhead">why it matters</p><p>
     SmartMirror demonstrates voice processing, api integration, contextual ai design, smart-device automation,
     and interface minimalism. It’s not a single demo screen — it’s a system built to grow.
-  </p>
-        </section>
-
-
-        <section id="cooltvheadthing" class="route">
-          <p class="subhead">
-            project
-          </p>
-          <h1 class="h1">
-            /projects/current/cooltvheadthing
-          </h1>
-          <p>
-            mysterious device page.
-          </p>
-        </section>
-        <section id="thiswebsite" class="route">
-          <p class="subhead">
-            project
-          </p>
-          <h1 class="h1">
-            /projects/current/thiswebsite
-          </h1>
-          <p>
-            meta: how the archive is built.
-          </p>
-        </section>
-        <section id="python" class="route">
-          <p class="subhead">
+  </p></section>
+<section class="route" id="cooltvheadthing">
+<p class="subhead">project</p>
+<h1 class="h1">/projects/current/cooltvheadthing</h1>
+<p>a mysterious device concept. think: wearable / prop / interface experiment — part costume, part display, part ‘what is that’.</p>
+<div class="btnrow">
+<a class="btn" href="#" rel="noopener" target="_blank">project repo (add link)</a>
+<a class="btn" href="#" rel="noopener" target="_blank">demo / screenshots (add link)</a>
+<a class="btn" href="#" rel="noopener" target="_blank">writeup (add link)</a>
+</div>
+<p class="subhead">highlights</p>
+<p>
+- form factor exploration + constraints<br/>- screen states + animations<br/>- battery + portability considerations<br/>- future: tie into glitch / smartmirror as an output surface<br/>
+</p>
+<p class="subhead">status</p>
+<p>active / evolving. this page is a living doc — i add artifacts as they solidify.</p>
+<p class="subhead">ui documentation</p>
+<p>screenshots slot</p>
+<div class="embed-wrap">
+<img alt="/projects/current/cooltvheadthing screenshot" class="embed" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','&lt;p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;&gt;image missing: assets/devlab/cooltvheadthing/overview.png&lt;/p&gt;');" src="assets/devlab/cooltvheadthing/overview.png"/>
+</div>
+<p class="subhead" style="margin-top:18px;">code excerpt</p>
+<pre><code>
+# insert a short, clean snippet here later.
+# keep it small. link out for the full file.
+</code></pre>
+</section>
+<section class="route" id="thiswebsite">
+<p class="subhead">project</p>
+<h1 class="h1">/projects/current/thiswebsite</h1>
+<p>this whole site: a filesystem-themed portfolio built for speed, readability, and vibes.</p>
+<div class="btnrow">
+<a class="btn" href="#" rel="noopener" target="_blank">project repo (add link)</a>
+<a class="btn" href="#" rel="noopener" target="_blank">demo / screenshots (add link)</a>
+<a class="btn" href="#" rel="noopener" target="_blank">writeup (add link)</a>
+</div>
+<p class="subhead">highlights</p>
+<p>
+- hash router + mounted routes<br/>- boot sequence + sidebar swipe-in<br/>- pdf.js viewer (resume) with file:// fallback<br/>- canvas background layer (sparkle swirl) kept pointer-safe<br/>
+</p>
+<p class="subhead">status</p>
+<p>active / evolving. this page is a living doc — i add artifacts as they solidify.</p>
+<p class="subhead">ui documentation</p>
+<p>screenshots slot</p>
+<div class="embed-wrap">
+<img alt="/projects/current/thiswebsite screenshot" class="embed" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','&lt;p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;&gt;image missing: assets/devlab/thiswebsite/overview.png&lt;/p&gt;');" src="assets/devlab/thiswebsite/overview.png"/>
+</div>
+<p class="subhead" style="margin-top:18px;">code excerpt</p>
+<pre><code>
+# insert a short, clean snippet here later.
+# keep it small. link out for the full file.
+</code></pre>
+<p class="subhead">implementation notes</p>
+<p>
+  layout: sidebar + divider + routes area.<br/>
+  routing: hash-based, no framework needed.<br/>
+  styling: one mono font, sharp hierarchy, soft glow, and “don’t blind me” contrast.
+</p>
+<p class="subhead">roadmap</p>
+<p>
+  - mount more artifacts (pdfs, renders, screenshots)<br/>
+  - add per-project galleries + changelogs<br/>
+  - make pdf viewer reusable for multiple docs (resume + cover letter + more)
+</p>
+</section>
+<section class="route" id="python"><p class="subhead">
             directory
-          </p>
-          <h1 class="h1">
+          </p><h1 class="h1">
             /languages/python
-          </h1>
-          <ol>
-    <li>
-      <h2>Nested Input Validation Workflow</h2>
-      <p>
+          </h1><ol>
+<li>
+<h2>Nested Input Validation Workflow</h2>
+<p>
         This function repeatedly prompts for employee data and only proceeds when each
         validation step succeeds. It demonstrates a defensive, user-input-first style that
         chains together specialized validation helpers.
       </p>
-      <pre><code>def ValidateInputs():
+<pre><code>def ValidateInputs():
     strFlag = False
     while strFlag == False:
         strEmployeeStatus = str(input("Enter employee status (management or hourly): "))
@@ -691,15 +525,14 @@ router:
                     strFlag, decSubtotal = ValidateDecInput(decSubtotal)
                     if strFlag == True:
                         return strEmployeeStatus, intYearsEmployed, decYTDPurchases, decSubtotal</code></pre>
-    </li>
-
-    <li>
-      <h2>Order Discount Capped at Annual Limit</h2>
-      <p>
+</li>
+<li>
+<h2>Order Discount Capped at Annual Limit</h2>
+<p>
         This pricing function applies a computed order discount but enforces a $200 yearly
         cap. It is a compact example of business-rule enforcement with conditional guards.
       </p>
-      <pre><code>def CalculateOrderDiscount(decSubtotal, decDiscountPercent, decYTDDiscount):
+<pre><code>def CalculateOrderDiscount(decSubtotal, decDiscountPercent, decYTDDiscount):
     decOrderDiscount = decSubtotal * decDiscountPercent
 
     if decYTDDiscount &gt; 200.00:
@@ -709,16 +542,15 @@ router:
             decOrderDiscount = 200.00 - decYTDDiscount
 
     return decOrderDiscount</code></pre>
-    </li>
-
-    <li>
-      <h2>Property Setter with Type and Range Validation</h2>
-      <p>
+</li>
+<li>
+<h2>Property Setter with Type and Range Validation</h2>
+<p>
         The <code>intAge</code> property setter in the <code>Person</code> class converts
         the input to an integer and enforces an age range. It highlights encapsulation and
         validation through Python properties.
       </p>
-      <pre><code>@intAge.setter
+<pre><code>@intAge.setter
 def intAge(self, intAge):
     try:
         intAge = int(intAge)
@@ -730,16 +562,15 @@ def intAge(self, intAge):
         raise Exception ("Age must be numeric.")
     else:
         self.__intAge = intAge</code></pre>
-    </li>
-
-    <li>
-      <h2>Inheritance-Based Graduate Initialization</h2>
-      <p>
+</li>
+<li>
+<h2>Inheritance-Based Graduate Initialization</h2>
+<p>
         This constructor shows class inheritance in action. <code>Graduate</code> extends
         <code>Student</code>, updates aggregate class counters, and tracks employment
         metrics by gender.
       </p>
-      <pre><code>def __init__(self, strFirstName, strLastName, strGender, decGpa, intAge, intGraduationYear, strJobStatus):
+<pre><code>def __init__(self, strFirstName, strLastName, strGender, decGpa, intAge, intGraduationYear, strJobStatus):
     Student.__init__(self, strFirstName, strLastName, strGender, decGpa, intAge)
     self.intGraduationYear = intGraduationYear
     self.strJobStatus = strJobStatus
@@ -752,16 +583,15 @@ def intAge(self, intAge):
             Graduate.intEmployedMaleCount += 1
         elif self.strGender.lower() == "female":
             Graduate.intEmployedFemaleCount += 1</code></pre>
-    </li>
-
-    <li>
-      <h2>Bike Return Billing with Promotions</h2>
-      <p>
+</li>
+<li>
+<h2>Bike Return Billing with Promotions</h2>
+<p>
         This return-processing logic computes rental charges for hourly, daily, or weekly
         rentals, then applies family and coupon discounts. It is a strong example of state
         updates plus transactional invoice behavior.
       </p>
-      <pre><code>if rentalTime and rentalBasis and numOfBikes and strBikeType:
+<pre><code>if rentalTime and rentalBasis and numOfBikes and strBikeType:
     self.stock += numOfBikes
     now = datetime.now()
     rentalPeriod = now - rentalTime
@@ -785,136 +615,249 @@ def intAge(self, intAge):
         print("You are eligible for a 10% coupon discount")
         decPreDiscount = bill
         bill *= 0.90</code></pre>
-    </li>
-  </ol>
-        </section>
-        <section id="java" class="route">
-          <p class="subhead">
-            directory
-          </p>
-          <h1 class="h1">
-            /languages/java
-          </h1>
-          <p>
-            notes + snippets.
-          </p>
-        </section>
-        <section id="c" class="route">
-          <p class="subhead">
-            directory
-          </p>
-          <h1 class="h1">
-            /languages/c
-          </h1>
-          <p>
-            notes + snippets.
-          </p>
-        </section>
-        <section id="cpp" class="route">
-          <p class="subhead">
-            directory
-          </p>
-          <h1 class="h1">
-            /languages/c++
-          </h1>
-          <p>
-            notes + snippets.
-          </p>
-        </section>
-        <section id="web" class="route">
-          <p class="subhead">
-            directory
-          </p>
-          <h1 class="h1">
-            /languages/web
-          </h1>
-          <p>
-            notes + snippets.
-          </p>
-        </section>
-        <section id="dotnet" class="route">
-          <p class="subhead">
-            directory
-          </p>
-          <h1 class="h1">
-            /languages/.net
-          </h1>
-          <p>
-            notes + snippets.
-          </p>
-        </section>
-        <section id="sql" class="route">
-          <p class="subhead">
-            directory
-          </p>
-          <h1 class="h1">
-            /languages/sql
-          </h1>
-          <p>
-            notes + snippets.
-          </p>
-        </section>
-        <section id="transcript" class="route">
-          <p class="subhead">
+</li>
+</ol></section>
+<section class="route" id="java">
+<p class="subhead">directory</p>
+<h1 class="h1">/languages/java</h1>
+<p>notes + snippets from coursework + projects.</p>
+<p class="subhead">what i use it for</p>
+<p>
+- oop patterns (classes, inheritance, interfaces)<br/>- input validation styles + clean console apps<br/>- database connectivity practice + mvc-ish organization<br/>- small utilities + coursework projects<br/>
+</p>
+<p class="subhead">snippet shelf</p>
+<p>little patterns i reuse a lot (cleaner writeups coming soon):</p>
+<ol>
+<li>
+<h2>starter template</h2>
+<p>basic structure + conventions i keep repeating.</p>
+<pre><code>// placeholder — add your favorite snippet here
+</code></pre>
+</li>
+<li>
+<h2>common gotchas</h2>
+<p>notes i wish someone tattooed on my forehead earlier.</p>
+<pre><code>// placeholder — list 2–3 gotchas + solutions
+</code></pre>
+</li>
+</ol>
+</section>
+<section class="route" id="c">
+<p class="subhead">directory</p>
+<h1 class="h1">/languages/c</h1>
+<p>notes + snippets. low-level fundamentals + pointer-heavy assignments.</p>
+<p class="subhead">what i use it for</p>
+<p>
+- loops + validation + clean console formatting<br/>- procedures, pointers, malloc + dynamic arrays<br/>- struct-based csv ingest + analysis projects<br/>
+</p>
+<p class="subhead">snippet shelf</p>
+<p>little patterns i reuse a lot (cleaner writeups coming soon):</p>
+<ol>
+<li>
+<h2>starter template</h2>
+<p>basic structure + conventions i keep repeating.</p>
+<pre><code>// placeholder — add your favorite snippet here
+</code></pre>
+</li>
+<li>
+<h2>common gotchas</h2>
+<p>notes i wish someone tattooed on my forehead earlier.</p>
+<pre><code>// placeholder — list 2–3 gotchas + solutions
+</code></pre>
+</li>
+</ol>
+</section>
+<section class="route" id="cpp">
+<p class="subhead">directory</p>
+<h1 class="h1">/languages/c++</h1>
+<p>notes + snippets. mostly for systems-y practice and data structures.</p>
+<p class="subhead">what i use it for</p>
+<p>
+- classes + basics, when i need performance or structure<br/>- projects where i want stricter typing than js<br/>- small experiments + utilities<br/>
+</p>
+<p class="subhead">snippet shelf</p>
+<p>little patterns i reuse a lot (cleaner writeups coming soon):</p>
+<ol>
+<li>
+<h2>starter template</h2>
+<p>basic structure + conventions i keep repeating.</p>
+<pre><code>// placeholder — add your favorite snippet here
+</code></pre>
+</li>
+<li>
+<h2>common gotchas</h2>
+<p>notes i wish someone tattooed on my forehead earlier.</p>
+<pre><code>// placeholder — list 2–3 gotchas + solutions
+</code></pre>
+</li>
+</ol>
+</section>
+<section class="route" id="web">
+<p class="subhead">directory</p>
+<h1 class="h1">/languages/web</h1>
+<p>html/css/js notes + ui experiments + little background monsters.</p>
+<p class="subhead">what i use it for</p>
+<p>
+- interfaces (this site, dashboards, prototypes)<br/>- animation + canvas backgrounds (subtle, not laggy)<br/>- forms + routing + components without frameworks<br/>
+</p>
+<p class="subhead">snippet shelf</p>
+<p>little patterns i reuse a lot (cleaner writeups coming soon):</p>
+<ol>
+<li>
+<h2>starter template</h2>
+<p>basic structure + conventions i keep repeating.</p>
+<pre><code>// placeholder — add your favorite snippet here
+</code></pre>
+</li>
+<li>
+<h2>common gotchas</h2>
+<p>notes i wish someone tattooed on my forehead earlier.</p>
+<pre><code>// placeholder — list 2–3 gotchas + solutions
+</code></pre>
+</li>
+</ol>
+</section>
+<section class="route" id="dotnet">
+<p class="subhead">directory</p>
+<h1 class="h1">/languages/.net</h1>
+<p>notes + snippets for .net / c# work (apis, tooling, and the occasional suffering).</p>
+<p class="subhead">what i use it for</p>
+<p>
+- api work + structured routing<br/>- database-backed apps<br/>- clean project structure + docs<br/>
+</p>
+<p class="subhead">snippet shelf</p>
+<p>little patterns i reuse a lot (cleaner writeups coming soon):</p>
+<ol>
+<li>
+<h2>starter template</h2>
+<p>basic structure + conventions i keep repeating.</p>
+<pre><code>// placeholder — add your favorite snippet here
+</code></pre>
+</li>
+<li>
+<h2>common gotchas</h2>
+<p>notes i wish someone tattooed on my forehead earlier.</p>
+<pre><code>// placeholder — list 2–3 gotchas + solutions
+</code></pre>
+</li>
+</ol>
+</section>
+<section class="route" id="sql">
+<p class="subhead">directory</p>
+<h1 class="h1">/languages/sql</h1>
+<p>queries, joins, schema notes, and ‘why is this returning duplicates’ archaeology.</p>
+<p class="subhead">what i use it for</p>
+<p>
+- joins + aggregates for stats pages<br/>- insert/update flows for web apps<br/>- schema design + constraints + naming consistency<br/>
+</p>
+<p class="subhead">snippet shelf</p>
+<p>little patterns i reuse a lot (cleaner writeups coming soon):</p>
+<ol>
+<li>
+<h2>starter template</h2>
+<p>basic structure + conventions i keep repeating.</p>
+<pre><code>// placeholder — add your favorite snippet here
+</code></pre>
+</li>
+<li>
+<h2>common gotchas</h2>
+<p>notes i wish someone tattooed on my forehead earlier.</p>
+<pre><code>// placeholder — list 2–3 gotchas + solutions
+</code></pre>
+</li>
+</ol>
+</section>
+<section class="route" id="transcript">
+<p class="subhead">file</p>
+<h1 class="h1">/academics/transcript</h1>
+<p>high-level snapshot of coursework + milestones. (full transcript artifact can live here later.)</p>
+<p class="subhead">at a glance</p>
+<p>
+  - multi-discipline tech track (software + support + systems)<br/>
+  - honors + leadership sprinkled in<br/>
+  - project-heavy coursework (labs, builds, reports, demos)
+</p>
+<p class="subhead">programs</p>
+<p>
+  - network administration / computer support administration<br/>
+  - software development<br/>
+  - software engineering technologies<br/>
+  - certificates: network admin track
+</p>
+<p class="subhead">artifacts</p>
+<div class="btnrow">
+<a class="btn" href="#" rel="noopener" target="_blank">transcript pdf (add link)</a>
+<a class="btn" data-route="" href="#set">degrees</a>
+<a class="btn" data-route="" href="#ptk">extracurriculars</a>
+</div>
+<p class="subhead">notes</p>
+<p>if you’re reading this: yes, i keep receipts. i just haven’t mounted them here yet.</p>
+</section>
+<!-- resume: viewer + download -->
+<section class="route" id="resume"><p class="subhead">
             file
-          </p>
-          <h1 class="h1">
-            /academics/transcript
-          </h1>
-          <p>
-            transcript summary / embed later.
-          </p>
-        </section>
-        <!-- resume: viewer + download -->
-        <section id="resume" class="route">
-          <p class="subhead">
-            file
-          </p>
-          <h1 class="h1">
+          </p><h1 class="h1">
             /workinfo/resume.pdf
-          </h1>
-          <div class="btnrow">
-            <input class="filepick" id="pick-resume" type="file" accept="application/pdf">
-            <a class="btn" id="btn-open-raw" href="assets/resume.pdf" target="_blank"
-            rel="noopener">
+          </h1><div class="btnrow">
+<input accept="application/pdf" class="filepick" id="pick-resume" type="file"/>
+<a class="btn" href="assets/resume.pdf" id="btn-open-raw" rel="noopener" target="_blank">
               open raw
             </a>
-            <a class="btn" id="btn-download" href="#" download="resume.pdf" aria-disabled="true">
+<a aria-disabled="true" class="btn" download="resume.pdf" href="#" id="btn-download">
               download
             </a>
-            <button class="btn" id="btn-reload" type="button">
+<button class="btn" id="btn-reload" type="button">
               reload
             </button>
-          </div>
-          <div id="pdf-status" class="pdf-status">
-          </div>
-          <div id="pdf-container" class="pdf-container">
-          </div>
-        </section>
-        <section id="coverletter" class="route">
-          <p class="subhead">
-            file
-          </p>
-          <h1 class="h1">
-            /workinfo/genericcoverletter.pdf
-          </h1>
-          <p>
-            pdf embed later.
-          </p>
-        </section>
-        <section id="experience" class="route">
-          <p class="subhead">
-            directory
-          </p>
-          <h1 class="h1">
-            /workinfo/experience
-          </h1>
-          <p>
-            experience timeline.
-          </p>
-        </section>
-      </section>
-    </main>
-  </body>
-
+</div><div class="pdf-status" id="pdf-status">
+</div><div class="pdf-container" id="pdf-container">
+</div></section>
+<section class="route" id="coverletter">
+<p class="subhead">file</p>
+<h1 class="h1">/workinfo/genericcoverletter.pdf</h1>
+<p>a flexible cover letter base that i customize per role.</p>
+<div class="btnrow">
+<a class="btn" href="assets/genericcoverletter.pdf" rel="noopener" target="_blank">open raw</a>
+<a class="btn" download="genericcoverletter.pdf" href="assets/genericcoverletter.pdf">download</a>
+<a class="btn" data-route="" href="#resume">resume</a>
+</div>
+<p class="subhead">what’s inside</p>
+<p>
+  - quick “who i am” intro<br/>
+  - a tight paragraph on results + impact<br/>
+  - a modular section i swap depending on the posting<br/>
+  - clean closing + contact
+</p>
+<p class="subhead">todo</p>
+<p>optional: embed viewer like resume once i unify the pdf loader for multiple docs.</p>
+</section>
+<section class="route" id="experience">
+<p class="subhead">directory</p>
+<h1 class="h1">/workinfo/experience</h1>
+<p>a readable timeline of the stuff i’ve done — support work, builds, and the “i fixed it” receipts.</p>
+<p class="subhead">timeline</p>
+<ol>
+<li>
+<h2>lab center / campus it technician</h2>
+<p>hands-on troubleshooting, device deployment, inventory-ish work, and user support.</p>
+</li>
+<li>
+<h2>software projects</h2>
+<p>database-backed web apps, local tools, and a lot of “ship the thing” energy.</p>
+</li>
+<li>
+<h2>leadership + orgs</h2>
+<p>honors / ptk involvement, coordination, and presentations.</p>
+</li>
+</ol>
+<p class="subhead">artifacts</p>
+<div class="btnrow">
+<a class="btn" data-route="" href="#resume">resume</a>
+<a class="btn" href="#projects" onclick="location.hash='#bedsidebistro'; return false;">projects</a>
+<a class="btn" href="#" rel="noopener" target="_blank">portfolio notes (add link)</a>
+</div>
+</section>
+</section>
+</main>
+</body>
 </html>
