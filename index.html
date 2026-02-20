@@ -1,491 +1,920 @@
-<!-- root.html
-     josie's archive — amoled filesystem site
-     includes:
-     - boot -> swipe sidebar in -> show routes
-     - router (hash-based)
-     - pdf viewer (pdf.js) with:
-        - auto-load when served
-        - file picker fallback on file:// (no server required)
-        - download button + open raw
+<!-- root.html josie's archive — amoled filesystem site includes: - boot
+-> swipe sidebar in -> show routes
+- router (hash-based)
+- pdf viewer (pdf.js) with:
+- auto-load when served
+- file picker fallback on file:// (no server required)
+- download button + open raw
 -->
-
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>josie's archive</title>
-  <link rel="stylesheet" href="amoled-shell.css" />
-
-  <!-- pdf.js (cdnjs exposes window.pdfjsLib) -->
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-</head>
-
-<body>
-  <aside class="sidebar" aria-label="sidebar">
-    <div class="brand">
-      <h1 class="h1">josie's archive</h1>
-      <p class="quote">“you’ve come to the right place.”</p>
-    </div>
-
-    <nav class="tree" id="dirlist" aria-label="directories">
-      <a class="label" href="#root" data-route>/root</a>
-
-      <details open>
-        <summary><span class="label">/users</span></summary>
-        <div class="children">
-
-          <details class="indent" style="--d:1" open>
-            <summary class="indent" style="--d:1">
-              <span class="label dash">/josieisnotarat</span>
-            </summary>
-            <div class="children">
-              <a class="indent dash" style="--d:2" href="#josie-journals" data-route>/journals</a>
-              <a class="indent dash" style="--d:2" href="#josie-bio" data-route>/bio</a>
-            </div>
-          </details>
-
-          <details class="indent" style="--d:1">
-            <summary class="indent" style="--d:1">
-              <span class="label dash">/josephine</span>
-            </summary>
-            <div class="children">
-              <a class="indent dash" style="--d:2" href="#josephine-bio" data-route>/bio</a>
-            </div>
-          </details>
-
-        </div>
-      </details>
-
-      <details>
-        <summary><span class="label">/projects</span></summary>
-        <div class="children">
-
-          <details class="indent" style="--d:1">
-            <summary class="indent" style="--d:1">
-              <span class="label dash">/completed</span>
-            </summary>
-            <div class="children">
-              <a class="indent dash" style="--d:2" href="#bedsidebistro" data-route>/bedsidebistro</a>
-              <a class="indent dash" style="--d:2" href="#typefinity" data-route>/typefinity</a>
-            </div>
-          </details>
-
-          <details class="indent" style="--d:1" open>
-            <summary class="indent" style="--d:1">
-              <span class="label dash">/current</span>
-            </summary>
-            <div class="children">
-              <a class="indent dash" style="--d:2" href="#glitch" data-route>/glitch</a>
-              <a class="indent dash" style="--d:2" href="#smartmirror" data-route>/smartmirror</a>
-              <a class="indent dash" style="--d:2" href="#cooltvheadthing" data-route>/cooltvheadthing</a>
-              <a class="indent dash" style="--d:2" href="#thiswebsite" data-route>/thiswebsite</a>
-            </div>
-          </details>
-
-        </div>
-      </details>
-
-      <details>
-        <summary><span class="label">/languages</span></summary>
-        <div class="children">
-          <a class="indent dash" style="--d:1" href="#python" data-route>/python</a>
-          <a class="indent dash" style="--d:1" href="#java" data-route>/java</a>
-          <a class="indent dash" style="--d:1" href="#c" data-route>/c</a>
-          <a class="indent dash" style="--d:1" href="#cpp" data-route>/c++</a>
-          <a class="indent dash" style="--d:1" href="#web" data-route>/web</a>
-          <a class="indent dash" style="--d:1" href="#dotnet" data-route>/.net</a>
-          <a class="indent dash" style="--d:1" href="#sql" data-route>/sql</a>
-        </div>
-      </details>
-
-      <details>
-        <summary><span class="label">/academics</span></summary>
-        <div class="children">
-          <a class="indent dash" style="--d:1" href="#transcript" data-route>/transcript</a>
-
-          <details class="indent" style="--d:1">
-            <summary class="indent" style="--d:1">
-              <span class="label dash">/degrees</span>
-            </summary>
-            <div class="children">
-              <a class="indent dash" style="--d:2" href="#csa" data-route>/csa</a>
-              <a class="indent dash" style="--d:2" href="#csd" data-route>/csd</a>
-              <a class="indent dash" style="--d:2" href="#set" data-route>/set</a>
-            </div>
-          </details>
-
-          <details class="indent" style="--d:1">
-            <summary class="indent" style="--d:1">
-              <span class="label dash">/certificates</span>
-            </summary>
-            <div class="children">
-              <a class="indent dash" style="--d:2" href="#netca" data-route>/netca</a>
-            </div>
-          </details>
-
-          <details class="indent" style="--d:1">
-            <summary class="indent" style="--d:1">
-              <span class="label dash">/extracurriculars</span>
-            </summary>
-            <div class="children">
-              <a class="indent dash" style="--d:2" href="#ptk" data-route>/ptk</a>
-              <a class="indent dash" style="--d:2" href="#dndclub" data-route>/d&dclub</a>
-            </div>
-          </details>
-
-        </div>
-      </details>
-
-      <details>
-        <summary><span class="label">/workinfo</span></summary>
-        <div class="children">
-          <a class="indent dash" style="--d:1" href="#resume" data-route>/resume.pdf</a>
-          <a class="indent dash" style="--d:1" href="#coverletter" data-route>/genericcoverletter.pdf</a>
-          <a class="indent dash" style="--d:1" href="#experience" data-route>/experience</a>
-        </div>
-      </details>
-    </nav>
-  </aside>
-
-  <main class="main">
-    <section class="bootstage" id="bootstage">
-      <p class="subhead">root@josies-archive:~$ boot</p>
-      <div class="bootlines" id="bootlines" aria-live="polite"></div>
-    </section>
-
-    <section class="routes" id="routes">
-
-      <section id="root" class="route active">
-        <p class="subhead">root@josies-archive:~$ welcome</p>
-        <h1 class="h1">/root</h1>
-
-        <p>hi. welcome to josie's archive.</p>
-        <p>this is a directory-based site. open folders on the left, pick a path, and you land here on the right.</p>
-
-        <p>quickstart:</p>
-        <p>
-          - click a folder to expand it<br>
-          - click an item to open it<br>
-          - deep links work: <code>#root</code> / <code>#smartmirror</code> / etc
+  
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>
+      josie's archive
+    </title>
+    <link rel="stylesheet" href="amoled-shell.css" />
+    <!-- pdf.js (use https; http can get blocked) -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
+    </script>
+    <!-- your scripts (defer=w ait for DOM; order preserved) -->
+    <script defer src="scripts/pdf.js">
+    </script>
+    <script defer src="scripts/sparkle-swirl.js">
+    </script>
+    <script defer src="scripts/pretty.js">
+    </script>
+    <script defer src="scripts/boot.js">
+    </script>
+  </head>
+  
+  <body>
+    <canvas id="bg" aria-hidden="true">
+    </canvas>
+    <aside class="sidebar" aria-label="sidebar">
+      <div class="brand">
+        <h1 class="h1">
+          josie's archive
+        </h1>
+        <p class="quote">
+          “you’ve come to the right place.”
         </p>
-
-        <p>recommended paths:</p>
-        <p>
-          - <a href="#josie-journals" data-route>users / josieisnotarat / journals</a><br>
-          - <a href="#josephine-bio" data-route>users / josephine / bio</a><br>
-          - <a href="#smartmirror" data-route>projects / current / smartmirror</a><br>
-          - <a href="#glitch" data-route>projects / current / glitch</a><br>
-          - <a href="#bedsidebistro" data-route>projects / completed / bedsidebistro</a><br>
-          - <a href="#resume" data-route>workinfo / resume.pdf</a>
+      </div>
+      <nav class="tree" id="dirlist" aria-label="directories">
+        <a class="label" href="#root" data-route>
+          /root
+        </a>
+        <details open>
+          <summary>
+            <span class="label">
+              /users
+            </span>
+          </summary>
+          <div class="children">
+            <details class="indent" style="--d:1" open>
+              <summary class="indent" style="--d:1">
+                <span class="label dash">
+                  /josieisnotarat
+                </span>
+              </summary>
+              <div class="children">
+                <a class="indent dash" style="--d:2" href="#josie-journals" data-route>
+                  /journals
+                </a>
+                <a class="indent dash" style="--d:2" href="#josie-bio" data-route>
+                  /bio
+                </a>
+              </div>
+            </details>
+            <details class="indent" style="--d:1">
+              <summary class="indent" style="--d:1">
+                <span class="label dash">
+                  /josephine
+                </span>
+              </summary>
+              <div class="children">
+                <a class="indent dash" style="--d:2" href="#josephine-bio" data-route>
+                  /bio
+                </a>
+              </div>
+            </details>
+          </div>
+        </details>
+        <details>
+          <summary>
+            <span class="label">
+              /projects
+            </span>
+          </summary>
+          <div class="children">
+            <details class="indent" style="--d:1">
+              <summary class="indent" style="--d:1">
+                <span class="label dash">
+                  /completed
+                </span>
+              </summary>
+              <div class="children">
+                <a class="indent dash" style="--d:2" href="#bedsidebistro" data-route>
+                  /bedsidebistro
+                </a>
+                <a class="indent dash" style="--d:2" href="#typefinity" data-route>
+                  /typefinity
+                </a>
+              </div>
+            </details>
+            <details class="indent" style="--d:1" open>
+              <summary class="indent" style="--d:1">
+                <span class="label dash">
+                  /current
+                </span>
+              </summary>
+              <div class="children">
+                <a class="indent dash" style="--d:2" href="#glitch" data-route>
+                  /glitch
+                </a>
+                <a class="indent dash" style="--d:2" href="#smartmirror" data-route>
+                  /smartmirror
+                </a>
+                <a class="indent dash" style="--d:2" href="#cooltvheadthing" data-route>
+                  /cooltvheadthing
+                </a>
+                <a class="indent dash" style="--d:2" href="#thiswebsite" data-route>
+                  /thiswebsite
+                </a>
+              </div>
+            </details>
+          </div>
+        </details>
+        <details>
+          <summary>
+            <span class="label">
+              /languages
+            </span>
+          </summary>
+          <div class="children">
+            <a class="indent dash" style="--d:1" href="#python" data-route>
+              /python
+            </a>
+            <a class="indent dash" style="--d:1" href="#java" data-route>
+              /java
+            </a>
+            <a class="indent dash" style="--d:1" href="#c" data-route>
+              /c
+            </a>
+            <a class="indent dash" style="--d:1" href="#cpp" data-route>
+              /c++
+            </a>
+            <a class="indent dash" style="--d:1" href="#web" data-route>
+              /web
+            </a>
+            <a class="indent dash" style="--d:1" href="#dotnet" data-route>
+              /.net
+            </a>
+            <a class="indent dash" style="--d:1" href="#sql" data-route>
+              /sql
+            </a>
+          </div>
+        </details>
+        <details>
+          <summary>
+            <span class="label">
+              /academics
+            </span>
+          </summary>
+          <div class="children">
+            <a class="indent dash" style="--d:1" href="#transcript" data-route>
+              /transcript
+            </a>
+            <details class="indent" style="--d:1">
+              <summary class="indent" style="--d:1">
+                <span class="label dash">
+                  /degrees
+                </span>
+              </summary>
+              <div class="children">
+                <a class="indent dash" style="--d:2" href="#csa" data-route>
+                  /csa
+                </a>
+                <a class="indent dash" style="--d:2" href="#csd" data-route>
+                  /csd
+                </a>
+                <a class="indent dash" style="--d:2" href="#set" data-route>
+                  /set
+                </a>
+              </div>
+            </details>
+            <details class="indent" style="--d:1">
+              <summary class="indent" style="--d:1">
+                <span class="label dash">
+                  /certificates
+                </span>
+              </summary>
+              <div class="children">
+                <a class="indent dash" style="--d:2" href="#netca" data-route>
+                  /netca
+                </a>
+              </div>
+            </details>
+            <details class="indent" style="--d:1">
+              <summary class="indent" style="--d:1">
+                <span class="label dash">
+                  /extracurriculars
+                </span>
+              </summary>
+              <div class="children">
+                <a class="indent dash" style="--d:2" href="#ptk" data-route>
+                  /ptk
+                </a>
+                <a class="indent dash" style="--d:2" href="#dndclub" data-route>
+                  /d&dclub
+                </a>
+              </div>
+            </details>
+          </div>
+        </details>
+        <details>
+          <summary>
+            <span class="label">
+              /workinfo
+            </span>
+          </summary>
+          <div class="children">
+            <a class="indent dash" style="--d:1" href="#resume" data-route>
+              /resume.pdf
+            </a>
+            <a class="indent dash" style="--d:1" href="#coverletter" data-route>
+              /genericcoverletter.pdf
+            </a>
+            <a class="indent dash" style="--d:1" href="#experience" data-route>
+              /experience
+            </a>
+          </div>
+        </details>
+      </nav>
+    </aside>
+    <main class="main">
+      <section class="bootstage" id="bootstage">
+        <p class="subhead">
+          root@josies-archive:~$ boot
         </p>
-
-        <p>notes:</p>
-        <p>
-          - this is intentionally minimal. amoled black. white text. one divider line.<br>
-          - pdf pages will render cleanly (no browser chrome). ”<br>
-          - if you get lost, hit <a href="#root" data-route>/root</a>.
-        </p>
+        <div class="bootlines" id="bootlines" aria-live="polite">
+        </div>
       </section>
+      <section class="routes" id="routes">
+        <section id="root" class="route active">
+          <p class="subhead">
+            root@josies-archive:~$ welcome
+          </p>
+          <h1 class="h1">
+            /root
+          </h1>
+          <p>
+            hi. welcome to josie's archive.
+          </p>
+          <p>
+            quickstart:
+          </p>
+          <p>
+            - click a folder to expand it
+            <br>
+            - click an item to open it
+            <br>
+            - look cool while you're doing it
+          </p>
+        </section>
 
-      <section id="josieisnotarat" class="route">
-        <p class="subhead">directory</p>
-        <h1 class="h1">/users/josieisnotarat</h1>
-        <p>personal hub.</p>
-      </section>
 
-      <section id="josie-journals" class="route">
-        <p class="subhead">directory</p>
-        <h1 class="h1">/users/josieisnotarat/journals</h1>
-        <p>personal journals root.</p>
-      </section>
+        <section id="josieisnotarat" class="route">
+          <p class="subhead">
+            directory
+          </p>
+          <h1 class="h1">
+            /users/josieisnotarat
+          </h1>
+          <p>
+            personal hub.
+          </p>
+        </section>
 
-      <section id="josie-bio" class="route">
-        <p class="subhead">file</p>
-        <h1 class="h1">/users/josieisnotarat/bio</h1>
-        <p>short bio page.</p>
-      </section>
 
-      <section id="josephine-bio" class="route">
-        <p class="subhead">file</p>
-        <h1 class="h1">/users/josephine/bio</h1>
-        <p>work-focused bio page.</p>
-      </section>
+        <section id="josie-journals" class="route">
+          <p class="subhead">
+            directory
+          </p>
+          <h1 class="h1">
+            /users/josieisnotarat/journals
+          </h1>
+          <p>
+            personal journals root.
+          </p>
+        </section>
 
-      <section id="bedsidebistro" class="route">
-  <p class="subhead">project</p>
-  <h1 class="h1">/projects/completed/bedsidebistro</h1>
 
-  <p>live demo (patient view):</p>
+        <section id="josie-bio" class="route">
+          <p class="subhead">
+            file
+          </p>
+          <h1 class="h1">
+            /users/josieisnotarat/bio
+          </h1>
+          <p>
+            short bio page.
+          </p>
+        </section>
+
+
+        <section id="josephine-bio" class="route">
+          <p class="subhead">
+            file
+          </p>
+          <h1 class="h1">
+            /users/josephine/bio
+          </h1>
+          <p>
+            work-focused bio page.
+          </p>
+        </section>
+
+
+        <section id="bedsidebistro" class="route">
+          <p class="subhead">
+            project
+          </p>
+          <h1 class="h1">
+            /projects/completed/bedsidebistro
+          </h1>
+          <p>
+            live demo (patient view):
+          </p>
+          <div class="btnrow">
+            <a class="btn" href="http://www.bedsidebistro.com/patientview.html?mrn=MRN001"
+            target="_blank" rel="noopener">
+              open demo
+            </a>
+            <a class="btn" href="#bedsidebistro" id="btn-reload-bb">
+              reload
+            </a>
+          </div>
+          <div class="embed-wrap">
+            <iframe id="bb-iframe" class="embed" src="https://www.bedsidebistro.com/patientview.html?mrn=MRN001"
+            title="bedsidebistro patientview demo" loading="lazy" referrerpolicy="no-referrer"
+            sandbox="allow-scripts allow-forms allow-same-origin allow-popups">
+            </iframe>
+          </div>
+          <p class="pdf-status" id="bb-embed-status">
+          </p>
+          <p>
+            project artifacts:
+          </p>
+          <p>
+            -
+            <a href="http://www.bedsidebistro.com/projects/bedsidebistro/" target="_blank"
+            rel="noopener">
+              project hub
+            </a>
+            <br>
+            -
+            <a href="http://www.bedsidebistro.com/projects/bedsidebistro/docs/" target="_blank"
+            rel="noopener">
+              docs
+            </a>
+            <br>
+            -
+            <a href="http://www.bedsidebistro.com/projects/bedsidebistro/renders/"
+            target="_blank" rel="noopener">
+              renders
+            </a>
+          </p>
+        </section>
+
+
+        <section id="typefinity" class="route">
+          <p class="subhead">
+            project
+          </p>
+          <h1 class="h1">
+            /projects/completed/typefinity
+          </h1>
+          <p>
+            project writeup later.
+          </p>
+        </section>
+
+
+        <section id="glitch" class="route">
+          <p class="subhead">
+            project
+          </p>
+          <h2 class="h1">glitch</h2>
+
+  <p>
+    Glitch is my personal AI assistant: a voice-first interface with a custom tone, memory-aware responses,
+    and an opinionated UI layer designed to feel more like a system I own than a generic chatbot.
+  </p>
+
+  <p>
+    It’s built to do real work (answers, recall, routing, device control) while keeping the interaction style
+    consistent: fast, minimal, and slightly chaotic when appropriate.
+  </p>
 
   <div class="btnrow">
-    <a class="btn" href="http://www.bedsidebistro.com/patientview.html?mrn=MRN001" target="_blank" rel="noopener">
-      open demo
-    </a>
-    <a class="btn" href="#bedsidebistro" id="btn-reload-bb">reload</a>
+    <a class="btn" href="#" target="_blank" rel="noopener">project repo (add link)</a>
+    <a class="btn" href="#" target="_blank" rel="noopener">demo video (add link)</a>
+    <a class="btn" href="#" target="_blank" rel="noopener">notes / writeup (add link)</a>
   </div>
 
-  <div class="embed-wrap">
-    <iframe
-      id="bb-iframe"
-      class="embed"
-      src="http://www.bedsidebistro.com/patientview.html?mrn=MRN001"
-      title="bedsidebistro patientview demo"
-      loading="lazy"
-      referrerpolicy="no-referrer"
-      sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
-    ></iframe>
-  </div>
-
-  <p class="pdf-status" id="bb-embed-status"></p>
-
-  <p>project artifacts:</p>
+  <p class="subhead">capabilities</p>
   <p>
-    - <a href="http://www.bedsidebistro.com/projects/bedsidebistro/" target="_blank" rel="noopener">project hub</a><br>
-    - <a href="http://www.bedsidebistro.com/projects/bedsidebistro/docs/" target="_blank" rel="noopener">docs</a><br>
-    - <a href="http://www.bedsidebistro.com/projects/bedsidebistro/renders/" target="_blank" rel="noopener">renders</a>
+    conversation + reasoning: responds with consistent assistant voice, handles multi-step tasks, and keeps output structured.
   </p>
-</section>
-      <section id="typefinity" class="route"><p class="subhead">project</p><h1 class="h1">/projects/completed/typefinity</h1><p>project writeup later.</p></section>
+  <p>
+    memory + recall: retrieves relevant stored notes / tags / embeddings to answer “what was that thing…” questions.
+  </p>
+  <p>
+    intent routing: detects when a request should trigger automation (reminders, device control, logging, etc.).
+  </p>
+  <p>
+    voice mode: wake word, speech-to-text input, and text-to-speech output for hands-free use.
+  </p>
 
-      <section id="glitch" class="route"><p class="subhead">project</p><h1 class="h1">/projects/current/glitch</h1><p>assistant + voice + smart home stuff.</p></section>
-      <section id="smartmirror" class="route"><p class="subhead">project</p><h1 class="h1">/projects/current/smartmirror</h1><p>board shell + ui experiments.</p></section>
-      <section id="cooltvheadthing" class="route"><p class="subhead">project</p><h1 class="h1">/projects/current/cooltvheadthing</h1><p>mysterious device page.</p></section>
-      <section id="thiswebsite" class="route"><p class="subhead">project</p><h1 class="h1">/projects/current/thiswebsite</h1><p>meta: how the archive is built.</p></section>
+  <p class="subhead">high-level flow</p>
+  <pre><code>
+user input (voice or text)
+      ↓
+transcription (if voice)
+      ↓
+context assembly (recent chat + memory retrieval)
+      ↓
+model call (response + tool intents)
+      ↓
+router:
+  - speak reply
+  - render ui update
+  - run device commands
+  - schedule reminders
+  - log / store notes
+  </code></pre>
 
-      <section id="python" class="route"><p class="subhead">directory</p><h1 class="h1">/languages/python</h1><p>notes + snippets.</p></section>
-      <section id="java" class="route"><p class="subhead">directory</p><h1 class="h1">/languages/java</h1><p>notes + snippets.</p></section>
-      <section id="c" class="route"><p class="subhead">directory</p><h1 class="h1">/languages/c</h1><p>notes + snippets.</p></section>
-      <section id="cpp" class="route"><p class="subhead">directory</p><h1 class="h1">/languages/c++</h1><p>notes + snippets.</p></section>
-      <section id="web" class="route"><p class="subhead">directory</p><h1 class="h1">/languages/web</h1><p>notes + snippets.</p></section>
-      <section id="dotnet" class="route"><p class="subhead">directory</p><h1 class="h1">/languages/.net</h1><p>notes + snippets.</p></section>
-      <section id="sql" class="route"><p class="subhead">directory</p><h1 class="h1">/languages/sql</h1><p>notes + snippets.</p></section>
+  <p class="subhead">ui documentation</p>
 
-      <section id="transcript" class="route"><p class="subhead">file</p><h1 class="h1">/academics/transcript</h1><p>transcript summary / embed later.</p></section>
+  <p>main console view</p>
+  <div class="embed-wrap">
+    <img
+      src="assets/devlab/glitch/console.png"
+      alt="glitch console ui"
+      class="embed"
+      onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;>image missing: assets/devlab/glitch/console.png</p>');"
+    />
+  </div>
 
-      <!-- resume: viewer + download -->
-      <section id="resume" class="route">
-        <p class="subhead">file</p>
-        <h1 class="h1">/workinfo/resume.pdf</h1>
+  <p style="margin-top:14px;">voice listening state</p>
+  <div class="embed-wrap">
+    <img
+      src="assets/devlab/glitch/listening.png"
+      alt="glitch listening state"
+      class="embed"
+      onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;>image missing: assets/devlab/glitch/listening.png</p>');"
+    />
+  </div>
 
-        <div class="btnrow">
-          <input class="filepick" id="pick-resume" type="file" accept="application/pdf">
+  <p style="margin-top:14px;">memory recall example</p>
+  <div class="embed-wrap">
+    <img
+      src="assets/devlab/glitch/recall.png"
+      alt="glitch memory recall example"
+      class="embed"
+      onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;>image missing: assets/devlab/glitch/recall.png</p>');"
+    />
+  </div>
 
-          <a class="btn" id="btn-open-raw" href="assets/resume.pdf" target="_blank" rel="noopener">open raw</a>
+  <p class="subhead" style="margin-top:18px;">code excerpts</p>
 
-          <a class="btn" id="btn-download" href="#" download="resume.pdf" aria-disabled="true">download</a>
+  <p>context assembly (insert real snippet)</p>
+  <pre><code class="language-python">
+# build messages + attach retrieved memory context
+# keep it short; link out for full module
+  </code></pre>
 
-          <button class="btn" id="btn-reload" type="button">reload</button>
-        </div>
+  <p>tool / intent routing (insert real snippet)</p>
+  <pre><code class="language-python">
+# parse assistant output for tool intents
+# route to: devices, reminders, logging, ui updates
+  </code></pre>
 
-        <div id="pdf-status" class="pdf-status"></div>
-        <div id="pdf-container" class="pdf-container"></div>
+  <p>voice pipeline (insert real snippet)</p>
+  <pre><code class="language-python">
+# wake word -> record -> transcribe -> reply -> speak
+  </code></pre>
+
+  <p class="subhead">prompt + behavior rules</p>
+  <p>
+    Glitch runs with a defined system prompt and lightweight behavior rules to keep responses consistent:
+    concise by default, structured output, clear boundaries, and intentional “personality” without noise.
+  </p>
+
+  <p class="subhead">expansion roadmap</p>
+  <p>
+    local-first memory store; offline recall; plugin registry; richer device scenes; daily briefing mode;
+    tighter UI integration with the SmartMirror display layer; better debugging and trace logs.
+  </p>
+
+  <p class="subhead">why it matters</p>
+  <p>
+    Glitch is an end-to-end assistant system: input, context, model calls, tool routing, and a UI layer.
+    It’s a practical foundation for automation, personal knowledge retrieval, and interface design.
+  </p>
+        </section>
+
+
+        <section id="smartmirror" class="route">
+          <p class="subhead">
+            project
+          </p>
+            <h2 class="h1">smartmirror</h2>
+
+  <p>
+    SmartMirror is a modular, voice-activated AI interface designed to run on a mirror panel or dedicated display.
+    It functions as a personal command center that blends ambient UI, contextual recall, and smart device control
+    into a minimal AMOLED console system.
+  </p>
+
+  <p>
+    The goal is not to recreate a commercial assistant. The goal is to build something that feels owned:
+    fast, quiet, extensible, and aesthetically intentional.
+  </p>
+
+  <div class="btnrow">
+    <a class="btn" href="#" target="_blank" rel="noopener">project repo (add link)</a>
+    <a class="btn" href="#" target="_blank" rel="noopener">demo video (add link)</a>
+    <a class="btn" href="#" target="_blank" rel="noopener">notes / writeup (add link)</a>
+  </div>
+
+  <p class="subhead">system architecture</p>
+  <pre><code>
+[ microphone ]
+      ↓
+[ wake word detection ]
+      ↓
+[ speech-to-text ]
+      ↓
+[ OpenAI API + memory context ]
+      ↓
+[ response router ]
+      ├─ voice output
+      ├─ on-screen console render
+      ├─ device control (api)
+      └─ scheduler (alarms/reminders)
+  </code></pre>
+
+  <p class="subhead">feature set</p>
+  <p>
+    wake word activation: listens for <code>glitch</code>, then begins capture + transcription.
+  </p>
+  <p>
+    contextual recall: searches stored notes / embeddings, returns summarized context on demand.
+  </p>
+  <p>
+    smart device control: routes certain intents into api calls (lights, outlets, scene presets).
+  </p>
+  <p>
+    alarms + reminders: natural language scheduling stored locally and triggered by a background scheduler.
+  </p>
+
+  <p class="subhead">ui documentation</p>
+
+  <!-- image slot: main interface -->
+  <p>
+    main interface
+  </p>
+  <div class="embed-wrap">
+    <!-- replace src with your asset path -->
+    <img
+      src="assets/devlab/smartmirror/ui-overview.png"
+      alt="smartmirror main ui screenshot"
+      class="embed"
+      onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;>image missing: assets/devlab/smartmirror/ui-overview.png</p>');"
+    />
+  </div>
+
+  <!-- image slot: listening state -->
+  <p style="margin-top:14px;">
+    listening state
+  </p>
+  <div class="embed-wrap">
+    <img
+      src="assets/devlab/smartmirror/listening.png"
+      alt="smartmirror listening state"
+      class="embed"
+      onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;>image missing: assets/devlab/smartmirror/listening.png</p>');"
+    />
+  </div>
+
+  <!-- image slot: device feedback -->
+  <p style="margin-top:14px;">
+    device feedback overlay
+  </p>
+  <div class="embed-wrap">
+    <img
+      src="assets/devlab/smartmirror/device-feedback.png"
+      alt="smartmirror device feedback overlay"
+      class="embed"
+      onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<p style=&quot;padding:12px; margin:0; color:rgba(255,255,255,.58);&quot;>image missing: assets/devlab/smartmirror/device-feedback.png</p>');"
+    />
+  </div>
+
+  <p class="subhead" style="margin-top:18px;">code excerpts</p>
+
+  <p>wake word prototype (insert real snippet)</p>
+  <pre><code class="language-python">
+# insert your current wake word detection / mic loop here
+# keep it short; link out for full file
+  </code></pre>
+
+  <p>openai integration (insert real snippet)</p>
+  <pre><code class="language-python">
+# insert your openai call + message construction here
+# ideally show how you attach retrieved memory context
+  </code></pre>
+
+  <p>device control (insert real snippet)</p>
+  <pre><code class="language-python">
+# insert your govee/outlet command routing here
+# include one example payload or function signature
+  </code></pre>
+
+  <p class="subhead">expansion roadmap</p>
+  <p>
+    handwriting capture + ocr ingestion; local embedding store for offline recall; modular plugins;
+    dashboard mode (calendar/weather); background reacts to state; encrypted memory vault.
+  </p>
+
+  <p class="subhead">why it matters</p>
+  <p>
+    SmartMirror demonstrates voice processing, api integration, contextual ai design, smart-device automation,
+    and interface minimalism. It’s not a single demo screen — it’s a system built to grow.
+  </p>
+        </section>
+
+
+        <section id="cooltvheadthing" class="route">
+          <p class="subhead">
+            project
+          </p>
+          <h1 class="h1">
+            /projects/current/cooltvheadthing
+          </h1>
+          <p>
+            mysterious device page.
+          </p>
+        </section>
+        <section id="thiswebsite" class="route">
+          <p class="subhead">
+            project
+          </p>
+          <h1 class="h1">
+            /projects/current/thiswebsite
+          </h1>
+          <p>
+            meta: how the archive is built.
+          </p>
+        </section>
+        <section id="python" class="route">
+          <p class="subhead">
+            directory
+          </p>
+          <h1 class="h1">
+            /languages/python
+          </h1>
+          <ol>
+    <li>
+      <h2>Nested Input Validation Workflow</h2>
+      <p>
+        This function repeatedly prompts for employee data and only proceeds when each
+        validation step succeeds. It demonstrates a defensive, user-input-first style that
+        chains together specialized validation helpers.
+      </p>
+      <pre><code>def ValidateInputs():
+    strFlag = False
+    while strFlag == False:
+        strEmployeeStatus = str(input("Enter employee status (management or hourly): "))
+        strFlag, strEmployeeStatus = ValidateEmployeeStatus(strEmployeeStatus)
+        if strFlag == True:
+            intYearsEmployed = input("Enter years employed: ")
+            strFlag, intYearsEmployed = ValidateIntInput(intYearsEmployed)
+            if strFlag == True:
+                decYTDPurchases = input("Enter total amount of previous purchases before discount: ")
+                strFlag, decYTDPurchases = ValidateDecInput(decYTDPurchases)
+                if strFlag == True:
+                    decSubtotal = input("Enter today's purchase total: ")
+                    strFlag, decSubtotal = ValidateDecInput(decSubtotal)
+                    if strFlag == True:
+                        return strEmployeeStatus, intYearsEmployed, decYTDPurchases, decSubtotal</code></pre>
+    </li>
+
+    <li>
+      <h2>Order Discount Capped at Annual Limit</h2>
+      <p>
+        This pricing function applies a computed order discount but enforces a $200 yearly
+        cap. It is a compact example of business-rule enforcement with conditional guards.
+      </p>
+      <pre><code>def CalculateOrderDiscount(decSubtotal, decDiscountPercent, decYTDDiscount):
+    decOrderDiscount = decSubtotal * decDiscountPercent
+
+    if decYTDDiscount &gt; 200.00:
+        decOrderDiscount = 0.00
+    else:
+        if decYTDDiscount + decOrderDiscount &gt; 200.00:
+            decOrderDiscount = 200.00 - decYTDDiscount
+
+    return decOrderDiscount</code></pre>
+    </li>
+
+    <li>
+      <h2>Property Setter with Type and Range Validation</h2>
+      <p>
+        The <code>intAge</code> property setter in the <code>Person</code> class converts
+        the input to an integer and enforces an age range. It highlights encapsulation and
+        validation through Python properties.
+      </p>
+      <pre><code>@intAge.setter
+def intAge(self, intAge):
+    try:
+        intAge = int(intAge)
+        if 0 &lt;= intAge &lt;= 120:
+            self.__intAge = intAge
+        else:
+            raise Exception ("Age must be between 0 and 120.")
+    except ValueError:
+        raise Exception ("Age must be numeric.")
+    else:
+        self.__intAge = intAge</code></pre>
+    </li>
+
+    <li>
+      <h2>Inheritance-Based Graduate Initialization</h2>
+      <p>
+        This constructor shows class inheritance in action. <code>Graduate</code> extends
+        <code>Student</code>, updates aggregate class counters, and tracks employment
+        metrics by gender.
+      </p>
+      <pre><code>def __init__(self, strFirstName, strLastName, strGender, decGpa, intAge, intGraduationYear, strJobStatus):
+    Student.__init__(self, strFirstName, strLastName, strGender, decGpa, intAge)
+    self.intGraduationYear = intGraduationYear
+    self.strJobStatus = strJobStatus
+    Graduate.intGraduateCount += 1
+    Graduate.decTotalGraduateGpa += float(self.decGpa)
+
+    if self.strJobStatus.lower() == "y":
+        Graduate.intEmployedCount += 1
+        if self.strGender.lower() == "male":
+            Graduate.intEmployedMaleCount += 1
+        elif self.strGender.lower() == "female":
+            Graduate.intEmployedFemaleCount += 1</code></pre>
+    </li>
+
+    <li>
+      <h2>Bike Return Billing with Promotions</h2>
+      <p>
+        This return-processing logic computes rental charges for hourly, daily, or weekly
+        rentals, then applies family and coupon discounts. It is a strong example of state
+        updates plus transactional invoice behavior.
+      </p>
+      <pre><code>if rentalTime and rentalBasis and numOfBikes and strBikeType:
+    self.stock += numOfBikes
+    now = datetime.now()
+    rentalPeriod = now - rentalTime
+
+    if rentalBasis == 1:
+        bill = round(rentalPeriod.seconds / 3600) * 5 * numOfBikes
+        decPreDiscount = bill
+    elif rentalBasis == 2:
+        bill = round(rentalPeriod.days) * 20 * numOfBikes
+        decPreDiscount = bill
+    elif rentalBasis == 3:
+        bill = round(rentalPeriod.days / 7) * 60 * numOfBikes
+        decPreDiscount = bill
+
+    if 3 &lt;= numOfBikes &lt;= 5:
+        print("You are eligible for Family rental promotion of 25% discount")
+        decPreDiscount = bill
+        bill *= 0.75
+
+    if strCoupon and strCoupon.endswith("BBP"):
+        print("You are eligible for a 10% coupon discount")
+        decPreDiscount = bill
+        bill *= 0.90</code></pre>
+    </li>
+  </ol>
+        </section>
+        <section id="java" class="route">
+          <p class="subhead">
+            directory
+          </p>
+          <h1 class="h1">
+            /languages/java
+          </h1>
+          <p>
+            notes + snippets.
+          </p>
+        </section>
+        <section id="c" class="route">
+          <p class="subhead">
+            directory
+          </p>
+          <h1 class="h1">
+            /languages/c
+          </h1>
+          <p>
+            notes + snippets.
+          </p>
+        </section>
+        <section id="cpp" class="route">
+          <p class="subhead">
+            directory
+          </p>
+          <h1 class="h1">
+            /languages/c++
+          </h1>
+          <p>
+            notes + snippets.
+          </p>
+        </section>
+        <section id="web" class="route">
+          <p class="subhead">
+            directory
+          </p>
+          <h1 class="h1">
+            /languages/web
+          </h1>
+          <p>
+            notes + snippets.
+          </p>
+        </section>
+        <section id="dotnet" class="route">
+          <p class="subhead">
+            directory
+          </p>
+          <h1 class="h1">
+            /languages/.net
+          </h1>
+          <p>
+            notes + snippets.
+          </p>
+        </section>
+        <section id="sql" class="route">
+          <p class="subhead">
+            directory
+          </p>
+          <h1 class="h1">
+            /languages/sql
+          </h1>
+          <p>
+            notes + snippets.
+          </p>
+        </section>
+        <section id="transcript" class="route">
+          <p class="subhead">
+            file
+          </p>
+          <h1 class="h1">
+            /academics/transcript
+          </h1>
+          <p>
+            transcript summary / embed later.
+          </p>
+        </section>
+        <!-- resume: viewer + download -->
+        <section id="resume" class="route">
+          <p class="subhead">
+            file
+          </p>
+          <h1 class="h1">
+            /workinfo/resume.pdf
+          </h1>
+          <div class="btnrow">
+            <input class="filepick" id="pick-resume" type="file" accept="application/pdf">
+            <a class="btn" id="btn-open-raw" href="assets/resume.pdf" target="_blank"
+            rel="noopener">
+              open raw
+            </a>
+            <a class="btn" id="btn-download" href="#" download="resume.pdf" aria-disabled="true">
+              download
+            </a>
+            <button class="btn" id="btn-reload" type="button">
+              reload
+            </button>
+          </div>
+          <div id="pdf-status" class="pdf-status">
+          </div>
+          <div id="pdf-container" class="pdf-container">
+          </div>
+        </section>
+        <section id="coverletter" class="route">
+          <p class="subhead">
+            file
+          </p>
+          <h1 class="h1">
+            /workinfo/genericcoverletter.pdf
+          </h1>
+          <p>
+            pdf embed later.
+          </p>
+        </section>
+        <section id="experience" class="route">
+          <p class="subhead">
+            directory
+          </p>
+          <h1 class="h1">
+            /workinfo/experience
+          </h1>
+          <p>
+            experience timeline.
+          </p>
+        </section>
       </section>
+    </main>
+  </body>
 
-      <section id="coverletter" class="route"><p class="subhead">file</p><h1 class="h1">/workinfo/genericcoverletter.pdf</h1><p>pdf embed later.</p></section>
-      <section id="experience" class="route"><p class="subhead">directory</p><h1 class="h1">/workinfo/experience</h1><p>experience timeline.</p></section>
-
-    </section>
-  </main>
-
-  <script>
-    // ----------------------------
-    // boot
-    // ----------------------------
-    const bootText = [
-      "boot: initializing…",
-      "boot: mounting /users",
-      "boot: mounting /projects",
-      "boot: mounting /languages",
-      "boot: mounting /academics",
-      "boot: mounting /workinfo",
-      "",
-      "scan: rooting directories…",
-      "ok: /users/josieisnotarat",
-      "ok: /users/josephine",
-      "ok: /projects/current",
-      "ok: /projects/completed",
-      "ok: /workinfo/resume.pdf",
-      "",
-      "ready."
-    ];
-
-    const bootlines = document.getElementById("bootlines");
-
-    function addLine(t){
-      const el = document.createElement("div");
-      el.className = "line";
-      el.textContent = t;
-      bootlines.appendChild(el);
-      requestAnimationFrame(() => el.classList.add("show"));
-    }
-  </script>
-
-  <script>
-    // ----------------------------
-    // pdf viewer (server + file picker)
-    // ----------------------------
-
-    function setDownloadLinkFromBlob(blob){
-      const a = document.getElementById("btn-download");
-      const url = URL.createObjectURL(blob);
-      a.href = url;
-      a.setAttribute("download", "resume.pdf");
-      a.setAttribute("aria-disabled", "false");
-    }
-
-    async function renderPDFSource({ url=null, data=null }){
-      const statusEl = document.getElementById("pdf-status");
-      const container = document.getElementById("pdf-container");
-
-      container.innerHTML = "";
-      statusEl.textContent = "loading pdf…";
-
-      if (!window.pdfjsLib){
-        statusEl.textContent = "pdf.js not loaded (pdfjsLib missing).";
-        return;
-      }
-
-      window.pdfjsLib.GlobalWorkerOptions.workerSrc =
-        "http://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-
-      try{
-        const loadingTask = window.pdfjsLib.getDocument(
-          data ? { data } : { url }
-        );
-        const pdf = await loadingTask.promise;
-
-        statusEl.textContent = `rendering ${pdf.numPages} page(s)…`;
-
-        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++){
-          const page = await pdf.getPage(pageNum);
-
-          // fit to content width
-          const main = document.querySelector(".main");
-          const targetWidth = Math.min(760, main.clientWidth - 40);
-
-          const viewport0 = page.getViewport({ scale: 1 });
-          const scale = targetWidth / viewport0.width;
-          const viewport = page.getViewport({ scale });
-
-          const canvas = document.createElement("canvas");
-          const ctx = canvas.getContext("2d", { alpha: false });
-
-          canvas.width = Math.floor(viewport.width);
-          canvas.height = Math.floor(viewport.height);
-
-          await page.render({ canvasContext: ctx, viewport }).promise;
-          container.appendChild(canvas);
-        }
-
-        statusEl.textContent = "done.";
-      }catch(err){
-        console.error(err);
-        statusEl.textContent =
-          "couldn’t load the pdf.";
-      }
-    }
-
-    async function tryAutoLoadResume(){
-      // works when served; usually fails on file:// (expected)
-      try{
-        const res = await fetch("assets/resume.pdf", { cache: "no-store" });
-        if (!res.ok) throw new Error("fetch failed");
-        const blob = await res.blob();
-        const ab = await blob.arrayBuffer();
-        setDownloadLinkFromBlob(blob);
-        await renderPDFSource({ data: ab });
-        return true;
-      }catch{
-        return false;
-      }
-    }
-
-    async function onEnterResumeRoute(){
-      const container = document.getElementById("pdf-container");
-      if (container && container.childElementCount > 0) return;
-
-      const ok = await tryAutoLoadResume();
-      if (!ok){
-        document.getElementById("pdf-status").textContent =
-          "file mode detected. ";
-      }
-    }
-
-    // buttons
-    document.addEventListener("click", async (e) => {
-      if (e.target && e.target.id === "btn-pick-resume"){
-        document.getElementById("pick-resume").click();
-      }
-
-      if (e.target && e.target.id === "btn-reload"){
-        const ok = await tryAutoLoadResume();
-        if (!ok){
-          document.getElementById("pdf-status").textContent =
-            "reload failed (likely file://). ";
-        }
-      }
-    });
-
-    document.getElementById("pick-resume").addEventListener("change", async (e) => {
-      const file = e.target.files && e.target.files[0];
-      if (!file) return;
-
-      setDownloadLinkFromBlob(file);
-      const ab = await file.arrayBuffer();
-      await renderPDFSource({ data: ab });
-    });
-  </script>
-
-  <script>
-    // ----------------------------
-    // router + boot orchestration
-    // ----------------------------
-    function routeTo(hash){
-      const id = (hash || "#root").replace("#", "");
-
-      document.querySelectorAll(".route").forEach(r => {
-        r.classList.toggle("active", r.id === id);
-      });
-
-      document.querySelectorAll("[data-route]").forEach(a => {
-        a.classList.toggle("active", a.getAttribute("href") === "#" + id);
-      });
-
-      // auto-open parents for deep links
-      const active = document.querySelector('[data-route].active');
-      if (active){
-        let node = active.parentElement;
-        while (node){
-          if (node.tagName === "DETAILS") node.open = true;
-          node = node.parentElement;
-        }
-      }
-
-      if (id === "resume"){
-        onEnterResumeRoute();
-      }
-    }
-
-    window.addEventListener("hashchange", () => routeTo(location.hash));
-
-    async function runBoot(){
-      for (const t of bootText){
-        addLine(t);
-        await new Promise(r => setTimeout(r, 220 + Math.random() * 170));
-      }
-
-      // phase 1: swipe sidebar in + push boot text right
-      document.body.classList.add("shifted");
-
-      // after swipe completes, swap boot -> routes, then route
-      setTimeout(() => {
-        document.body.classList.add("ready");
-        routeTo(location.hash || "#root");
-      }, 540);
-    }
-
-    runBoot();
-  </script>
-</body>
 </html>

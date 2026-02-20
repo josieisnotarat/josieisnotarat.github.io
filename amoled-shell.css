@@ -1,22 +1,28 @@
 /* amoled-shell.css
    josie's archive — amoled filesystem site
 
-   goals:
-   - amoled black / white only
-   - one font (mono)
-   - sidebar + divider + nav swipe in as ONE chunk after boot
-   - boot text starts at true left edge of page, then swipes right with content
-   - clean tree nav via <details>
-   - pdf viewer via pdf.js:
-       - auto-loads from assets/*.pdf when served over http(s)
-       - on file://, prompts user to pick the pdf (no server required)
-       - provides download button (blob-based) + open raw button (when served)
+   enhancements added:
+   - soft "orb" depth (monochrome only)
+   - subtle bloom + film grain overlay (white-only)
+   - layered blacks for panels (still black)
+   - slightly improved hierarchy + hairlines
 */
 
 :root{
-  --bg:#000;
-  --fg:#fff;
-  --line:#fff;
+  /* base colors */
+  --bg: #000;
+  --fg: #fff;
+
+  /* layered blacks (still black) */
+  --bg-1: #000;     /* true amoled */
+  --bg-2: #050505;  /* panel-ish */
+  --bg-3: #0a0a0a;  /* hover surface */
+
+  /* lines + muted */
+  --line: rgba(255,255,255,.22);
+  --hair: rgba(255,255,255,.10);
+  --muted: rgba(255,255,255,.78);
+  --muted2: rgba(255,255,255,.58);
 
   --sidebar-w: 340px;
   --pad: 18px;
@@ -26,27 +32,124 @@
 
   --mono: ui-monospace, sfmono-regular, menlo, monaco, consolas, "liberation mono","courier new", monospace;
   --indent: 14px;
+
+  /* vibe controls */
+  --orb-x: 72%;
+  --orb-y: 28%;
+  --orb-size: 980px;
+
+  --bloom: 0.16;   /* 0.10–0.22 */
+  --grain: 0.09;   /* 0.05–0.12 */
 }
 
+/* reset */
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
 
+/* canvas background layer */
+#bg{
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+
 body{
   margin:0;
-  background:var(--bg);
   color:var(--fg);
   font-family:var(--mono);
   text-transform: lowercase;
   overflow-x:hidden;
+
+  /* depth background (monochrome) */
+  background:
+    linear-gradient(#000, #000),
+    radial-gradient(
+      circle var(--orb-size) at var(--orb-x) var(--orb-y),
+      rgba(255,255,255,0.10) 0%,
+      rgba(255,255,255,0.05) 24%,
+      rgba(255,255,255,0.02) 40%,
+      rgba(255,255,255,0.00) 62%
+    ),
+    radial-gradient(
+      circle 1200px at 18% 80%,
+      rgba(255,255,255,0.025),
+      rgba(255,255,255,0.00) 60%
+    ),
+    linear-gradient(#000, #000);
 }
 
-/* sidebar is fixed and offscreen until boot ends */
+/* bloom layer (white-only haze) */
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+
+  background:
+    linear-gradient(#000, #000),
+    radial-gradient(
+      circle 900px at var(--orb-x) var(--orb-y),
+      rgba(255,255,255,var(--bloom)),
+      rgba(255,255,255,0) 60%
+    );
+
+  mix-blend-mode: screen;
+  opacity: 1;
+}
+
+/* film grain (procedural-ish using repeating gradients; no external file) */
+body::after{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+
+  /* layered tiny patterns to fake grain */
+  background:
+    linear-gradient(#000, #000),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.00) 0px,
+      rgba(255,255,255,0.00) 2px,
+      rgba(255,255,255,0.02) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.00) 0px,
+      rgba(255,255,255,0.00) 3px,
+      rgba(255,255,255,0.015) 4px
+    ),
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.02), rgba(255,255,255,0) 55%),
+    radial-gradient(circle at 70% 80%, rgba(255,255,255,0.015), rgba(255,255,255,0) 60%);
+
+  opacity: var(--grain);
+  mix-blend-mode: overlay;
+  filter: contrast(120%) brightness(110%);
+}
+
+/* keep content above overlays */
+.sidebar, .main{ position: relative; z-index: 3; }
+
+/* ----------------------------
+   sidebar is fixed and offscreen until boot ends
+   ---------------------------- */
 .sidebar{
   position: fixed;
   top: 0; left: 0;
   width: var(--sidebar-w);
   height: 100vh;
   padding: var(--pad);
+
+  /* subtle panel separation while still black */
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+
   transform: translateX(calc(-1 * var(--sidebar-w)));
   transition: transform var(--t) var(--ease);
   z-index: 10;
@@ -58,7 +161,7 @@ body{
   position:absolute;
   top:0; right:0;
   width:1px; height:100%;
-  background:var(--line);
+  background: var(--line);
   opacity:0;
   transition: opacity var(--t) var(--ease);
 }
@@ -76,13 +179,15 @@ body.shifted .sidebar{ transform: translateX(0); }
 body.shifted .sidebar::after{ opacity: 1; }
 body.shifted .main{ transform: translateX(var(--sidebar-w)); }
 
-/* brand */
+/* ----------------------------
+   brand
+   ---------------------------- */
 .brand{
   display:grid;
   gap:6px;
   padding-bottom:14px;
   margin-bottom:14px;
-  border-bottom:1px solid var(--line);
+  border-bottom:1px solid var(--hair);
 }
 .brand .h1{
   margin:0;
@@ -93,10 +198,12 @@ body.shifted .main{ transform: translateX(var(--sidebar-w)); }
   margin:0;
   font-size:12px;
   font-style:italic;
-  opacity:.9;
+  color: var(--muted2);
 }
 
-/* boot (no boxes, true left edge until shift) */
+/* ----------------------------
+   boot (no boxes, true left edge until shift)
+   ---------------------------- */
 .bootstage{
   display:block;
   max-width: 760px;
@@ -104,7 +211,7 @@ body.shifted .main{ transform: translateX(var(--sidebar-w)); }
 .subhead{
   font-size: 12px;
   letter-spacing: .10em;
-  opacity: .65;
+  color: var(--muted2);
   margin: 0 0 18px 0;
 }
 .bootlines{
@@ -118,6 +225,7 @@ body.shifted .main{ transform: translateX(var(--sidebar-w)); }
   transform: translateY(4px);
   transition: opacity 180ms linear, transform 180ms linear;
   white-space:pre-wrap;
+  color: var(--muted);
 }
 .line.show{
   opacity:1;
@@ -132,7 +240,9 @@ body.shifted .main{ transform: translateX(var(--sidebar-w)); }
 body.ready .routes{ display:block; }
 body.ready .bootstage{ display:none; }
 
-/* route content */
+/* ----------------------------
+   route content
+   ---------------------------- */
 .route{
   display:none;
   max-width: 760px;
@@ -147,14 +257,19 @@ body.ready .bootstage{ display:none; }
 .route p{
   margin: 0 0 14px 0;
   line-height: 1.55;
-  opacity: .92;
-}
-code{
-  border: 1px solid var(--line);
-  padding: 1px 6px;
+  color: var(--muted);
 }
 
-/* sidebar tree */
+/* inline code */
+code{
+  border: 1px solid var(--hair);
+  padding: 1px 6px;
+  background: rgba(255,255,255,0.04);
+}
+
+/* ----------------------------
+   sidebar tree
+   ---------------------------- */
 .tree{
   display:grid;
   gap:10px;
@@ -168,11 +283,11 @@ code{
   user-select:none;
   padding: 2px 0;
   font-size: 13px;
-  opacity: .9;
+  color: var(--muted);
   transition: opacity 140ms ease;
 }
 .tree summary::-webkit-details-marker{ display:none; }
-.tree summary:hover{ opacity: .6; }
+.tree summary:hover{ opacity: .65; }
 
 .tree .children{
   display:grid;
@@ -199,17 +314,24 @@ code{
 
 /* links */
 .tree a{
-  color:var(--fg);
+  color: var(--fg);
   text-decoration:none;
   font-size: 13px;
   display:flex;
   align-items:center;
   padding: 2px 0;
-  opacity: .78;
-  transition: opacity 140ms ease;
+  opacity: .72;
+  transition: opacity 140ms ease, text-shadow 140ms ease;
 }
-.tree a:hover{ opacity: 1; }
-.tree a.active{ opacity: 1; }
+.tree a:hover{
+  opacity: 1;
+  /* micro-glow on hover (subtle, not everywhere) */
+  text-shadow: 0 0 10px rgba(255,255,255,0.18);
+}
+.tree a.active{
+  opacity: 1;
+  text-shadow: 0 0 12px rgba(255,255,255,0.22);
+}
 
 /* top-level /root link */
 .tree > a.label{
@@ -218,21 +340,33 @@ code{
   color: var(--fg);
   text-decoration:none;
   font-size:13px;
-  opacity:.78;
-  transition: opacity 140ms ease;
+  opacity:.72;
+  transition: opacity 140ms ease, text-shadow 140ms ease;
 }
-.tree > a.label:hover{ opacity:1; }
-.tree > a.label.active{ opacity:1; }
+.tree > a.label:hover{
+  opacity:1;
+  text-shadow: 0 0 10px rgba(255,255,255,0.18);
+}
+.tree > a.label.active{
+  opacity:1;
+  text-shadow: 0 0 12px rgba(255,255,255,0.22);
+}
 
 /* routes links (recommended paths list) */
 .routes a{
   color: var(--fg);
   text-decoration: none;
-  opacity: .78;
-  transition: opacity 140ms ease;
+  opacity: .72;
+  transition: opacity 140ms ease, text-shadow 140ms ease;
 }
-.routes a:hover{ opacity: 1; }
-.routes a.active{ opacity: 1; }
+.routes a:hover{
+  opacity: 1;
+  text-shadow: 0 0 10px rgba(255,255,255,0.16);
+}
+.routes a.active{
+  opacity: 1;
+  text-shadow: 0 0 12px rgba(255,255,255,0.20);
+}
 
 /* ----------------------------
    buttons (barebones)
@@ -241,21 +375,25 @@ code{
   display:inline-block;
   color: var(--fg);
   text-decoration:none;
-  border: 1px solid var(--line);
+  border: 1px solid var(--hair);
   padding: 6px 10px;
   font-size: 13px;
-  opacity: .9;
-  transition: opacity 140ms ease;
-  background: transparent;
+  opacity: .92;
+  transition: opacity 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+  background: rgba(255,255,255,0.03);
   font-family: var(--mono);
 }
-.btn:hover{ opacity: .6; }
+.btn:hover{
+  opacity: .7;
+  box-shadow: 0 0 18px rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.20);
+}
 .btnrow{ display:flex; gap:10px; align-items:center; margin-top:10px; flex-wrap:wrap; }
 
 .pdf-status{
   margin-top: 10px;
   font-size: 13px;
-  opacity: .75;
+  color: var(--muted2);
 }
 
 /* ----------------------------
@@ -271,6 +409,8 @@ code{
   width: 100%;
   height: auto;
   display: block;
+  border: 1px solid var(--hair);
+  background: #000;
 }
 
 /* hide native input */
@@ -282,22 +422,38 @@ code{
   overflow:hidden;
 }
 
-/* mobile */
-@media (max-width: 860px){
-  :root{ --sidebar-w: 100vw; }
-  body.shifted .main{ transform: translateX(100vw); }
-}
-
+/* embeds */
 .embed-wrap{
   margin-top: 12px;
   width: 100%;
   height: 75vh;
-  border: 1px solid var(--line);
+  border: 1px solid var(--hair);
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(6px);
 }
-
 .embed{
   width: 100%;
   height: 100%;
   border: none;
   display: block;
 }
+
+/* mobile */
+@media (max-width: 860px){
+  :root{ --sidebar-w: 100vw; }
+  body.shifted .main{ transform: translateX(100vw); }
+  .sidebar{
+    background: rgba(0,0,0,0.72);
+    backdrop-filter: blur(8px);
+  }
+}
+
+/* accessibility: reduce motion */
+@media (prefers-reduced-motion: reduce){
+  :root{ --t: 0ms; }
+  .line{ transition: none; }
+  .sidebar, .main{ transition: none; }
+}
+
+/* --- amoled override for background canvas build --- */
+html, body { background: #000 !important; }
