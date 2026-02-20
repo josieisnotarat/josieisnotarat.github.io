@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="amoled-shell.css" />
 
   <!-- pdf.js (cdnjs exposes window.pdfjsLib) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 
 <body>
@@ -219,7 +219,7 @@
   <p>live demo (patient view):</p>
 
   <div class="btnrow">
-    <a class="btn" href="https://www.bedsidebistro.com/patientview.html?mrn=MRN001" target="_blank" rel="noopener">
+    <a class="btn" href="http://www.bedsidebistro.com/patientview.html?mrn=MRN001" target="_blank" rel="noopener">
       open demo
     </a>
     <a class="btn" href="#bedsidebistro" id="btn-reload-bb">reload</a>
@@ -229,7 +229,7 @@
     <iframe
       id="bb-iframe"
       class="embed"
-      src="https://www.bedsidebistro.com/patientview.html?mrn=MRN001"
+      src="http://www.bedsidebistro.com/patientview.html?mrn=MRN001"
       title="bedsidebistro patientview demo"
       loading="lazy"
       referrerpolicy="no-referrer"
@@ -241,9 +241,9 @@
 
   <p>project artifacts:</p>
   <p>
-    - <a href="https://www.bedsidebistro.com/projects/bedsidebistro/" target="_blank" rel="noopener">project hub</a><br>
-    - <a href="https://www.bedsidebistro.com/projects/bedsidebistro/docs/" target="_blank" rel="noopener">docs</a><br>
-    - <a href="https://www.bedsidebistro.com/projects/bedsidebistro/renders/" target="_blank" rel="noopener">renders</a>
+    - <a href="http://www.bedsidebistro.com/projects/bedsidebistro/" target="_blank" rel="noopener">project hub</a><br>
+    - <a href="http://www.bedsidebistro.com/projects/bedsidebistro/docs/" target="_blank" rel="noopener">docs</a><br>
+    - <a href="http://www.bedsidebistro.com/projects/bedsidebistro/renders/" target="_blank" rel="noopener">renders</a>
   </p>
 </section>
       <section id="typefinity" class="route"><p class="subhead">project</p><h1 class="h1">/projects/completed/typefinity</h1><p>project writeup later.</p></section>
@@ -347,7 +347,7 @@
       }
 
       window.pdfjsLib.GlobalWorkerOptions.workerSrc =
-        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+        "http://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
       try{
         const loadingTask = window.pdfjsLib.getDocument(
