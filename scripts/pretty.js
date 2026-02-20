@@ -129,3 +129,76 @@
   };
   window.addEventListener('DOMContentLoaded', dedentCodeBlocks);
 })();
+
+
+// -------------------- github repo loader --------------------
+(async () => {
+  const root = document.getElementById('ghRepos');
+  if (!root) return;
+
+  const note = root.querySelector('.repoMeta .muted');
+  const listProjects = root.querySelector('.repoList[data-kind="projects"]');
+  const listAssignments = root.querySelector('.repoList[data-kind="assignments"]');
+
+  const isAssignmentRepo = (name) => {
+    const n = name.toLowerCase();
+    return n.includes('programming') || n.includes('assignments') || n.includes('homework') || n.includes('labs');
+  };
+
+  const fmtDate = (iso) => {
+    try{
+      const d = new Date(iso);
+      return d.toLocaleDateString(undefined, { year:'numeric', month:'short' });
+    }catch{ return ''; }
+  };
+
+  const mkItem = (r) => {
+    const div = document.createElement('div');
+    div.className = 'repoItem';
+
+    const tags = [];
+    if (r.language) tags.push(r.language);
+    if (r.archived) tags.push('archived');
+    if (r.private) tags.push('private');
+    tags.push('updated ' + fmtDate(r.pushed_at || r.updated_at));
+
+    div.innerHTML = `
+      <div class="top">
+        <div class="name"><a href="${r.html_url}" target="_blank" rel="noreferrer">${r.name}</a></div>
+        <div class="stars k">★ ${r.stargazers_count}</div>
+      </div>
+      <div class="desc">${(r.description || '').replace(/</g,'&lt;')}</div>
+      <div class="tags">${tags.map(t => `<span>${t}</span>`).join('')}</div>
+    `;
+    return div;
+  };
+
+  try{
+    note.textContent = 'fetching…';
+    const resp = await fetch('https://api.github.com/users/josieisnotarat/repos?per_page=100&sort=updated');
+    if (!resp.ok) throw new Error('github api error: ' + resp.status);
+    const repos = await resp.json();
+
+    const projects = [];
+    const assignments = [];
+
+    for (const r of repos){
+      if (isAssignmentRepo(r.name)) assignments.push(r);
+      else projects.push(r);
+    }
+
+    note.textContent = `loaded ${repos.length} repos`;
+    (projects.slice(0, 16)).forEach(r => listProjects.appendChild(mkItem(r)));
+    (assignments.slice(0, 16)).forEach(r => listAssignments.appendChild(mkItem(r)));
+
+    // if there are more, show a link
+    const more = document.createElement('p');
+    more.className = 'subhead';
+    more.style.marginTop = '10px';
+    more.innerHTML = `want all of them? <a href="https://github.com/josieisnotarat?tab=repositories" target="_blank" rel="noreferrer">view full repo list</a>`;
+    root.appendChild(more);
+  }catch(err){
+    note.textContent = 'could not load repos (offline / rate-limit). open github link instead.';
+    console.warn(err);
+  }
+})();

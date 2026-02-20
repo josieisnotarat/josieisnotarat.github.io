@@ -191,8 +191,9 @@ body.shifted .main{ transform: translateX(var(--sidebar-w)); }
 }
 .brand .h1{
   margin:0;
-  font-size: 18px;
-  letter-spacing: -0.01em;
+  font-size: 19px;
+  letter-spacing: -0.015em;
+  font-weight: 800;
 }
 .brand .quote{
   margin:0;
@@ -207,12 +208,6 @@ body.shifted .main{ transform: translateX(var(--sidebar-w)); }
 .bootstage{
   display:block;
   max-width: 760px;
-}
-.subhead{
-  font-size: 12px;
-  letter-spacing: .10em;
-  color: var(--muted2);
-  margin: 0 0 18px 0;
 }
 .bootlines{
   display:grid;
@@ -259,6 +254,24 @@ body.ready .bootstage{ display:none; }
   line-height: 1.55;
   color: var(--muted);
 }
+.route ul{
+  margin: 0 0 16px 0;
+  padding: 0;
+  list-style: none;
+}
+.route li{
+  position: relative;
+  padding-left: 14px;
+  margin: 6px 0;
+}
+.route li::before{
+  content: "-";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: rgba(255,255,255,.78);
+}
+
 
 /* inline code */
 code{
@@ -504,17 +517,19 @@ body{
 }
 
 .route .h1{
-  font-size: clamp(22px, 2.15vw, 30px);
+  font-size: clamp(24px, 2.4vw, 34px);
   letter-spacing: -0.02em;
-  line-height: 1.15;
-  text-shadow: 0 0 22px rgba(255,255,255,.12);
+  line-height: 1.12;
+  font-weight: 900;
+  text-shadow: 0 0 26px rgba(255,255,255,.16), 0 0 58px rgba(255,255,255,.06);
 }
 
 .route h2,
 .route .h2{
   margin: 22px 0 10px 0;
-  font-size: 18px;
-  letter-spacing: -0.01em;
+  font-size: 19px;
+  letter-spacing: -0.015em;
+  font-weight: 800;
   line-height: 1.25;
   color: var(--fg);
   text-shadow: 0 0 16px rgba(255,255,255,.10);
@@ -526,7 +541,9 @@ body{
   font-size: 15px;
   letter-spacing: 0;
   line-height: 1.3;
+  font-weight: 750;
   color: var(--fg);
+  text-shadow: 0 0 14px rgba(255,255,255,.08);
 }
 
 .route p{
@@ -534,22 +551,20 @@ body{
   max-width: 76ch;
 }
 
-/* section labels */
+
+/* section labels (text-only, glow) */
 .subhead{
-  margin: 0 0 16px 0;
-  padding: 8px 10px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.02);
-  border-radius: 999px;
+  margin: 0 0 14px 0;
+  padding: 0;
+  display: block;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: .12em;
-  font-size: 11px;
-  color: rgba(255,255,255,.72);
-  box-shadow: var(--glow-soft);
+  letter-spacing: .14em;
+  font-weight: 800;
+  color: rgba(255,255,255,.80);
+  text-shadow: 0 0 18px rgba(255,255,255,.16), 0 0 42px rgba(255,255,255,.06);
 }
+
 
 /* links w/ glow underline */
 a{
@@ -668,4 +683,105 @@ blockquote{
 ::selection{
   background: rgba(255,255,255,.20);
   color: #000;
+}
+
+
+/* -------------------- bio: less boxy -------------------- */
+.bio-panels .card{
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+.bio-panels{
+  gap: 18px;
+  margin: 18px 0 10px;
+}
+.bio-panels h2{
+  margin-top: 0;
+}
+.bio-panels ul{
+  margin: 8px 0 0;
+}
+
+/* -------------------- callouts -------------------- */
+.callout{
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 14px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,.03);
+}
+.callout .row{
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.callout .meta{
+  opacity: .9;
+}
+.k{opacity:.75}
+.v{opacity:1}
+
+/* slimmer cards for dense pages */
+.card.slim{
+  padding: 14px 16px;
+}
+.cols{
+  columns: 2;
+  column-gap: 24px;
+}
+@media (max-width: 720px){
+  .cols{columns:1;}
+}
+
+/* -------------------- github repo block -------------------- */
+.repoBlock{
+  margin-top: 16px;
+}
+.repoLists{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 900px){
+  .repoLists{grid-template-columns:1fr;}
+}
+.repoList .repoItem{
+  padding: 12px 12px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px;
+  background: rgba(255,255,255,.02);
+  margin: 10px 0;
+}
+.repoList .repoItem:hover{
+  border-color: rgba(255,255,255,.22);
+}
+.repoItem .top{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap: 10px;
+}
+.repoItem .name a{
+  font-weight: 800;
+  text-decoration: none;
+}
+.repoItem .desc{
+  opacity:.9;
+  margin-top:6px;
+}
+.repoItem .tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 8px;
+  margin-top:10px;
+  opacity:.9;
+  font-size: 13px;
+}
+.repoItem .tags span{
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 999px;
+  padding: 2px 10px;
 }
