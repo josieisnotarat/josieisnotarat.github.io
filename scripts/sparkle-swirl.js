@@ -31,10 +31,10 @@
     threshold: 0.20,     // hide most of the "empty" space (blobby clusters)
     fog: 0.06,           // tiny ambient sparkles even outside blobs
     // alpha tuning (keep faint)
-    aMin: 0.006,
-    aMax: 0.20,
+    aMin: 0.008,
+    aMax: 0.26,
     // glow baked into sprite
-    glow: 0.22,
+    glow: 0.30,
     glowBlur: 6
   };
 

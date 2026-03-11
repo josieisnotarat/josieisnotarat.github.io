@@ -292,7 +292,7 @@ body.shifted .main {
 }
 
 .line {
-  color: var(--green);
+  color: var(--accent);
   font-size: 12px;
   letter-spacing: 0.06em;
   line-height: 1.95;
